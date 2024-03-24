@@ -36,6 +36,12 @@ class User {
         }
     }
 
+    public function createUser($email, $username, $password) {
+        $query = "INSERT INTO users (email, username, password) VALUES (:email, :username, :password)";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute(array(':email' => $email, ':username' => $username, ':password' => password_hash($password, PASSWORD_DEFAULT)));
+    }
+
 }
 
 

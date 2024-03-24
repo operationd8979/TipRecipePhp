@@ -1,5 +1,7 @@
 <?php
-include_once '../../config/config.php';
+require_once './vendor/autoload.php';
+require_once './config/config.php';
+use \Firebase\JWT\JWT;
 
 class JwtHelper{
 
@@ -10,10 +12,9 @@ class JwtHelper{
     private $expiration;
 
     public function __construct(){
-        global $SECRET_KEY, $ALGORITHM, $EXPIRATION;
-        $this->secretKey = $SECRET_KEY;
-        $this->algorithm = $ALGORITHM;
-        $this->expiration = $EXPIRATION;
+        $this->secretKey = SECRET_KEY;
+        $this->algorithm = ALGORITHM;
+        $this->expiration = EXPIRATION;
     }
 
     public static function getInstance(){
@@ -23,12 +24,12 @@ class JwtHelper{
         return self::$instance;
     }
     
-    public function generate($username) {
+    public function generate($email) {
         $time = time();
         $payload = array(
             'iat' => $time,
             'exp' => $time + $this->expiration,
-            'data' => $username
+            'data' => $email
         );
         return JWT::encode($payload, $this->secretKey, $this->algorithm);
     }

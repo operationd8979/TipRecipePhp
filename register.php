@@ -1,5 +1,12 @@
 <?php
 require_once("./src/ultis/generate.php");
+require_once("./src/controllers/useRegister.php");
+require_once("./src/ultis/autoRoute.php");
+
+if(checkAlreadyLoggedIn()){
+    header('Location: index.php');
+}
+
 session_start();
 
 if (!isset($_SESSION['captcha']) || isset($_GET['refresh'])) {
@@ -27,25 +34,33 @@ if (!isset($_SESSION['captcha']) || isset($_GET['refresh'])) {
     <div class="container mx-auto mt-8 max-w-md">
         <div class="bg-white shadow-md rounded px-8 py-8">
             <h2 class="text-2xl mb-6 font-semibold">Register</h2>
-            <form action="#" method="POST">
+            <p class="text-red-500 text-sm mb-4"><?php echo $error; ?></p>
+            <form action="" method="POST">
                 <div class="mb-4">
                     <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
-                    <input type="email" id="email" name="email"
+                    <input type="email" id="email" name="email" value="operationddd@gmail.com"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
 
                 <div class="mb-4">
                     <label for="username"
                         class="block text-gray-700 text-sm font-bold mb-2">Username(Displayname)</label>
-                    <input type="text" id="username" name="username"
+                    <input type="text" id="username" name="username" value="operationddd"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
 
                 <div class="mb-4">
                     <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
-                    <input type="password" id="password" name="password"
+                    <input type="password" id="password" name="password" value="12345678"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
+
+                <div class="mb-4">
+                    <label for="confirmPassword" class="block text-gray-700 text-sm font-bold mb-2">Retype_Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" value="12345678"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+
                 <div class="mb-4 flex items-center">
                     <input type="text" id="captcha" name="captcha"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"

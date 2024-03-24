@@ -16,10 +16,14 @@
             <a href="index.php" class="text-white text-lg font-semibold flex">
                 <img class="h-8 w-8 mr-2" src="./assets/images/logo.png" />TipRecipePhp</a>
             <nav>
-                <ul class="flex space-x-4">
-                    <li><a href="index.php" class="text-white hover:text-gray-300">Home</a></li>
-                    <li><a href="register.php" class="text-white hover:text-gray-300">Register</a></li>
-                    <li><a href="login.php" class="text-white hover:text-gray-300">Login</a></li>
+                <ul class="flex space-x-4 mr-4">
+                    <?php if (checkAlreadyLoggedIn()) : ?>
+                        <li><a href="profile.php" class="text-white hover:text-gray-300">Profile</a></li>
+                        <li><a href="./src/controllers/useLogout.php" class="text-white hover:text-gray-300">Logout</a></li>
+                    <?php else : ?>
+                        <li><a href="register.php" class="text-white hover:text-gray-300">Register</a></li>
+                        <li><a href="login.php" class="text-white hover:text-gray-300">Login</a></li>
+                    <?php endif; ?>
                 </ul>
             </nav>
         </div>

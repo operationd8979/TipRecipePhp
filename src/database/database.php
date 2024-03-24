@@ -1,5 +1,6 @@
 <?php
-include_once '../../config/config.php';
+include_once './config/config.php';
+// include_once '../../config/config.php';
 
 class Database {
     
@@ -9,8 +10,7 @@ class Database {
 
     private function __construct() {
         try {
-            global $DB_HOST, $DB_USERNAME, $DB_PASSWORD, $DB_NAME;
-            $this->connection = new PDO("mysql:host=$DB_HOST;dbname=$DB_NAME", $DB_USERNAME, $DB_PASSWORD);
+            $this->connection = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USERNAME, DB_PASSWORD);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             die("Connection failed: " . $e->getMessage());
@@ -29,5 +29,6 @@ class Database {
     }
 
 }
+
 
 ?>
