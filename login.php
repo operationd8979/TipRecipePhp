@@ -1,19 +1,10 @@
 <?php
+require_once("./src/ultis/generate.php");
 session_start();
-
-function generateCaptcha() {
-    $chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    $captchaLength = 6;
-    $captcha = "";
-    for ($i = 0; $i < $captchaLength; $i++) {
-        $captcha .= $chars[mt_rand(0, strlen($chars) - 1)];
-    }
-    $_SESSION['captcha'] = $captcha;
-    return $captcha;
-}
 
 if (!isset($_SESSION['captcha']) || isset($_GET['refresh'])) {
     $captcha = generateCaptcha();
+    $_SESSION['captcha'] = $captcha;
 } else {
     $captcha = $_SESSION['captcha'];
 }
@@ -58,7 +49,7 @@ if (!isset($_SESSION['captcha']) || isset($_GET['refresh'])) {
                     <button type="submit"
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Sign
                         In</button>
-                    <a href="#" class="text-blue-500 hover:text-blue-800 text-sm">Forgot Password?</a>
+                    <a href="register.php" class="text-blue-500 hover:text-blue-800 text-sm">Sign up?</a>
                 </div>
             </form>
         </div>

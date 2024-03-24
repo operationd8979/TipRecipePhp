@@ -1,19 +1,10 @@
 <?php
+require_once("./src/ultis/generate.php");
 session_start();
-
-function generateCaptcha() {
-    $chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    $captchaLength = 6;
-    $captcha = "";
-    for ($i = 0; $i < $captchaLength; $i++) {
-        $captcha .= $chars[mt_rand(0, strlen($chars) - 1)];
-    }
-    $_SESSION['captcha'] = $captcha;
-    return $captcha;
-}
 
 if (!isset($_SESSION['captcha']) || isset($_GET['refresh'])) {
     $captcha = generateCaptcha();
+    $_SESSION['captcha'] = $captcha;
 } else {
     $captcha = $_SESSION['captcha'];
 }
@@ -61,8 +52,11 @@ if (!isset($_SESSION['captcha']) || isset($_GET['refresh'])) {
                         placeholder="Enter Captcha">
                     <img src="captcha.php" alt="CAPTCHA" class="ml-4" onclick="this.src='captcha.php?refresh=1'">
                 </div>
-                <button type="submit"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Register</button>
+                <div class="flex items-center justify-between">
+                    <button type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Register</button>
+                    <a href="login.php" class="text-blue-500 hover:text-blue-800 text-sm">Login in?</a>
+                </div>
             </form>
         </div>
     </div>

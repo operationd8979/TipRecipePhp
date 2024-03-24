@@ -1,3 +1,11 @@
+<?php
+    if (!isset($_COOKIE['access_token'])) {
+        header("Location: login.php");
+        exit;
+    }
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
