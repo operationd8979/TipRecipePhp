@@ -4,17 +4,17 @@ require_once './src/models/user.php';
 require_once './src/database/database.php';
 require_once './src/helpers/jwtHelper.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    
+
+function validate($email, $password, &$error) {
     if (empty($email) || empty($password)) {
         $error = "Email and password are required!";
-    } else {
-        $email = htmlspecialchars(strip_tags($email));
-        $password = htmlspecialchars(strip_tags($password));
-        
+        return false;
+    }
+    return true;
+}
+
+function login($email, $password, &$error) {
+    if(validate($email, $password, $error)){
         $db = Database::getInstance()->getConnection();
         $userModel = new User($db);
 

@@ -4,8 +4,6 @@ require_once './src/models/User.php';
 require_once './src/database/database.php';
 require_once './src/helpers/jwtHelper.php';
 
-$error = "";
-
 function validate($email, $username, $password, $confirmPassword, &$error) {
     if (empty($email) || empty($username) || empty($password) || empty($confirmPassword)) {
         $error = "All fields are required!";
@@ -25,15 +23,8 @@ function validate($email, $username, $password, $confirmPassword, &$error) {
     return true;
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    
-    $email = $_POST['email'];
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $confirmPassword = $_POST['confirmPassword'];
-    
+function register($email, $username, $password, $confirmPassword, &$error) {
     if(validate($email, $username, $password, $confirmPassword, $error)){
-
         $email = htmlspecialchars(strip_tags($email));
         $password = htmlspecialchars(strip_tags($password));
         $username = htmlspecialchars(strip_tags($username));
@@ -55,9 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $error = "An error occurred!";
             }
         }
-        
     }
-   
 }
+
+
 
 ?>

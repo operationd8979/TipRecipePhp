@@ -2,6 +2,7 @@
 require_once './vendor/autoload.php';
 require_once './config/config.php';
 use \Firebase\JWT\JWT;
+use \Firebase\JWT\Key;
 
 class JwtHelper{
 
@@ -36,9 +37,11 @@ class JwtHelper{
 
     private function extract($token) {
         try {
-            $decoded = JWT::decode($token, $this->secretKey, array($this->algorithm));
+            $headers = new stdClass();
+            $decoded = JWT::decode($token, new Key($this->secretKey, $this->algorithm));
             return $decoded;
         } catch (Exception $e) {
+            echo $e->getMessage();
             return null;
         }
     }

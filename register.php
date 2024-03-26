@@ -1,10 +1,11 @@
 <?php
 require_once("./src/ultis/generate.php");
+require_once("./src/ultis/checkState.php");
 require_once("./src/controllers/useRegister.php");
-require_once("./src/ultis/autoRoute.php");
 
 if(checkAlreadyLoggedIn()){
     header('Location: index.php');
+    exit;
 }
 
 session_start();
@@ -15,6 +16,20 @@ if (!isset($_SESSION['captcha']) || isset($_GET['refresh'])) {
 } else {
     $captcha = $_SESSION['captcha'];
 }
+?>
+
+<?php
+
+$error = "";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = htmlspecialchars(strip_tags($_POST['email']));
+    $username = htmlspecialchars(strip_tags($_POST['username']));
+    $password = htmlspecialchars(strip_tags($_POST['password']));
+    $confirmPassword = htmlspecialchars(strip_tags($_POST['confirmPassword']));
+    register($email, $username, $password, $confirmPassword, $error);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +71,8 @@ if (!isset($_SESSION['captcha']) || isset($_GET['refresh'])) {
                 </div>
 
                 <div class="mb-4">
-                    <label for="confirmPassword" class="block text-gray-700 text-sm font-bold mb-2">Retype_Password</label>
+                    <label for="confirmPassword"
+                        class="block text-gray-700 text-sm font-bold mb-2">Retype_Password</label>
                     <input type="password" id="confirmPassword" name="confirmPassword" value="12345678"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </div>

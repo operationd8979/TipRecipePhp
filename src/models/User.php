@@ -1,14 +1,8 @@
 <?php
 
 class User {
-    private $db;
 
-    private $userID;
-    private $email;
-    private $username;
-    private $password;
-    private $createdAt;
-    private $updatedAt;
+    private $db;
 
     public function __construct($db) {
         $this->db = $db;
@@ -37,9 +31,30 @@ class User {
     }
 
     public function createUser($email, $username, $password) {
-        $query = "INSERT INTO users (email, username, password) VALUES (:email, :username, :password)";
+        $rand = rand(100000, 999999);
+        $userID = uniqid().$rand;
+        $query = "INSERT INTO users (userID, email, username, password) VALUES (:userID, :email, :username, :password)";
         $stmt = $this->db->prepare($query);
-        $stmt->execute(array(':email' => $email, ':username' => $username, ':password' => password_hash($password, PASSWORD_DEFAULT)));
+        $stmt->execute(array(':userID' => $userID, ':email' => $email, ':username' => $username, ':password' => password_hash($password, PASSWORD_DEFAULT)));
+    }
+
+    public function updateUser($user, $username, $email, $password) {
+        $userID = $user['userID'];
+        if($username == "") {
+            $username = $user['username'];
+        }
+        if($email == "") {
+            $email = $user['email'];
+        }
+        if($password == ""){
+            $password = $user['password'];
+        }
+        else{
+            $password = password_hash($password, PASSWORD_DEFAULT);
+        }
+        $query = "UPDATE users SET username = :username, email = :email, password = :password WHERE userID = :userID";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute(array(':userID' => $userID, ':username' => $username, ':email' => $email, ':password' => $password));
     }
 
 }

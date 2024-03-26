@@ -1,20 +1,29 @@
 <?php
-
 require_once("./src/ultis/generate.php");
+require_once("./src/ultis/checkState.php");
 require_once("./src/controllers/useLogin.php");
-require_once("./src/ultis/autoRoute.php");
+
 
 if(checkAlreadyLoggedIn()){
     header('Location: index.php');
+    exit;
 }
 
 session_start();
-
 if (!isset($_SESSION['captcha']) || isset($_GET['refresh'])) {
     $captcha = generateCaptcha();
     $_SESSION['captcha'] = $captcha;
 } else {
     $captcha = $_SESSION['captcha'];
+}
+?>
+
+<?php
+$error = "";
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = htmlspecialchars(strip_tags($_POST['email']));
+    $password = htmlspecialchars(strip_tags($_POST['password']));
+    login($email, $password, $error);
 }
 ?>
 
@@ -34,6 +43,7 @@ if (!isset($_SESSION['captcha']) || isset($_GET['refresh'])) {
     <div class="container mx-auto mt-8 max-w-md">
         <div class="bg-white shadow-md rounded px-8 py-8">
             <h2 class="text-2xl mb-6 font-semibold">Login</h2>
+            <p class="text-red-500 text-sm mb-4"><?php echo $error; ?></p>
             <form action="" method="POST">
                 <div class="mb-4">
                     <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
