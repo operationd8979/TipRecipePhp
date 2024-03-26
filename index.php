@@ -36,9 +36,10 @@
             <aside class="lg:col-span-1 lg:bg-white lg:p-4 lg:shadow-md">
                 <h2 class="text-lg font-semibold mt-10 mb-4">Ingredients/Type tag</h2>
                 <!-- Search by Ingredient & type -->
+                <p class="font-thin text-blue-600/100" id="hintTag"></p>
                 <div class="flex flex-wrap">
                     <textarea id="tagInput"
-                        class="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
+                        class="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500 w-full"
                         placeholder="Enter tags..."></textarea>
                 </div>
 
@@ -94,20 +95,58 @@
     //     }
     // });
 
-    const suggestions = ["HTML", "CSS", "JavaScript", "Python", "PHP", "Java", "React", "Angular", "Vue.js"];
+    const suggestions = ["HTML", "HTT", "CSS", "JavaScript", "Python", "PHP", "Java", "React", "Angular", "Vue.js"];
 
     const tagInput = document.getElementById('tagInput');
+    tagInput.addEventListener('input', function() {
+        if (this.value.trim() === '') {
+            document.getElementById('hintTag').textContent = '';
+            return;
+        }
+        const tags = this.value.split(',').map(tag => tag.trim());
+        const lastTag = tags[tags.length - 1];
+        const suggestedTags = suggestions.filter(suggestion => suggestion.toLowerCase()
+            .includes(lastTag.toLowerCase()));
+        let stringHint = '';
+        suggestedTags.forEach(suggestedTag => {
+            stringHint += `${suggestedTag}, `;
+        });
+        document.getElementById('hintTag').textContent = stringHint;
+    });
     tagInput.addEventListener('keydown', function(event) {
         if (event.key === 'Enter' && this.value.trim() !== '') {
             event.preventDefault();
+            let tags = this.value.split(',').map(tag => tag.trim());
+            const lastTag = tags[tags.length - 1];
+            const suggestedTags = suggestions.filter(suggestion => suggestion.toLowerCase()
+                .includes(lastTag.toLowerCase()));
+            const index = this.value.lastIndexOf(lastTag);
+            if (suggestedTags.length == 1 && !tags.includes(suggestedTags[0])) {
+                this.value = this.value.substring(0, index) + suggestedTags[0] + ", ";
+            }
+        }
+        if (event.key === ',' && this.value.trim() !== '') {
+            event.preventDefault();
+            let tags = this.value.split(',').map(tag => tag.trim());
+            const lastTag = tags[tags.length - 1];
+            const suggestedTags = suggestions.filter(suggestion => suggestion.toLowerCase()
+                .includes(lastTag.toLowerCase()));
+            if (suggestedTags.length === 1) {
+                this.value = this.value + ', ';
+            }
+        }
+        if (event.key === 'Backspace' && this.value.trim() !== '') {
             const tags = this.value.split(',').map(tag => tag.trim());
-            tags.forEach(tag => {
-                const suggestedTags = suggestions.filter(suggestion => suggestion.toLowerCase()
-                    .includes(tag.toLowerCase()));
-                if (suggestedTags.length > 0) {
-                    this.value += `, ${suggestedTags[0]}`;
-                }
-            });
+            const lastTag = tags[tags.length - 1];
+            if (suggestions.includes(lastTag)) {
+                event.preventDefault();
+                tags.pop();
+                let stringValue = "";
+                tags.forEach(tag => {
+                    stringValue += tag + ', ';
+                });
+                this.value = stringValue;
+            }
         }
     });
     </script>
