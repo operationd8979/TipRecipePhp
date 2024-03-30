@@ -34,15 +34,21 @@
         <div class="lg:grid lg:grid-cols-3 lg:gap-8 mr-4 ml-4">
             <!-- Sidebar -->
             <aside class="lg:col-span-1 lg:bg-white lg:p-4 lg:shadow-md">
-                <h2 class="text-lg font-semibold mt-10 mb-4">Ingredients/Type tag</h2>
+                <h2 class="text-lg font-semibold">Ingredients/Type tag</h2>
                 <!-- Search by Ingredient & type -->
-                <p class="font-thin text-blue-600/100" id="hintTag"></p>
+                <div class="h-6">
+                    <p class="font-thin text-blue-600/100 truncate line-clamp-1" id="hintTag"></p>
+                </div>
                 <div class="flex flex-wrap">
                     <textarea id="tagInput"
                         class="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500 w-full"
                         placeholder="Enter tags..."></textarea>
                 </div>
-
+                <!-- tags  -->
+                <h2 class="text-lg font-semibold mt-4">Ingredients filter</h2>
+                <div class="flex flex-wrap gap-2" id="ingredients"></div>
+                <h2 class="text-lg font-semibold mt-4">Type filter</h2>
+                <div class="flex flex-wrap gap-2" id="types"></div>
                 <!-- <h2 class="text-lg font-semibold mt-10 mb-4">Ingredients</h2>
                 <form action="" method="GET">
                     <div class="mb-4">
@@ -95,7 +101,11 @@
     //     }
     // });
 
-    const suggestions = ["HTML", "HTT", "CSS", "JavaScript", "Python", "PHP", "Java", "React", "Angular", "Vue.js"];
+    const ingredients = ["trứng", "bắp", "đường", "muối", "gạo", "nếp", "rau diếp", "rau muống", "gà ta", "gà tây"];
+    const types = ["hàn", "âu", "mỹ", "giảm cân", "đậm vị", "thái", "chua cay", "ăn tiệc", "tráng miệng", "đậm vị"];
+    const filterIngredients = [];
+    const filterTypes = [];
+    let currentCursorPosition = 0;
 
     const tagInput = document.getElementById('tagInput');
     tagInput.addEventListener('input', function() {
@@ -105,50 +115,107 @@
         }
         const tags = this.value.split(',').map(tag => tag.trim());
         const lastTag = tags[tags.length - 1];
-        const suggestedTags = suggestions.filter(suggestion => suggestion.toLowerCase()
-            .includes(lastTag.toLowerCase()));
+        const suggestedTags = [
+            ...ingredients.filter(ingredient => ingredient.toLowerCase()
+                .includes(lastTag.toLowerCase())),
+            ...types.filter(type => type.toLowerCase()
+                .includes(lastTag.toLowerCase()))
+        ];
         let stringHint = '';
         suggestedTags.forEach(suggestedTag => {
             stringHint += `${suggestedTag}, `;
         });
         document.getElementById('hintTag').textContent = stringHint;
     });
+    tagInput.addEventListener('mousedown', function(event) {
+        if (event.button === 0) {
+            currentCursorPosition = tagInput.selectionStart;
+        }
+    });
+    tagInput.addEventListener('click', function(event) {
+        tagInput.selectionStart = currentCursorPosition;
+    });
     tagInput.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter' && this.value.trim() !== '') {
+        if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'ArrowLeft' || event
+            .key ===
+            'ArrowRight' || event.key === 'a' && (event.ctrlKey || event.metaKey)) {
             event.preventDefault();
-            let tags = this.value.split(',').map(tag => tag.trim());
-            const lastTag = tags[tags.length - 1];
-            const suggestedTags = suggestions.filter(suggestion => suggestion.toLowerCase()
-                .includes(lastTag.toLowerCase()));
-            const index = this.value.lastIndexOf(lastTag);
-            if (suggestedTags.length == 1 && !tags.includes(suggestedTags[0])) {
-                this.value = this.value.substring(0, index) + suggestedTags[0] + ", ";
+        }
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            if (this.value.trim() !== '') {
+                let tags = this.value.split(',').map(tag => tag.trim());
+                const lastTag = tags[tags.length - 1];
+                const suggestedTags = [
+                    ...ingredients.filter(ingredient => ingredient.toLowerCase()
+                        .includes(lastTag.toLowerCase())),
+                    ...types.filter(type => type.toLowerCase()
+                        .includes(lastTag.toLowerCase()))
+                ];
+                if (suggestedTags.length == 1 && !tags.slice(0, tags.length - 1).includes(suggestedTags[
+                        0])) {
+                    const index = this.value.lastIndexOf(lastTag);
+                    this.value = this.value.substring(0, index) + suggestedTags[0] + ", ";
+                    document.getElementById('hintTag').textContent = "";
+                    renderTag(suggestedTags[0]);
+                }
             }
         }
         if (event.key === ',' && this.value.trim() !== '') {
             event.preventDefault();
             let tags = this.value.split(',').map(tag => tag.trim());
             const lastTag = tags[tags.length - 1];
-            const suggestedTags = suggestions.filter(suggestion => suggestion.toLowerCase()
-                .includes(lastTag.toLowerCase()));
-            if (suggestedTags.length === 1) {
+            const suggestedTags = [
+                ...ingredients.filter(ingredient => ingredient.toLowerCase()
+                    .includes(lastTag.toLowerCase())),
+                ...types.filter(type => type.toLowerCase()
+                    .includes(lastTag.toLowerCase()))
+            ];
+            if (suggestedTags.length === 1 && !tags.slice(0, tags.length - 1).includes(suggestedTags[0])) {
                 this.value = this.value + ', ';
+                renderTag(suggestedTags[0]);
             }
         }
         if (event.key === 'Backspace' && this.value.trim() !== '') {
             const tags = this.value.split(',').map(tag => tag.trim());
             const lastTag = tags[tags.length - 1];
+            const suggestions = [...ingredients, ...types];
             if (suggestions.includes(lastTag)) {
                 event.preventDefault();
-                tags.pop();
-                let stringValue = "";
-                tags.forEach(tag => {
-                    stringValue += tag + ', ';
-                });
-                this.value = stringValue;
+                const aimGuy = tags.pop();
+                this.value = this.value.substring(0, this.value.length - aimGuy.length);
+                deleteTag(aimGuy);
             }
         }
     });
+
+    function renderTag(value) {
+        if (ingredients.includes(value)) {
+            document.getElementById('ingredients').innerHTML +=
+                `<span class="inline-block bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm font-semibold">${value}</span>`;
+            filterIngredients.push(value);
+        } else {
+            document.getElementById('types').innerHTML +=
+                `<span class="inline-block bg-red-200 text-gray-700 rounded-full px-3 py-1 text-sm font-semibold">${value}</span>`;
+            filterTypes.push(value);
+        }
+    }
+
+    function deleteTag(value) {
+        if (ingredients.includes(value)) {
+            document.getElementById('ingredients').innerHTML = document.getElementById('ingredients')
+                .innerHTML.replace(
+                    `<span class="inline-block bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm font-semibold">${value}</span>`,
+                    '');
+            filterIngredients.splice(filterIngredients.indexOf(value), 1);
+        } else {
+            document.getElementById('types').innerHTML = document.getElementById('types').innerHTML
+                .replace(
+                    `<span class="inline-block bg-red-200 text-gray-700 rounded-full px-3 py-1 text-sm font-semibold">${value}</span>`,
+                    '');
+            filterTypes.splice(filterTypes.indexOf(value), 1);
+        }
+    }
     </script>
 </body>
 
