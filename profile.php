@@ -22,6 +22,7 @@ $email = $user['email'];
 $username = $user['username'];
 $createdAt = $user['created_at'];
 $updatedAt = $user['updated_at'];
+$role = $user['role'];
 
 $error = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -57,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- <p class="text-gray-600 mb-2"><strong>Phone:</strong> 123-456-7890</p> -->
             <p class="text-gray-600 mb-2"><strong>Created At:</strong> <?php echo($createdAt) ?></p>
             <p class="text-gray-600 mb-2"><strong>Updated At:</strong> <?php echo($updatedAt) ?></p>
+            <p class="text-gray-600 mb-2"><strong>Role:</strong> <?php echo($role) ?></p>
         </div>
 
         <!-- Update Profile -->

@@ -1,3 +1,8 @@
+<?php
+require_once('src/ultis/checkState.php');
+require_once('src/helpers/jwtFilter.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,6 +23,9 @@
             <nav class="mr-4">
                 <ul class="flex space-x-4">
                     <?php if (checkAlreadyLoggedIn()) : ?>
+                    <?php if (doFilterInternal()["role"] == "ADMIN") : ?>
+                    <li><a href="admin.php" class="text-white hover:text-gray-300">Admin</a></li>
+                    <?php endif; ?>
                     <li><a href="profile.php" class="text-white hover:text-gray-300">Profile</a></li>
                     <li><a href="logout.php" class="text-white hover:text-gray-300">Logout</a></li>
                     <?php else : ?>

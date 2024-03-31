@@ -1,7 +1,7 @@
 <?php
 require_once './src/helpers/jwtFilter.php';
 require_once './src/database/database.php';
-require_once './src/models/user.php';
+require_once './src/models/User.php';
 
 function getUserInfo(){
     $user = doFilterInternal();
