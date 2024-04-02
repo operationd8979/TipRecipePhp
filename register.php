@@ -1,12 +1,8 @@
 <?php
 require_once("./src/ultis/generate.php");
-require_once("./src/ultis/checkState.php");
 require_once("./src/controllers/useRegister.php");
-
-if(checkAlreadyLoggedIn()){
-    header('Location: index.php');
-    exit;
-}
+require_once('./src/helpers/jwtFilter.php');
+doFilterInternal();
 
 session_start();
 

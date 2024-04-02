@@ -1,10 +1,6 @@
 <?php
-require_once('src/ultis/checkState.php');
-
-if(!checkAlreadyLoggedIn()){
-    header('Location: login.php');
-    exit;
-}
+require_once('./src/helpers/jwtFilter.php');
+doFilterInternal();
 ?>
 <?php
 require_once './src/models/user.php';

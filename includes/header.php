@@ -1,5 +1,4 @@
 <?php
-require_once('src/ultis/checkState.php');
 require_once('src/helpers/jwtFilter.php');
 ?>
 
@@ -10,19 +9,20 @@ require_once('src/helpers/jwtFilter.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Header</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <script src="./assets/css/3.4.3"></script>
     <link rel="stylesheet" href="./assets/css/main.css">
 </head>
 
 <body>
 
-    <header class="bg-gray-800 py-4">
+    <header class="bg-gray-800 py-4 z-50">
         <div class="container mx-auto flex justify-between items-center">
             <a href="index.php" class="text-white text-lg font-semibold flex ml-4">
                 <img class="h-8 w-8 mr-2" src="./assets/images/logo.png" />TipRecipePhp</a>
             <nav class="mr-4">
                 <ul class="flex space-x-4">
-                    <?php if (checkAlreadyLoggedIn()) : ?>
+                    <?php if (doFilterInternal()) : ?>
                     <?php if (doFilterInternal()["role"] == "ADMIN") : ?>
                     <li><a href="admin.php" class="text-white hover:text-gray-300">Admin</a></li>
                     <?php endif; ?>

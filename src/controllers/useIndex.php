@@ -5,10 +5,6 @@ require_once './src/models/Ingredient.php';
 require_once './src/models/Type.php';
 require_once './src/models/Disk.php';
 
-function getUserInfo(){
-    $user = doFilterInternal();
-    return $user;
-}
 
 
 function getDataIngredient(&$ingredients){

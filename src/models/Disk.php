@@ -8,14 +8,6 @@ class Disk {
         $this->db = $db;
     }
 
-    // public function getDisks() {
-    //     $query = "SELECT * FROM disks";
-    //     $stmt = $this->db->prepare($query);
-    //     $stmt->execute();
-    //     $disks = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    //     return $disks;
-    // }
-    
 
     // SELECT d.diskID, d.diskName, d.summary, GROUP_CONCAT(DISTINCT i.ingredientName) as ingredients, GROUP_CONCAT(DISTINCT t.typeName) as types
     // FROM `disks` d 
@@ -63,6 +55,21 @@ class Disk {
         $stmt = $this->db->prepare($query);
         $stmt->execute(array(':diskID' => $diskID));
         $disks = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $disks;
+    }
+
+    public function getDisksAdmin($search) {
+        $query = "SELECT d.diskID, d.diskName, d.summary, d.url, GROUP_CONCAT(DISTINCT i.ingredientName) as ingredients, GROUP_CONCAT(DISTINCT t.typeName) as types
+        FROM `disks` d
+        JOIN `diskingredients` di ON d.diskID = di.diskID
+        JOIN `ingredients` i ON di.ingredientID = i.ingredientID
+        JOIN `disktypes` dt ON d.diskID = dt.diskID
+        JOIN `typedisks` t ON dt.typeID = t.typeID
+        GROUP BY d.diskID
+        Having d.diskName LIKE :search";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute(array(':search' => "%$search%"));
+        $disks = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $disks;
     }
 

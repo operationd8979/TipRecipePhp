@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <footer class="bg-gray-800 text-white text-center p-3">
+    <footer class="bg-gray-800 text-white text-center p-3 z-50">
         <p> &copy; 2021 TipRecipePhp </p>
     </footer>
 </body>

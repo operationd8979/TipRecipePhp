@@ -1,10 +1,8 @@
 <?php
-    require_once('src/ultis/checkState.php');
     require_once('src/controllers/useIndex.php');
-    if(!checkAlreadyLoggedIn()){
-        header('Location: login.php');
-        exit;
-    }
+    require_once('src/helpers/jwtFilter.php');
+    doFilterInternal();
+    
     $ingredients = [];
     getDataIngredient($ingredients);
     $types = [];
@@ -243,7 +241,7 @@
 
     function callApiSearch() {
         const search = document.getElementById('search').value;
-        const url = new URL("http://localhost/tipRecipesPhp/index.php");
+        const url = new URL(window.location.href.split('?')[0]);
         url.searchParams.set('search', search);
         if (filterIngredients.length !== 0) {
             url.searchParams.set('ingredients', filterIngredients);

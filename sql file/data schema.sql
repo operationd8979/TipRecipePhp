@@ -15,7 +15,7 @@ CREATE TABLE typeDisks (
 
 CREATE TABLE ingredients (
   ingredientID INT PRIMARY KEY AUTO_INCREMENT,
-  ingredientName NVARCHAR(255) UNIQUE
+  ingredientName NVARCHAR(255) UNIQUE,
 );
 
 CREATE TABLE disks (
@@ -38,7 +38,7 @@ CREATE TABLE diskIngredients (
   diskID VARCHAR(20),
   ingredientID INT,
   amount INT,
-  unit VARCHAR(255),
+  unit VARCHAR(255) DEFAULT 'gram',
   PRIMARY KEY (diskID, ingredientID),
   FOREIGN KEY (diskID) REFERENCES disks(diskID),
   FOREIGN KEY (ingredientID) REFERENCES ingredients(ingredientID)
