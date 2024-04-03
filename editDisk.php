@@ -7,9 +7,7 @@ getDataIngredient($ingredients);
 $types = [];
 getDataType($types);
 
-$current_url = $_SERVER['REQUEST_URI'];
-$url_parts = explode('/', $current_url);
-$id = end($url_parts);
+$id=$_GET['id']??"";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,8 +56,9 @@ $id = end($url_parts);
             </nav>
         </aside>
         <main class="flex-1 bg-white p-8">
-            <h1 class="text-3xl font-bold mb-8">Disk</h1>
-            <!-- Add Dish Form -->
+            <h1 class="text-3xl font-bold mb-8">
+                <?php echo $id==""?"Add Disk":"Edit Disk"; ?>
+            </h1>
             <div class="lg:grid lg:grid-cols-2">
                 <div class="max-w-xl lg:col-span-1 mr-8">
                     <div class="mb-4">
@@ -95,15 +94,16 @@ $id = end($url_parts);
                 <div class="max-w-xl lg:col-span-1">
                     <div class="mb-4">
                         <label for="recipe" class="block text-gray-700 font-semibold mb-2">Recipe</label>
-                        <textarea type="text" id="recipe" name="recipe"
+                        <textarea type="text" id="recipeBlog" name="recipeBlog"
                             class="border border-gray-300 rounded-md px-4 py-2 w-full focus:outline-none focus:border-blue-500 h-96"
                             required>
                         </textarea>
                     </div>
                     <div class="mb-4">
                         <button type="submit" onClick="callUpdateFromDom()"
-                            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded">Add
-                            Dish</button>
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded">
+                            <?php echo $id==""?"Add Disk":"Edit Disk"; ?>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -112,6 +112,7 @@ $id = end($url_parts);
     </div>
     <?php require_once('includes/footer.php'); ?>
     <script>
+    const id = <?php echo json_encode($id); ?>;
     const ingredients = <?php echo json_encode($ingredients); ?>.map(ingredient => ingredient.ingredientName);
     const types = <?php echo json_encode($types); ?>.map(type => type.typeName);
     let filterIngredients = [];
@@ -250,35 +251,42 @@ $id = end($url_parts);
     //     window.location.href = url.href;
     // }
     function callUpdateFromDom() {
-        if (filterIngredients.length !== 0) {
-            filterIngredients = filterIngredients.map(ingredient => {
-                return {
-                    name: ingredient,
-                    amount: document.getElementById(`${ingredient}-amount`).value,
-                    unit: document.getElementById(`${ingredient}-unit`).value
-                };
-            });
-        }
-
+        const summary = document.getElementById("summary").value;
+        const diskName = document.getElementById("dishName").value;
+        var editorFrame = document.getElementById('recipeBlog_ifr');
+        var editorBody = editorFrame.contentDocument.body;
+        const recipe = editorBody.innerHTML.trim();
+        // if (filterIngredients.length === 0 || filterTypes.length === 0 || summary === "" || diskName === "" ||
+        //     recipe === `<p><br data-mce-bogus="1"></p>`) {
+        //     alert("Please fill all the fields");
+        //     return;
+        // }
+        filterIngredients = filterIngredients.map(ingredient => {
+            return {
+                name: ingredient,
+                amount: document.getElementById(`${ingredient}-amount`).value,
+                unit: document.getElementById(`${ingredient}-unit`).value
+            };
+        });
         var data = {
+            id: id,
+            diskName: diskName,
+            summary: summary,
+            recipe: recipe,
             ingredients: filterIngredients,
             types: filterTypes
         };
 
-        // Sử dụng XMLHttpRequest để gửi dữ liệu đi
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "test.php", true);
         xhr.setRequestHeader("Content-Type", "application/json");
 
-        // Xử lý sự kiện khi trạng thái của request thay đổi
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                // Xử lý kết quả từ server nếu cần
                 console.log(xhr.responseText);
             }
         };
 
-        // Gửi dữ liệu JSON đi
         xhr.send(JSON.stringify(data));
     }
     </script>
