@@ -7,7 +7,7 @@ class UserService{
     private $userModel;
     public static $instance = null;
 
-    public function __construct(){
+    private function __construct(){
         $this->db = Database::getInstance()->getConnection();
         $this->userModel = new User($this->db);
     }

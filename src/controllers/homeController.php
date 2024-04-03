@@ -17,7 +17,7 @@ class HomeController{
 
     public function invoke(&$dishs, &$ingredients, &$types){
         doFilterInternal();
-        $ingredient = $this->ingredientService->getIngredients();
+        $ingredients = $this->ingredientService->getIngredients();
         $types = $this->typeService->getTypes();
         if($_SERVER['REQUEST_METHOD'] === 'GET'){
             $search = $_GET['search'] ?? '';

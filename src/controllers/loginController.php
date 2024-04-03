@@ -24,8 +24,10 @@ class LoginController {
         if(validate($email, $password, $error)){
             $user = $this->userService->authenticate($email, $password);
             if ($user) {
+                session_start();
                 $jwt = JwtHelper::getInstance()->generate($email);
                 setcookie('jwt', $jwt, time() + 86400, '/');
+                $_SESSION['role'] = $user['role'];
                 header('Location: index.php');
                 exit;
             } else {

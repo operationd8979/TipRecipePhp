@@ -7,7 +7,7 @@ class DishService{
     private $dishModel;
     public static $instance = null;
 
-    public function __construct(){
+    private function __construct(){
         $this->db = Database::getInstance()->getConnection();
         $this->dishModel = new Dish($this->db);
     }
@@ -29,6 +29,26 @@ class DishService{
 
     public function getDishById($dishId){
         return $this->dishModel->getDishById($dishId);
+    }
+
+    public function getDetailDishById($dishId){
+        return $this->dishModel->getDetailDishById($dishId);
+    }
+
+    public function addDish($dishName, $summary, $recipe, $ingredients, $types){
+        return $this->dishModel->addDish($dishName, $summary, $recipe, $ingredients, $types);
+    }
+
+    public function updateDishUrl($id, $url){
+        return $this->dishModel->updateDishUrl($id, $url);
+    }
+
+    public function modifyDish($id, $dishName, $summary, $recipe, $ingredients, $types){
+        return $this->dishModel->modifyDish($id, $dishName, $summary, $recipe, $ingredients, $types);
+    }
+
+    public function deleteDish($id){
+        return $this->dishModel->deleteDish($id);
     }
 
 }

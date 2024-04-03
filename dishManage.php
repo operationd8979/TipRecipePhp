@@ -18,8 +18,9 @@ function renderDishsToDom($dishs){
         echo '<p>Loại: '.$dish['types'].'</p>';
         echo '</td>';
         echo '<td class="border border-gray-200 px-4 py-2">';
-        echo '<button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 ml-1 rounded">Edit</button>';
-        echo '<button class="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 ml-1 rounded">Delete</button>';
+        echo '<a href="./editDish.php?id='.$dish['dishID'].'" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 ml-1 rounded">Edit</a>';
+        echo '<a href="./dishManage.php?delete='.$dish['dishID'].'" class="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 ml-1 rounded">Delete</a>';
+        // echo '<a href="#" onclick="confirmDelete(' . $dish['dishID'] . '); return false;"  class="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 ml-1 rounded">Delete</a>';
         echo '</td>';
         echo '</tr>';
     }
@@ -32,6 +33,7 @@ function renderDishsToDom($dishs){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dish Manage</title>
+
 </head>
 
 <body>
@@ -61,7 +63,7 @@ function renderDishsToDom($dishs){
                     <input type="text" id="search"
                         onKeyDown="if(event.key === 'Enter') {event.preventDefault(); callApiSearch();}"
                         class="border border-gray-300 rounded-md px-4 py-2 pr-10 focus:outline-none focus:border-blue-500"
-                        placeholder="Search...">
+                        placeholder="Search..by ID hoặc Name">
                     <button onClick="callApiSearch()"
                         class="px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none">Search</button>
                 </div>
@@ -113,6 +115,18 @@ function renderDishsToDom($dishs){
         </main>
     </div>
     <?php require_once('includes/footer.php'); ?>
+
+    <script>
+        function callApiSearch() {
+            const search = document.getElementById('search').value;
+            window.location.href = `./dishManage.php?search=${search}`;
+        }
+        function confirmDelete(id) {
+            if (confirm("Are you sure to delete this dish?")) {
+                window.location.href = `./dishManage.php?delete=${id}`;
+            }
+        }
+    </script>
 </body>
 
 </html>

@@ -1,5 +1,7 @@
 <?php
 require_once('src/helpers/jwtFilter.php');
+session_start();
+$role = $_SESSION['role'] ?? null;
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +11,6 @@ require_once('src/helpers/jwtFilter.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Header</title>
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <script src="./assets/css/3.4.3"></script>
     <link rel="stylesheet" href="./assets/css/main.css">
 </head>
@@ -22,8 +23,8 @@ require_once('src/helpers/jwtFilter.php');
                 <img class="h-8 w-8 mr-2" src="./assets/images/logo.png" />TipRecipePhp</a>
             <nav class="mr-4">
                 <ul class="flex space-x-4">
-                    <?php if (doFilterInternal()) : ?>
-                    <?php if (doFilterInternal()["role"] == "ADMIN") : ?>
+                    <?php if ($role) : ?>
+                    <?php if ($role == "ADMIN") : ?>
                     <li><a href="admin.php" class="text-white hover:text-gray-300">Admin</a></li>
                     <?php endif; ?>
                     <li><a href="profile.php" class="text-white hover:text-gray-300">Profile</a></li>

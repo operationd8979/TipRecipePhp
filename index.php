@@ -49,12 +49,16 @@
                 <h2 class="text-lg font-semibold mt-4">Type filter</h2>
                 <div class="flex flex-wrap gap-2" id="types"></div>
             </aside>
-            <section class="lg:col-span-2 lg:bg-white lg:p-4 lg:shadow-md">
+            <section class="lg:col-span-1 lg:bg-white lg:p-4 lg:shadow-md">
                 <h2 class="text-lg font-semibold mb-4">Recipes</h2>
                 <ul>
                     <?php renderRecipce($disks); ?>
                 </ul>
             </section>
+            <aside class="lg:col-span-1 lg:bg-white lg:p-4 lg:shadow-md">
+                <h2 class="text-lg font-semibold">User</h2>
+             
+            </aside>
         </div>
     </main>
     <?php include('includes/footer.php'); ?>

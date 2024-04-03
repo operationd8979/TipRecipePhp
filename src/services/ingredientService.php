@@ -7,7 +7,7 @@ class IngredientService{
     private $ingredientModel;
     public static $instance = null;
 
-    public function __construct(){
+    private function __construct(){
         $this->db = Database::getInstance()->getConnection();
         $this->ingredientModel = new Ingredient($this->db);
     }

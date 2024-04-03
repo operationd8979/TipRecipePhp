@@ -7,7 +7,7 @@ class TypeService{
     private $typeModel;
     public static $instance = null;
 
-    public function __construct(){
+    private function __construct(){
         $this->db = Database::getInstance()->getConnection();
         $this->typeModel = new Type($this->db);
     }

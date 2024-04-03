@@ -28,10 +28,9 @@ CREATE TABLE dishs (
 );
 
 CREATE TABLE recipes (
-  recipeID VARCHAR(20) PRIMARY KEY,
-  dishID VARCHAR(20),
-  content VARCHAR(500),
-  FOREIGN KEY (dishID) REFERENCES dishs(dishID)
+  dishID VARCHAR(20) PRIMARY KEY,
+  content VARCHAR(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  FOREIGN KEY (dishID) REFERENCES dishs(dishID) 
 );
 
 CREATE TABLE dishIngredients (
