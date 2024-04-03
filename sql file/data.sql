@@ -69,28 +69,27 @@ INSERT INTO ingredients (ingredientID, ingredientName) VALUES (NULL, 'đậu h�
 INSERT INTO ingredients (ingredientID, ingredientName) VALUES (NULL, 'mỳ ý');
 INSERT INTO ingredients (ingredientID, ingredientName) VALUES (NULL, 'mỳ gói');
 INSERT INTO ingredients (ingredientID, ingredientName) VALUES (NULL, 'mỳ trứng');
-------------------------------------------------------------------------------------
--- Thêm loại món ăn vào bảng typeDisks
-INSERT INTO typeDisks (typeID, typeName) VALUES (NULL, 'món Hàn');
-INSERT INTO typeDisks (typeID, typeName) VALUES (NULL, 'món Việt');
-INSERT INTO typeDisks (typeID, typeName) VALUES (NULL, 'món Trung');
-INSERT INTO typeDisks (typeID, typeName) VALUES (NULL, 'món Nhật');
-INSERT INTO typeDisks (typeID, typeName) VALUES (NULL, 'món Ý');
-INSERT INTO typeDisks (typeID, typeName) VALUES (NULL, 'món Pháp');
-INSERT INTO typeDisks (typeID, typeName) VALUES (NULL, 'món Thái');
-INSERT INTO typeDisks (typeID, typeName) VALUES (NULL, 'món Ấn');
-INSERT INTO typeDisks (typeID, typeName) VALUES (NULL, 'siêu cay');
-INSERT INTO typeDisks (typeID, typeName) VALUES (NULL, 'ăn kiêng');
-INSERT INTO typeDisks (typeID, typeName) VALUES (NULL, 'ăn chay');
-INSERT INTO typeDisks (typeID, typeName) VALUES (NULL, 'lạnh');
-INSERT INTO typeDisks (typeID, typeName) VALUES (NULL, 'nước dùng');
-INSERT INTO typeDisks (typeID, typeName) VALUES (NULL, 'hấp');
-INSERT INTO typeDisks (typeID, typeName) VALUES (NULL, 'nướng');
-INSERT INTO typeDisks (typeID, typeName) VALUES (NULL, 'xào');
-INSERT INTO typeDisks (typeID, typeName) VALUES (NULL, 'luộc');
-INSERT INTO typeDisks (typeID, typeName) VALUES (NULL, 'món nhanh');
-INSERT INTO typeDisks (typeID, typeName) VALUES (NULL, 'tráng miệng');
-INSERT INTO typeDisks (typeID, typeName) VALUES (NULL, 'khai vị');
-INSERT INTO typeDisks (typeID, typeName) VALUES (NULL, 'chính');
-INSERT INTO typeDisks (typeID, typeName) VALUES (NULL, 'ăn nhẹ');
+-- Thêm loại món ăn vào bảng typeDishs
+INSERT INTO typeDishs (typeID, typeName) VALUES (NULL, 'món Hàn');
+INSERT INTO typeDishs (typeID, typeName) VALUES (NULL, 'món Việt');
+INSERT INTO typeDishs (typeID, typeName) VALUES (NULL, 'món Trung');
+INSERT INTO typeDishs (typeID, typeName) VALUES (NULL, 'món Nhật');
+INSERT INTO typeDishs (typeID, typeName) VALUES (NULL, 'món Ý');
+INSERT INTO typeDishs (typeID, typeName) VALUES (NULL, 'món Pháp');
+INSERT INTO typeDishs (typeID, typeName) VALUES (NULL, 'món Thái');
+INSERT INTO typeDishs (typeID, typeName) VALUES (NULL, 'món Ấn');
+INSERT INTO typeDishs (typeID, typeName) VALUES (NULL, 'siêu cay');
+INSERT INTO typeDishs (typeID, typeName) VALUES (NULL, 'ăn kiêng');
+INSERT INTO typeDishs (typeID, typeName) VALUES (NULL, 'ăn chay');
+INSERT INTO typeDishs (typeID, typeName) VALUES (NULL, 'lạnh');
+INSERT INTO typeDishs (typeID, typeName) VALUES (NULL, 'nước dùng');
+INSERT INTO typeDishs (typeID, typeName) VALUES (NULL, 'hấp');
+INSERT INTO typeDishs (typeID, typeName) VALUES (NULL, 'nướng');
+INSERT INTO typeDishs (typeID, typeName) VALUES (NULL, 'xào');
+INSERT INTO typeDishs (typeID, typeName) VALUES (NULL, 'luộc');
+INSERT INTO typeDishs (typeID, typeName) VALUES (NULL, 'món nhanh');
+INSERT INTO typeDishs (typeID, typeName) VALUES (NULL, 'tráng miệng');
+INSERT INTO typeDishs (typeID, typeName) VALUES (NULL, 'khai vị');
+INSERT INTO typeDishs (typeID, typeName) VALUES (NULL, 'chính');
+INSERT INTO typeDishs (typeID, typeName) VALUES (NULL, 'ăn nhẹ');
 

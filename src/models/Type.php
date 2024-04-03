@@ -9,7 +9,7 @@ class Type {
     }
 
     public function getTypes() {
-        $query = "SELECT * FROM typedisks";
+        $query = "SELECT * FROM typedishs";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         $types = $stmt->fetchAll(PDO::FETCH_ASSOC);

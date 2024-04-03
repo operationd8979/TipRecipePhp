@@ -1,13 +1,11 @@
 <?php
-require_once('src/helpers/jwtFilter.php');
-require_once('src/controllers/useAdmin.php');
-doFilterInternal();
+require_once './src/controllers/adminController.php';
 $ingredients = [];
-getDataIngredient($ingredients);
 $types = [];
-getDataType($types);
-
-$id=$_GET['id']??"";
+$dish=null;
+$adminController = new AdminController();
+$adminController->invokeModifyDish($ingredients, $types, $dish);
+$id=$dish?$dish['dishID']:"";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,13 +63,13 @@ $id=$_GET['id']??"";
                         <label for="dishName" class="block text-gray-700 font-semibold mb-2">Dish Name</label>
                         <input type="text" id="dishName" name="dishName"
                             class="border border-gray-300 rounded-md px-4 py-2 w-full focus:outline-none focus:border-blue-500"
-                            required>
+                            value="<?php echo($dish?$dish["dishName"]:""); ?>">
                     </div>
                     <div class="mb-4">
                         <label for="summary" class="block text-gray-700 font-semibold mb-2">Summary</label>
                         <input id="summary" name="summary" rows="4"
                             class="border border-gray-300 rounded-md px-4 py-2 w-full resize-none focus:outline-none focus:border-blue-500"
-                            required />
+                            value="<?php echo($dish?$dish["summary"]:""); ?>" />
                     </div>
                     <div class="mb-4">
                         <aside class="lg:col-span-1 lg:bg-white lg:p-4 lg:shadow-md min-h-72">
@@ -92,6 +90,12 @@ $id=$_GET['id']??"";
                     </div>
                 </div>
                 <div class="max-w-xl lg:col-span-1">
+                    <div class="mb-4">
+                        <label for="dishUrl" class="block text-gray-700 font-semibold mb-2">Photo</label>
+                        <input type="file" id="dishUrl" name="dishUrl"
+                            class="border border-gray-300 rounded-md px-4 py-2 w-full focus:outline-none focus:border-blue-500"
+                            required>
+                    </div>
                     <div class="mb-4">
                         <label for="recipe" class="block text-gray-700 font-semibold mb-2">Recipe</label>
                         <textarea type="text" id="recipeBlog" name="recipeBlog"
@@ -233,26 +237,10 @@ $id=$_GET['id']??"";
         }
     }
 
-    // function callUpdateFromDom() {
-    //     const url = new URL(window.location.href.split('?')[0]);
-    //     if (filterIngredients.length !== 0) {
-    //         filterIngredients = filterIngredients.map(ingredient => {
-    //             return {
-    //                 name: ingredient,
-    //                 amount: document.getElementById(`${ingredient}-amount`).value,
-    //                 unit: document.getElementById(`${ingredient}-unit`).value
-    //             };
-    //         });
-    //         url.searchParams.set('ingredients', filterIngredients);
-    //     }
-    //     if (filterTypes.length !== 0) {
-    //         url.searchParams.set('types', filterTypes);
-    //     }
-    //     window.location.href = url.href;
-    // }
     function callUpdateFromDom() {
         const summary = document.getElementById("summary").value;
         const diskName = document.getElementById("dishName").value;
+        const dishUrl = document.getElementById("dishUrl").value.split('\\').pop();
         var editorFrame = document.getElementById('recipeBlog_ifr');
         var editorBody = editorFrame.contentDocument.body;
         const recipe = editorBody.innerHTML.trim();
@@ -272,13 +260,14 @@ $id=$_GET['id']??"";
             id: id,
             diskName: diskName,
             summary: summary,
+            dishUrl: dishUrl,
             recipe: recipe,
             ingredients: filterIngredients,
             types: filterTypes
         };
 
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "test.php", true);
+        xhr.open("POST", "modifyDish.php", true);
         xhr.setRequestHeader("Content-Type", "application/json");
 
         xhr.onreadystatechange = function() {

@@ -1,25 +1,8 @@
 <?php
-require_once("./src/ultis/generate.php");
-require_once("./src/controllers/useLogin.php");
-require_once('src/helpers/jwtFilter.php');
-doFilterInternal();
-
-session_start();
-if (!isset($_SESSION['captcha']) || isset($_GET['refresh'])) {
-    $captcha = generateCaptcha();
-    $_SESSION['captcha'] = $captcha;
-} else {
-    $captcha = $_SESSION['captcha'];
-}
-?>
-
-<?php
+require_once("./src/controllers/loginController.php");
 $error = "";
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = htmlspecialchars(strip_tags($_POST['email']));
-    $password = htmlspecialchars(strip_tags($_POST['password']));
-    login($email, $password, $error);
-}
+$loginController = new LoginController();
+$loginController->invoke($error);
 ?>
 
 <!DOCTYPE html>

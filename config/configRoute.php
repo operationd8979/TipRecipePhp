@@ -14,8 +14,8 @@ return [
         "/admin",
         "/dashboard",
         "/userManage",
-        "/diskManage",
-        "/editDisk",
+        "/dishManage",
+        "/editDish",
     ],
     'role' => ["USER","ADMIN"]
 ];

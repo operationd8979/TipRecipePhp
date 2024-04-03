@@ -1,6 +1,5 @@
 <?php
 require_once('src/helpers/jwtFilter.php');
-require_once('src/controllers/useAdmin.php');
 doFilterInternal();
 ?>
 <!DOCTYPE html>
@@ -22,7 +21,7 @@ doFilterInternal();
             <nav class="mt-4">
                 <ul>
                     <li><a href="admin.php" class="block p-4 hover:bg-gray-700">Dashboard</a></li>
-                    <li><a href="diskManage.php" class="block p-4 hover:bg-gray-700">Diskes manage</a></li>
+                    <li><a href="dishManage.php" class="block p-4 hover:bg-gray-700">Dishes manage</a></li>
                     <li><a href="userManage.php" class="block p-4 hover:bg-gray-700">User manage</a></li>
                 </ul>
             </nav>

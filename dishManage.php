@@ -1,24 +1,21 @@
 <?php
-require_once('src/helpers/jwtFilter.php');
-require_once('src/controllers/useAdmin.php');
-doFilterInternal();
+require_once('./src/helpers/jwtFilter.php');
+require_once('./src/controllers/adminController.php');
 
-$recipes = [];
-if($_SERVER['REQUEST_METHOD'] === 'GET'){
-    $search = $_GET['search'] ?? '';
-    getDisks($recipes, $search);
-}
+$dishs = [];
+$adminController = new AdminController();
+$adminController->invokeDishManage($dishs);
 
-function renderDisksToDom($recipes){
-    foreach($recipes as $recipe){
+function renderDishsToDom($dishs){
+    foreach($dishs as $dish){
         echo '<tr>';
-        echo '<td class="border border-gray-200 px-4 py-2">'.$recipe['diskID'].'</td>';
-        echo '<td class="border border-gray-200 px-4 py-2">'.$recipe['diskName'].'</td>';
-        echo '<td class="border border-gray-200 px-4 py-2 flex justify-center"><img class="w-24 h-24 object-cover object-center" src="'.$recipe['url'].'" /></td>';
+        echo '<td class="border border-gray-200 px-4 py-2">'.$dish['dishID'].'</td>';
+        echo '<td class="border border-gray-200 px-4 py-2">'.$dish['dishName'].'</td>';
+        echo '<td class="border border-gray-200 px-4 py-2 flex justify-center"><img class="w-24 h-24 object-cover object-center" src="'.$dish['url'].'" /></td>';
         echo '<td class="border border-gray-200 px-4 py-2">';
-        echo '<p>'.$recipe['summary'].'</p>';
-        echo '<p>Nguyên liệu: '.$recipe['ingredients'].'</p>';
-        echo '<p>Loại: '.$recipe['types'].'</p>';
+        echo '<p>'.$dish['summary'].'</p>';
+        echo '<p>Nguyên liệu: '.$dish['ingredients'].'</p>';
+        echo '<p>Loại: '.$dish['types'].'</p>';
         echo '</td>';
         echo '<td class="border border-gray-200 px-4 py-2">';
         echo '<button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 ml-1 rounded">Edit</button>';
@@ -34,7 +31,7 @@ function renderDisksToDom($recipes){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Disk Manage</title>
+    <title>Dish Manage</title>
 </head>
 
 <body>
@@ -47,15 +44,15 @@ function renderDisksToDom($recipes){
             <nav class="mt-4">
                 <ul>
                     <li><a href="admin.php" class="block p-4 hover:bg-gray-700">Dashboard</a></li>
-                    <li><a href="diskManage.php" class="block p-4 hover:bg-gray-700">Diskes manage</a></li>
+                    <li><a href="dishManage.php" class="block p-4 hover:bg-gray-700">Dishes manage</a></li>
                     <li><a href="userManage.php" class="block p-4 hover:bg-gray-700">User manage</a></li>
                 </ul>
             </nav>
         </aside>
         <main class="flex-1 bg-white p-8">
-            <h1 class="text-3xl font-bold mb-8">Disk Management</h1>
+            <h1 class="text-3xl font-bold mb-8">Dish Management</h1>
             <div class="mb-4">
-                <a href="editDisk.php"
+                <a href="editDish.php"
                     class="bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded">Add
                     Dish</a>
             </div>
@@ -102,7 +99,7 @@ function renderDisksToDom($recipes){
                                     class="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded">Delete</button>
                             </td>
                         </tr> -->
-                        <?php renderDisksToDom($recipes); ?>
+                        <?php renderDishsToDom($dishs); ?>
                     </tbody>
                 </table>
             </div>

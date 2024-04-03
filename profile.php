@@ -1,14 +1,9 @@
 <?php
-require_once('./src/helpers/jwtFilter.php');
-doFilterInternal();
-?>
-<?php
-require_once './src/models/user.php';
-require_once './src/database/database.php';
-require_once './src/helpers/jwtHelper.php';
-require_once './src/controllers/useProfile.php';
-
-$user = getUserInfo();
+require_once './src/controllers/profileController.php';
+$user = null;
+$error = "";
+$profileController = new ProfileController();
+$profileController->invoke($error,$user);
 if($user == null){
     header('Location: logout.php');
     exit;
@@ -19,18 +14,6 @@ $username = $user['username'];
 $createdAt = $user['created_at'];
 $updatedAt = $user['updated_at'];
 $role = $user['role'];
-
-$error = "";
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if($_POST['username'] != "" ){
-        $username = htmlspecialchars(strip_tags($_POST['username']));
-    }
-    if($_POST['email'] != "" ){
-        $email = htmlspecialchars(strip_tags($_POST['email']));
-    }
-    $password = htmlspecialchars(strip_tags($_POST['password']));
-    updateUser($username, $email, $password, $error);
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="mb-4">
                     <label for="email" class="block text-gray-600 mb-2">Email:</label>
                     <input type="email" id="email" name="email" class="border border-gray-300 rounded px-4 py-2 w-full"
-                        value=<?php echo($email) ?>>
+                        value=<?php echo($email) ?> readonly>
                 </div>
                 <div class="mb-4">
                     <label for="password" class="block text-gray-600 mb-2">password:</label>

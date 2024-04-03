@@ -1,40 +1,11 @@
 <?php
-    require_once('src/controllers/useIndex.php');
-    require_once('src/helpers/jwtFilter.php');
-    doFilterInternal();
-    
+    require_once('./src/controllers/homeController.php');
     $ingredients = [];
-    getDataIngredient($ingredients);
     $types = [];
-    getDataType($types);
     $disks = [];
-
-    $recipes = [];
-    //http://localhost/tipRecipesPhp/index.php?search=la&ingredients=h%C3%A0nh+l%C3%A1%2Cg%E1%BA%A1o%2Cg%E1%BA%A1o+n%E1%BA%BFp&types=m%C3%B3n+H%C3%A0n%2Cm%C3%B3n+Trung
-    if($_SERVER['REQUEST_METHOD'] === 'GET'){
-        $search = $_GET['search'] ?? '';
-        $filterIngredientsByName = [];
-        $filterTypesByName = [];
-        $filterIngredients = [];
-        $filterTypes = [];
-        if(isset($_GET['ingredients'])){
-            $filterIngredientsByName = explode(',', $_GET['ingredients']);
-            for($i = 0; $i < count($filterIngredientsByName); $i++){
-                $filterIngredients[$i] = $ingredients[array_search($filterIngredientsByName[$i], array_column($ingredients, 'ingredientName'))]['ingredientID'];
-            }
-        }
-        if(isset($_GET['types'])){
-            $filterTypesByName = explode(',', $_GET['types']);
-            for($i = 0; $i < count($filterTypesByName); $i++){
-                $filterTypes[$i] = $types[array_search($filterTypesByName[$i], array_column($types, 'typeName'))]['typeID'];
-            }
-        }
-        getDisks($recipes, $search, $filterIngredients, $filterTypes);
-        // echo(count($recipes));
-        // print_r($recipes);
-    }
+    $homeController = new HomeController();
+    $homeController->invoke($disks, $ingredients, $types);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,7 +20,6 @@
     <?php include('includes/header.php'); ?>
 
     <main class="container mx-auto py-8">
-
         <div class="flex justify-center">
             <div class="">
                 <input type="text" id="search"
@@ -62,7 +32,6 @@
         </div>
 
         <div class="lg:grid lg:grid-cols-3 lg:gap-8 mr-4 ml-4">
-            <!-- Sidebar -->
             <aside class="lg:col-span-1 lg:bg-white lg:p-4 lg:shadow-md">
                 <h2 class="text-lg font-semibold">Ingredients/Type tag</h2>
                 <!-- Search by Ingredient & type -->
@@ -80,40 +49,10 @@
                 <h2 class="text-lg font-semibold mt-4">Type filter</h2>
                 <div class="flex flex-wrap gap-2" id="types"></div>
             </aside>
-
-            <!-- Main Content Area -->
             <section class="lg:col-span-2 lg:bg-white lg:p-4 lg:shadow-md">
                 <h2 class="text-lg font-semibold mb-4">Recipes</h2>
-                <!-- Recipe List -->
                 <ul>
-                    <!-- <li class="mb-4">
-                        <h3 class="text-xl font-semibold">Sườn xào chua ngọt</h3>
-                        <div class="flex">
-                            <img src="https://via.placeholder.com/150" alt="Recipe 1"
-                                class="w-32 h-32 object-cover rounded-lg">
-                            <div class="ml-2">
-                                <p class="text-gray-600">Description: Món ăn siêu ngon cho đại gia đình.</p>
-                                <p class="text-gray-600">Ingredients:
-                                    <span
-                                        class="inline-block bg-gray-200 text-gray-700 rounded-full px-3 py-0.5 text-sm font-semibold">hành
-                                        lá</span>
-                                    <span
-                                        class="inline-block bg-gray-200 text-gray-700 rounded-full px-3 py-0.5 text-sm font-semibold">gà</span>
-                                </p>
-                                <p class="text-gray-600">Types:
-                                    <span
-                                        class="inline-block bg-red-200 text-gray-700 rounded-full px-3 py-0.5 text-sm font-semibold">món
-                                        hàn</span>
-                                    <span
-                                        class="inline-block bg-red-200 text-gray-700 rounded-full px-3 py-0.5 text-sm font-semibold">ăn
-                                        kiêng</span>
-                                </p>
-                                <a href="recipe.php?id=1" class="text-blue-500 hover:underline">View Recipe</a>
-                            </div>
-                        </div>
-                    </li> -->
-                    <!-- Repeat for other recipes -->
-                    <?php renderRecipce($recipes); ?>
+                    <?php renderRecipce($disks); ?>
                 </ul>
             </section>
         </div>
