@@ -8,7 +8,7 @@ class Dish {
         $this->db = $db;
     }
 
-    public function getDishs($search, $ingredients, $types) {
+    public function getDishs($search, $ingredients, $types, $itemsPerPage, $offset) {
         $query = "SELECT d.dishID, d.dishName, d.summary, d.url, GROUP_CONCAT(DISTINCT i.ingredientName) as ingredients, GROUP_CONCAT(DISTINCT t.typeName) as types
         FROM `dishs` d
         JOIN `dishingredients` di ON d.dishID = di.dishID
@@ -32,8 +32,13 @@ class Dish {
             $query .= implode(",", $types);
             $query .= "))";
         }
+        $query .= " LIMIT :itemsPerPage OFFSET :offset";
         $stmt = $this->db->prepare($query);
-        $stmt->execute(array(':search' => "%$search%"));
+        $searchPattern = "%$search%";
+        $stmt->bindParam(':search', $searchPattern, PDO::PARAM_STR);
+        $stmt->bindParam(':itemsPerPage', $itemsPerPage, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
         $dishs = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $dishs;
     }

@@ -1,7 +1,14 @@
 <?php
 require_once('src/helpers/jwtFilter.php');
 session_start();
-$role = $_SESSION['role'] ?? null;
+$role = $_SESSION['role']??null;
+if(!$role){
+    $user = doFilterInternal();
+    if($user){
+        $role = $user['role'];
+        $_SESSION['role'] = $role;
+    }
+}
 ?>
 
 <!DOCTYPE html>

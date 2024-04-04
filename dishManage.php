@@ -19,8 +19,8 @@ function renderDishsToDom($dishs){
         echo '</td>';
         echo '<td class="border border-gray-200 px-4 py-2">';
         echo '<a href="./editDish.php?id='.$dish['dishID'].'" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 ml-1 rounded">Edit</a>';
-        echo '<a href="./dishManage.php?delete='.$dish['dishID'].'" class="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 ml-1 rounded">Delete</a>';
-        // echo '<a href="#" onclick="confirmDelete(' . $dish['dishID'] . '); return false;"  class="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 ml-1 rounded">Delete</a>';
+        // echo '<a href="./dishManage.php?delete='.$dish['dishID'].'" class="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 ml-1 rounded">Delete</a>';
+        echo '<a href="#" onclick="confirmDelete(\'' . $dish['dishID'] . '\'); return false;"  class="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 ml-1 rounded">Delete</a>';
         echo '</td>';
         echo '</tr>';
     }

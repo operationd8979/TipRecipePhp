@@ -19,8 +19,8 @@ class DishService{
         return self::$instance;
     }
 
-    public function getDishs($search, $ingredients, $types){
-        return $this->dishModel->getDishs($search, $ingredients, $types);
+    public function getDishs($search, $ingredients, $types, $itemsPerPage, $offset){
+        return $this->dishModel->getDishs($search, $ingredients, $types, $itemsPerPage, $offset);
     }
 
     public function getDishsAdmin($search){

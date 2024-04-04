@@ -1,10 +1,16 @@
 <?php
     require_once('./src/controllers/homeController.php');
+
+    $itemsPerPage = 4;
+    $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+    $offset = ($currentPage - 1) * $itemsPerPage;
+
     $ingredients = [];
     $types = [];
     $disks = [];
+    $tempDish = [];
     $homeController = new HomeController();
-    $homeController->invoke($disks, $ingredients, $types);
+    $homeController->invoke($disks, $ingredients, $types, $itemsPerPage, $offset, $tempDish);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,25 +22,29 @@
 </head>
 
 
-<body>
+<body class="">
     <?php include('includes/header.php'); ?>
-
-    <main class="container mx-auto py-8">
-        <div class="flex justify-center">
-            <div class="">
-                <input type="text" id="search"
-                    onKeyDown="if(event.key === 'Enter') {event.preventDefault(); callApiSearch();}"
-                    class="border border-gray-300 rounded-md px-4 py-2 pr-10 focus:outline-none focus:border-blue-500"
-                    placeholder="Search...">
-                <button onClick="callApiSearch()"
-                    class="px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none">Search</button>
-            </div>
-        </div>
-
+    <div class="flex justify-center pb-4">
+        <img src="./assets/images/banner.png" alt="banner"
+            class="w-full h-auto">
+    </div>
+    <main class="container mx-auto pb-8">
         <div class="lg:grid lg:grid-cols-3 lg:gap-8 mr-4 ml-4">
             <aside class="lg:col-span-1 lg:bg-white lg:p-4 lg:shadow-md">
+            <h2 class="text-lg font-semibold mb-4">Filter</h2>
+            <hr>
+            <div class="flex justify-center mt-4 mb-8">
+                <div>
+                    <input type="text" id="search"
+                        onKeyDown="if(event.key === 'Enter') {event.preventDefault(); callApiSearch();}"
+                        class="border border-gray-300 rounded-md px-4 py-2 pr-10 focus:outline-none focus:border-blue-500"
+                        placeholder="Search... by dish's name">
+                    <button onClick="callApiSearch()"
+                        class="px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none">Search</button>
+                </div>
+            </div>
+            <div>
                 <h2 class="text-lg font-semibold">Ingredients/Type tag</h2>
-                <!-- Search by Ingredient & type -->
                 <div class="h-6">
                     <p class="font-thin text-blue-600/100 truncate line-clamp-1" id="hintTag"></p>
                 </div>
@@ -43,27 +53,76 @@
                         class="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500 w-full"
                         placeholder="Enter tags..."></textarea>
                 </div>
-                <!-- tags  -->
                 <h2 class="text-lg font-semibold mt-4">Ingredients filter</h2>
                 <div class="flex flex-wrap gap-2" id="ingredients"></div>
                 <h2 class="text-lg font-semibold mt-4">Type filter</h2>
-                <div class="flex flex-wrap gap-2" id="types"></div>
+                <div class="flex flex-wrap gap-2 mb-4" id="types"></div>
+            </div>
             </aside>
             <section class="lg:col-span-1 lg:bg-white lg:p-4 lg:shadow-md">
-                <h2 class="text-lg font-semibold mb-4">Recipes</h2>
+                <div class="flex justify-between">
+                    <h2 class="text-lg font-semibold mb-4">Dishs</h2>
+                    <div class="flex">
+                        <?php if($currentPage > 1) { ?>
+                        <a href="javascript:void(0)" onClick="changePage('back')" class="mr-2 text-blue-500 hover:text-blue-800">back</a>
+                        <?php } ?>
+                        <?php if(count($disks) === $itemsPerPage) { ?>
+                        <a href="javascript:void(0)" onClick="changePage('next')" class="mr-2 text-blue-500 hover:text-blue-800">next</a>  
+                        <?php } ?>
+                    </div>
+                </div>
+                <hr>
                 <ul>
                     <?php renderRecipce($disks); ?>
                 </ul>
             </section>
             <aside class="lg:col-span-1 lg:bg-white lg:p-4 lg:shadow-md">
-                <h2 class="text-lg font-semibold">User</h2>
-             
+                <h2 class="text-lg font-semibold mb-4">Quick view</h2>
+                <hr>
+                <ul>
+                <li class="mb-4">
+                    <h3 id="dish-name" class="text-xl font-semibold">
+                        <?php echo $tempDish['dishName']; ?>
+                    </h3>
+                    <div class="flex">
+                        <img id="dish-url" src="<?php echo $tempDish['url'] ?>" alt="Recipe 1" class="w-32 h-32 object-cover rounded-lg">
+                        <div class="ml-2">
+                            <p class="text-gray-600">Ingredients: </p>
+                            <ul id="dish-ingredients" class="list-disc ml-4">
+                                <?php
+                                    $ingredients = explode(',', $tempDish['ingredients']);
+                                    foreach($ingredients as $ingredient){
+                                        $arr = explode('@', $ingredient);
+                                        echo('<li>'.$arr[0].': '.$arr[1].' '.$arr[2].'</li>');
+                                    }
+                                ?>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                </ul>
+                <p id="dish-description" class="text-gray-600">
+                    Description: <?php echo $tempDish['summary']; ?>
+                </p>
+                <p id="dish-types" class="text-gray-600">Types: 
+                    <?php
+                        $types = explode(',', $tempDish['types']);
+                        foreach($types as $type){
+                            echo('<span class="inline-block bg-red-200 text-gray-700 rounded-full px-2 py-0.3 mr-1 text-sm font-semibold">'.$type.'</span>');
+                        }
+                    ?>
+                </p>
+                <div id="dish-content" class="mt-4">
+                    <hr>
+                    <?php echo $tempDish['content']; ?>
+                </div>
             </aside>
         </div>
     </main>
     <?php include('includes/footer.php'); ?>
 
     <script>
+    const currentPage = <?php echo $currentPage; ?>;
     const ingredients = <?php echo json_encode($ingredients); ?>.map(ingredient => ingredient.ingredientName);
     const types = <?php echo json_encode($types); ?>.map(type => type.typeName);
     const filterIngredients = [];
@@ -194,6 +253,43 @@
         }
         window.location.href = url.href;
     }
+
+    function changePage(option) {
+        const url = new URL(window.location.href);
+        if(option === 'next'){
+            url.searchParams.set('page', parseInt(currentPage + 1));
+        } else {
+            url.searchParams.set('page', parseInt(currentPage > 1 ? currentPage - 1 : 1));
+        }
+        window.location.href = url;
+    }
+
+    function quickView(dishID) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", `getRecipe.php?id=${dishID}`, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const dish = JSON.parse(xhr.responseText);
+                console.log(dish);
+                document.getElementById('dish-name').textContent = dish.dishName;
+                document.getElementById('dish-url').src = dish.url;
+                document.getElementById('dish-description').textContent = `Description: ${dish.summary}`;
+                document.getElementById('dish-ingredients').innerHTML = '';
+                dish.ingredients.split(',').forEach(ingredient => {
+                    const arr = ingredient.split('@');
+                    document.getElementById('dish-ingredients').innerHTML += `<li>${arr[0]}: ${arr[1]} ${arr[2]}</li>`;
+                });
+                document.getElementById('dish-types').textContent = `Types: `;
+                dish.types.split(',').forEach(type => {
+                    document.getElementById('dish-types').innerHTML += `<span class="inline-block bg-red-200 text-gray-700 rounded-full px-2 py-0.3 mr-1 text-sm font-semibold">${type}</span>`;
+                });
+                document.getElementById('dish-content').innerHTML = '<hr>'+dish.content;
+            }
+        }
+        xhr.send();
+    }
+
+
     </script>
 </body>
 
