@@ -25,15 +25,17 @@ class AdminController{
         doFilterInternal();
     }
 
-    public function invokeDishManage(&$dishs){
+    public function invokeDishManage(&$dishs, &$totalDishs, $offset, $itemsPerPage){
         doFilterInternal();
+        $search = '';
         if($_SERVER['REQUEST_METHOD'] === 'GET'){
             $search = $_GET['search'] ?? '';
             if(isset($_GET['delete'])){
                 $this->dishService->deleteDish($_GET['delete']);
             }
         }
-        $dishs = $this->dishService->getDishsAdmin($search);
+        $totalDishs = $this->dishService->getCount($search);
+        $dishs = $this->dishService->getDishsAdmin($search, $offset, $itemsPerPage);
     }
 
     public function invokeEditDish(&$ingredients, &$types, &$dish){
@@ -65,17 +67,23 @@ class AdminController{
             $INGREDIENTS = $this->ingredientService->getIngredients();
             $TYPES = $this->typeService->getTypes();
 
+            // $dishName = "test 0";
+            // $summary = "test 1";
+            // $recipe = "test 2";
+            // $ingredients = array(array('name' => 'hành lá', 'amount' => '300', 'unit' => 'gram'), array('name' => 'Thịt heo', 'amount' => '200', 'unit' => 'gram'));
+            // $types = array('2');
+            
             for($i = 0; $i < count($ingredients); $i++){
                 $ingredients[$i]['id'] = $INGREDIENTS[array_search($ingredients[$i]['name'], array_column($INGREDIENTS, 'ingredientName'))]['ingredientID'];
             }
             for($i = 0; $i < count($types); $i++){
                 $types[$i] = $TYPES[array_search($types[$i], array_column($TYPES, 'typeName'))]['typeID'];
             }
-            
+
             if($id === ''){
                 $id = $this->dishService->addDish($dishName, $summary, $recipe, $ingredients, $types);
             }else{
-                $this->dishService->updateDish($id, $dishName, $summary, $recipe, $ingredients, $types);
+                $this->dishService->modifyDish($id, $dishName, $summary, $recipe, $ingredients, $types);
             }
 
             if (isset($_FILES["file"]) && $_FILES["file"]["error"] === UPLOAD_ERR_OK) {

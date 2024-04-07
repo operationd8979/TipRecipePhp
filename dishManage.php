@@ -2,9 +2,17 @@
 require_once('./src/helpers/jwtFilter.php');
 require_once('./src/controllers/adminController.php');
 
+$itemsPerPage = 4;
+$currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+$offset = ($currentPage - 1) * $itemsPerPage;
+$totalDishs = 0;
+
 $dishs = [];
 $adminController = new AdminController();
-$adminController->invokeDishManage($dishs);
+$adminController->invokeDishManage($dishs, $totalDishs, $offset, $itemsPerPage);
+
+$numberPages = ceil($totalDishs / $itemsPerPage);
+
 
 function renderDishsToDom($dishs){
     foreach($dishs as $dish){
@@ -38,19 +46,9 @@ function renderDishsToDom($dishs){
 
 <body>
     <?php require_once('includes/header.php'); ?>
-    <div class="flex h-screen bg-gray-100 font-sans">
-        <aside class="bg-gray-800 text-gray-400 w-64">
-            <div class="flex items-center justify-center h-16 border-b border-gray-700">
-                <span class="text-2xl font-bold uppercase">Admin</span>
-            </div>
-            <nav class="mt-4">
-                <ul>
-                    <li><a href="admin.php" class="block p-4 hover:bg-gray-700">Dashboard</a></li>
-                    <li><a href="dishManage.php" class="block p-4 hover:bg-gray-700">Dishes manage</a></li>
-                    <li><a href="userManage.php" class="block p-4 hover:bg-gray-700">User manage</a></li>
-                </ul>
-            </nav>
-        </aside>
+    <div class="flex bg-gray-100 font-sans">
+        <?php require_once('includes/sideAdmin.php'); ?>
+
         <main class="flex-1 bg-white p-8">
             <h1 class="text-3xl font-bold mb-8">Dish Management</h1>
             <div class="mb-4">
@@ -106,26 +104,44 @@ function renderDishsToDom($dishs){
                 </table>
             </div>
             <div class="mt-8 flex justify-center">
-                <button class="bg-gray-200 text-gray-800 font-semibold px-4 py-2 rounded-l">Previous</button>
+                <?php if($currentPage > 1){ ?>
+                <a href="./dishManage.php?page=<?php echo $currentPage - 1; ?>"
+                    class="bg-gray-200 text-gray-800 font-semibold px-4 py-2 rounded-l">Previous</a>
+                <?php } ?>
+                <?php
+                for($i = 1; $i <= $numberPages; $i++){
+                    if($i == $currentPage){
+                        echo '<button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 ml-1">'.$i.'</button>';
+                    }else{
+                        echo '<a href="./dishManage.php?page='.$i.'" class="bg-gray-200 text-gray-800 font-semibold px-4 py-2 ml-1">'.$i.'</a>';
+                    }
+                }
+                ?>
+                <?php if($currentPage < $numberPages){ ?>
+                <a href="./dishManage.php?page=<?php echo $currentPage + 1; ?>"
+                    class="bg-gray-200 text-gray-800 font-semibold px-4 py-2 rounded-r ml-1">Next</a>
+                <?php } ?>
+                <!-- <button class="bg-gray-200 text-gray-800 font-semibold px-4 py-2 rounded-l">Previous</button>
                 <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2">1</button>
                 <button class="bg-gray-200 text-gray-800 font-semibold px-4 py-2">2</button>
                 <button class="bg-gray-200 text-gray-800 font-semibold px-4 py-2">3</button>
-                <button class="bg-gray-200 text-gray-800 font-semibold px-4 py-2 rounded-r">Next</button>
+                <button class="bg-gray-200 text-gray-800 font-semibold px-4 py-2 rounded-r">Next</button> -->
             </div>
         </main>
     </div>
     <?php require_once('includes/footer.php'); ?>
 
     <script>
-        function callApiSearch() {
-            const search = document.getElementById('search').value;
-            window.location.href = `./dishManage.php?search=${search}`;
+    function callApiSearch() {
+        const search = document.getElementById('search').value;
+        window.location.href = `./dishManage.php?search=${search}`;
+    }
+
+    function confirmDelete(id) {
+        if (confirm("Are you sure to delete this dish?")) {
+            window.location.href = `./dishManage.php?delete=${id}`;
         }
-        function confirmDelete(id) {
-            if (confirm("Are you sure to delete this dish?")) {
-                window.location.href = `./dishManage.php?delete=${id}`;
-            }
-        }
+    }
     </script>
 </body>
 

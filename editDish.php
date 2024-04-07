@@ -34,6 +34,7 @@ function renderValueTag($filterTypes,$filterIngredients){
     <title>Disk</title>
     <script src="https://cdn.tiny.cloud/1/1u5byklg9tall9ayqltrxvbcyie41qqc4ft9dknoji08i743/tinymce/7/tinymce.min.js"
         referrerpolicy="origin"></script>
+    <!-- <script src="./assets/css/tinymce.min.js" referrerpolicy="origin"></script> -->
     <script>
     tinymce.init({
         selector: 'textarea',
@@ -56,39 +57,40 @@ function renderValueTag($filterTypes,$filterIngredients){
     </script>
 </head>
 
-<body>
+<body class="bg-white">
     <?php require_once('includes/header.php'); ?>
-    <div class="flex h-screen bg-gray-100 font-sans mb-8">
-        <aside class="bg-gray-800 text-gray-400 w-64">
+    <div class="flex bg-gray-100 font-sans mb-8">
+        <!-- <aside class="bg-gray-800 text-gray-400 w-64 hidden sm:block">
             <div class="flex items-center justify-center h-16 border-b border-gray-700">
                 <span class="text-2xl font-bold uppercase">Admin</span>
             </div>
             <nav class="mt-4">
                 <ul>
                     <li><a href="admin.php" class="block p-4 hover:bg-gray-700">Dashboard</a></li>
-                    <li><a href="diskManage.php" class="block p-4 hover:bg-gray-700">Diskes manage</a></li>
+                    <li><a href="dishManage.php" class="block p-4 hover:bg-gray-700">Diskes manage</a></li>
                     <li><a href="userManage.php" class="block p-4 hover:bg-gray-700">User manage</a></li>
                 </ul>
             </nav>
-        </aside>
+        </aside> -->
+        <?php require_once('includes/sideAdmin.php'); ?>
         <main class="flex-1 bg-white p-8">
             <h1 class="text-3xl font-bold mb-8">
                 <?php echo !($dish)?"Add Disk":"Edit Disk"; ?>
             </h1>
             <div class="lg:grid lg:grid-cols-2">
                 <div class="max-w-xl lg:col-span-1 mr-8">
+                    <div class="mb-4 flex justify-center">
+                        <img id="dishPhoto" name="dishPhoto"
+                            src="<?php echo($dish?$dish["url"]:"https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Fdefault.png?alt=media&token=e7ccf739-5851-4a21-82a0-5769ef953c1e"); ?>"
+                            alt="Dish image" class="w-64 h-64">
+                    </div>
                     <div class="mb-4">
                         <label for="dishName" class="block text-gray-700 font-semibold mb-2">Dish Name</label>
                         <input type="text" id="dishName" name="dishName"
                             class="border border-gray-300 rounded-md px-4 py-2 w-full focus:outline-none focus:border-blue-500"
                             value="<?php echo($dish?$dish["dishName"]:""); ?>">
                     </div>
-                    <div class="mb-4">
-                        <label for="summary" class="block text-gray-700 font-semibold mb-2">Summary</label>
-                        <input id="summary" name="summary" rows="4"
-                            class="border border-gray-300 rounded-md px-4 py-2 w-full resize-none focus:outline-none focus:border-blue-500"
-                            value="<?php echo($dish?$dish["summary"]:""); ?>" />
-                    </div>
+
                     <div class="mb-4">
                         <aside class="lg:col-span-1 lg:bg-white lg:p-4 lg:shadow-md min-h-72">
                             <h2 class="text-lg font-semibold">Ingredients/Type tag</h2>
@@ -125,17 +127,21 @@ function renderValueTag($filterTypes,$filterIngredients){
                             </div>
                         </aside>
                     </div>
-                    <div class="mb-4 flex justify-center">
-                        <img id="dishPhoto" name="dishPhoto" src="<?php echo($dish?$dish["url"]:"https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Fdefault.png?alt=media&token=e7ccf739-5851-4a21-82a0-5769ef953c1e"); ?>" alt="Dish image" class="w-64 h-64">
-                    </div>
+                </div>
+                <div class="max-w-xl lg:col-span-1">
+
                     <div class="mb-4">
                         <label for="dishUrl" class="block text-gray-700 font-semibold mb-2">Photo</label>
                         <input type="file" id="dishUrl" name="dishUrl" accept="image/*"
                             class="border border-gray-300 rounded-md px-4 py-2 w-full focus:outline-none focus:border-blue-500"
                             required>
                     </div>
-                </div>
-                <div class="max-w-xl lg:col-span-1">
+                    <div class="mb-4">
+                        <label for="summary" class="block text-gray-700 font-semibold mb-2">Summary</label>
+                        <input id="summary" name="summary" rows="4"
+                            class="border border-gray-300 rounded-md px-4 py-2 w-full resize-none focus:outline-none focus:border-blue-500"
+                            value="<?php echo($dish?$dish["summary"]:""); ?>" />
+                    </div>
                     <div class="mb-4">
                         <label for="recipe" class="block text-gray-700 font-semibold mb-2">Recipe</label>
                         <textarea type="text" id="recipeBlog" name="recipeBlog">
@@ -292,10 +298,7 @@ function renderValueTag($filterTypes,$filterIngredients){
     }
 
     function callUpdateFromDom() {
-        if (filterIngredients.length === 0 || filterTypes.length === 0 || summary === "" || diskName === "" ||recipe === `<p><br data-mce-bogus="1"></p>`) {
-            alert("Please fill all the fields");
-            return;
-        }
+        // alert("callUpdateFromDom");
         const id = dish ? dish.dishID : "";
         const file = document.getElementById("dishUrl").files[0];
         const dishName = document.getElementById("dishName").value;
@@ -303,6 +306,11 @@ function renderValueTag($filterTypes,$filterIngredients){
         var editorFrame = document.getElementById('recipeBlog_ifr');
         var editorBody = editorFrame.contentDocument.body;
         const recipe = editorBody.innerHTML.trim();
+        if (filterIngredients.length === 0 || filterTypes.length === 0 || summary === "" || dishName === "" ||
+            recipe === `<p><br data-mce-bogus="1"></p>`) {
+            alert("Please fill all the fields");
+            return;
+        }
         filterIngredients = filterIngredients.map(ingredient => {
             return {
                 name: ingredient,
@@ -310,15 +318,28 @@ function renderValueTag($filterTypes,$filterIngredients){
                 unit: document.getElementById(`${ingredient}-unit`).value
             };
         });
-        if(dish){
+        console.log(JSON.stringify(filterTypes));
+        console.log(JSON.stringify(dish.types));
+        console.log(JSON.stringify(filterTypes) === JSON.stringify(dish.types));
+        if (dish) {
             //modify
-            if(diskName === dish.dishName && summary === dish.summary && recipe === dish.recipe && JSON.stringify(filterIngredients) === JSON.stringify(dish.ingredients) && JSON.stringify(filterTypes) === JSON.stringify(dish.types) && file === undefined){
-                alert("Nothing change");
+            //recipe === dish.recipe
+            //JSON.stringify(filterIngredients) === JSON.stringify(dish.ingredients)
+            //JSON.stringify(filterTypes) === JSON.stringify(dish.types)
+            if (dishName === dish.dishName && summary === dish.summary && recipe === dish.content && file ===
+                undefined) {
+                // alert("Nothing change");
                 return;
             }
-        }else{
+            // if (dishName === dish.dishName && summary === dish.summary && recipe === dish.recipe && JSON.stringify(
+            //         filterIngredients) === JSON.stringify(dish.ingredients) && JSON.stringify(filterTypes) === JSON
+            //     .stringify(dish.types) && file === undefined) {
+            //     alert("Nothing change");
+            //     return;
+            // }
+        } else {
             //add
-            if(file === undefined){
+            if (file === undefined) {
                 alert("Please upload a photo");
                 return;
             }

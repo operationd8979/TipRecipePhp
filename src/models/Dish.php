@@ -8,6 +8,16 @@ class Dish {
         $this->db = $db;
     }
 
+    public function getCount($search) {
+        $query = "SELECT COUNT(*) as total FROM dishs WHERE dishName LIKE :search";
+        $stmt = $this->db->prepare($query);
+        $searchPattern = "%$search%";
+        $stmt->bindParam(':search', $searchPattern, PDO::PARAM_STR);
+        $stmt->execute();
+        $total = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $total['total'];
+    }
+
     public function getDishs($search, $ingredients, $types, $itemsPerPage, $offset) {
         $query = "SELECT d.dishID, d.dishName, d.summary, d.url, GROUP_CONCAT(DISTINCT i.ingredientName) as ingredients, GROUP_CONCAT(DISTINCT t.typeName) as types
         FROM `dishs` d
@@ -43,7 +53,7 @@ class Dish {
         return $dishs;
     }
 
-    public function getDishsAdmin($search) {
+    public function getDishsAdmin($search, $offset, $itemsPerPage) {
         $query = "SELECT d.dishID, d.dishName, d.summary, d.url, GROUP_CONCAT(DISTINCT i.ingredientName) as ingredients, GROUP_CONCAT(DISTINCT t.typeName) as types
         FROM `dishs` d
         JOIN `dishingredients` di ON d.dishID = di.dishID
@@ -53,11 +63,80 @@ class Dish {
         WHERE d.isDelete = 0
         GROUP BY d.dishID
         Having d.dishName LIKE :search
-        OR d.dishID LIKE :search";
+        OR d.dishID LIKE :search
+        LIMIT :itemsPerPage OFFSET :offset";
         $stmt = $this->db->prepare($query);
-        $stmt->execute(array(':search' => "%$search%"));
+        $searchPattern = "%$search%";
+        $stmt->bindParam(':search', $searchPattern, PDO::PARAM_STR);
+        $stmt->bindParam(':itemsPerPage', $itemsPerPage, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
         $dishs = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $dishs;
+    }
+
+
+    public function getRating(){
+        $query = "SELECT u.userID, d.dishID, COALESCE(r.rating, d.avgRating) AS rating
+        FROM users u
+        CROSS JOIN dishs d
+        LEFT JOIN ratings r ON r.userID = u.userID AND r.dishID = d.dishID
+        ORDER BY d.dishID, u.userID";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        $ratings = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $ratings;
+    }
+
+    public function getAverageRating() {
+        $query = "SELECT `dishID`, `avgRating` FROM `dishs` ORDER BY `dishID`";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        $ratings = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $ratings;
+    }
+
+    public function getRatingUserOfDishs($dishIDs, $userID) {
+        $query = "SELECT dishID, rating, predictedRating as preRating, predictionTime as preRatingTime FROM ratings WHERE userID = :userID AND dishID IN (";
+        // $query .= implode(",", $dishIDs);
+        for($i = 0; $i < count($dishIDs); $i++) {
+            $query .= "\"$dishIDs[$i]\"";
+            if ($i < count($dishIDs) - 1)
+                $query .= ", ";
+        }
+        $query .= ")";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute(array(':userID' => $userID));
+        $ratings = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $ratings;
+    }
+
+    public function checkExitsRating($userID, $dishID) {
+        $query = "SELECT EXISTS(
+            SELECT 1
+            FROM ratings
+            WHERE userID = :userID AND dishID = :dishID
+        ) AS record_exists";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute(array(':userID' => $userID, ':dishID' => $dishID));
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result["record_exists"];
+    }
+
+    public function updatePredictedRating($updateQuery) {
+        foreach ($updateQuery as $update) {
+            $result = $this->checkExitsRating($update['userID'], $update['dishID']);
+            if($result){
+                $query = "UPDATE ratings SET predictedRating = :predictedRating, predictionTime = NOW() WHERE userID = :userID AND dishID = :dishID";
+                $stmt = $this->db->prepare($query);
+                $stmt->execute(array(':userID' => $update['userID'], ':dishID' => $update['dishID'], ':predictedRating' => $update['predictedRating']*10));
+            }
+            else{
+                $query = "INSERT INTO ratings (userID, dishID, predictedRating, predictionTime) VALUES (:userID, :dishID, :predictedRating, NOW())";
+                $stmt = $this->db->prepare($query);
+                $stmt->execute(array(':userID' => $update['userID'], ':dishID' => $update['dishID'], ':predictedRating' => $update['predictedRating']*10));
+            }
+        }
     }
 
     public function getDishById($dishID) {
@@ -69,15 +148,6 @@ class Dish {
     }
 
 
-    // SELECT d.dishID, d.dishName, d.summary, d.url, GROUP_CONCAT(DISTINCT i.ingredientName ,'@', di.amount,'@', di.unit) as ingredients, GROUP_CONCAT(DISTINCT t.typeName) as types, r.content
-    // FROM `dishs` d 
-    // JOIN `dishingredients` di ON d.dishID = di.dishID
-    // JOIN `ingredients` i ON di.ingredientID = i.ingredientID
-    // JOIN `dishtypes` dt ON d.dishID = dt.dishID
-    // JOIN `typedishs` t ON dt.typeID = t.typeID
-    // JOIN `recipes` r ON d.dishID = r.dishID
-    // GROUP BY d.dishID
-    // HAVING d.dishID = "Test01" 
     public function getDetailDishById($dishID) {
         $query = "SELECT d.dishID, d.dishName, d.summary, d.url, GROUP_CONCAT(DISTINCT i.ingredientName ,'@', di.amount,'@', di.unit) as ingredients, GROUP_CONCAT(DISTINCT t.typeName) as types, r.content
         FROM `dishs` d 
@@ -123,8 +193,7 @@ class Dish {
     }
 
     public function modifyDish($id, $dishName, $summary, $recipe, $ingredients, $types) {
-        //chưa check
-        $query = "UPDATE dishs SET dishName = :dishName, summary = :summary WHERE dishID = :id";
+        $query = "UPDATE dishs SET dishName = :dishName, summary = :summary, updated_at = NOW() WHERE dishID = :id";
         $stmt = $this->db->prepare($query);
         $stmt->execute(array(':id' => $id, ':dishName' => $dishName, ':summary' => $summary));
         $query = "UPDATE recipes SET content = :content WHERE dishID = :id";
@@ -152,6 +221,19 @@ class Dish {
         $query = "UPDATE dishs SET isDelete = 1 WHERE dishID = :dishID";
         $stmt = $this->db->prepare($query);
         $stmt->execute(array(':dishID' => $dishID));
+    }
+
+
+    public function updateAvgRating() {
+        $query = "UPDATE dishs d
+        LEFT JOIN (
+            SELECT dishID, AVG(rating) AS avgRating
+            FROM ratings
+            GROUP BY dishID
+        ) AS avg_ratings ON d.dishID = avg_ratings.dishID
+        SET d.avgRating = avg_ratings.avgRating, d.updatedAt = NOW()";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
     }
 
 }

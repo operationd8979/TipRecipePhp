@@ -6,11 +6,13 @@ return [
     ],
     'USER_LIST_URL' => [
         "/index",
-        "/profile"
+        "/profile",
+        "/detail"
     ],
     'ADMIN_LIST_URL' => [
         "/index",
         "/profile",
+        "/detail",
         "/admin",
         "/dashboard",
         "/userManage",

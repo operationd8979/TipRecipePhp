@@ -36,3 +36,38 @@ JOIN `typedishs` t ON dt.typeID = t.typeID
 JOIN `recipes` r ON d.dishID = r.dishID
 GROUP BY d.dishID
 HAVING d.dishID = "Test01" 
+
+-- cách 1
+SELECT      u.email, d.dishName, r.rating
+FROM        users u
+CROSS JOIN  dishs d
+LEFT JOIN ratings r ON r.userID = u.userID AND r.dishID = d.dishID
+
+SELECT dishID, AVG(rating) as avgRating FROM ratings GROUP BY dishID
+
+-- cách 2
+SELECT      
+    u.email, 
+    d.dishName, 
+    COALESCE(r.rating, (SELECT AVG(rating) FROM ratings r2 WHERE d.dishID = r2.dishID)) AS avgRating
+FROM        
+    users u
+CROSS JOIN  
+    dishs d
+LEFT JOIN 
+    ratings r ON r.userID = u.userID AND r.dishID = d.dishID;
+
+-- cách 3
+UPDATE dishs d
+LEFT JOIN (
+    SELECT dishID, AVG(rating) AS avgRating
+    FROM ratings
+    GROUP BY dishID
+) AS avg_ratings ON d.dishID = avg_ratings.dishID
+SET d.avgRating = avg_ratings.avgRating, d.updated_at = NOW();
+
+SELECT u.userID, d.dishID, COALESCE(r.rating, d.avgRating) AS avgRating
+FROM users u
+CROSS JOIN dishs d
+LEFT JOIN ratings r ON r.userID = u.userID AND r.dishID = d.dishID
+ORDER BY d.dishID, u.userID

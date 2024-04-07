@@ -23,8 +23,10 @@ CREATE TABLE dishs (
   dishName VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   summary VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   url VARCHAR(255),
+  isDelete BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  avgRating DECIMAL(10,2) DEFAULT 0
 );
 
 CREATE TABLE recipes (
@@ -54,9 +56,12 @@ CREATE TABLE dishTypes (
 CREATE TABLE ratings (
   userID VARCHAR(20),
   dishID VARCHAR(20),
-  rating INT,
+  rating FLOAT,
+  predictedRating FLOAT,
+  predictionTime TIMESTAMP,
   PRIMARY KEY (userID, dishID),
   FOREIGN KEY (userID) REFERENCES users(userID),
   FOREIGN KEY (dishID) REFERENCES dishs(dishID)
 );
+
 

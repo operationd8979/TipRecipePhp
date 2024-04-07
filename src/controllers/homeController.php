@@ -16,7 +16,7 @@ class HomeController{
     }
 
     public function invoke(&$dishs, &$ingredients, &$types, $itemsPerPage, $offset, &$tempDish){
-        doFilterInternal();
+        $user = doFilterInternal();
         $ingredients = $this->ingredientService->getIngredients();
         $types = $this->typeService->getTypes();
         if($_SERVER['REQUEST_METHOD'] === 'GET'){
@@ -38,6 +38,7 @@ class HomeController{
                 }
             }
             $dishs = $this->dishService->getDishs($search, $filterIngredients, $filterTypes, $itemsPerPage, $offset);
+            $this->dishService->implementRating($dishs, $user['userID']);
             if(count($dishs) > 0){
                 $tempDish = $this->dishService->getDetailDishById($dishs[0]['dishID']);
             }
@@ -52,6 +53,13 @@ class HomeController{
         }
     }
 
+    public function invokeDetail(&$dish){
+        if($_SERVER['REQUEST_METHOD'] === 'GET'){
+            $dishId = $_GET['id'] ?? '';
+            $dish = $this->dishService->getDetailDishById($dishId);
+        }
+    }
+
 
 }
 
@@ -62,7 +70,18 @@ function renderRecipce($dishs){
     }
     foreach($dishs as $dish){
         echo('<li class="mb-4">');
+        echo('<div class="flex justify-between">');
         echo('<h3 class="text-xl font-semibold">'.$dish['dishName'].'</h3>');
+        if($dish['isRated'])
+            echo('<p class="text-red-600">Your rating: '.$dish['rating']*10 .'/10</p>');
+        else{
+            // echo('<p class="text-red-600">Predicted rating: '.$dish['preRating']*10 .'/10</p>');
+            if($dish['preRating']*10 > 7)
+                echo('<p class="text-red-600">Có thể bạn sẽ thích</p>');
+            else
+                echo('<p class="text-red-600">Not rated yet</p>');
+        }
+        echo('</div>');
         echo('<div class="flex">');
         echo('<img src="'.$dish['url'].'" alt="Recipe 1" class="w-32 h-32 object-cover rounded-lg">');
         echo('<div class="ml-2">');
@@ -79,7 +98,7 @@ function renderRecipce($dishs){
             echo('<span class="inline-block bg-red-200 text-gray-700 rounded-full px-2 py-0.3 mr-1 text-sm font-semibold">'.$type.'</span>');
         }
         echo('</p>');
-        echo('<a href="recipe.php?id='.$dish['dishID'].'" class="text-blue-500 hover:underline">View Recipe</a>');
+        echo('<a href="detail.php?id='.$dish['dishID'].'" class="text-blue-500 hover:underline">View Recipe</a>');
         echo('<br>');
         echo('<a href="javascript:void(0)" onClick="quickView(\''.$dish['dishID'].'\')" class="text-blue-500 hover:underline">Quick View</a>');
 

@@ -52,7 +52,7 @@ class User {
         else{
             $password = password_hash($password, PASSWORD_DEFAULT);
         }
-        $query = "UPDATE users SET username = :username, email = :email, password = :password WHERE userID = :userID";
+        $query = "UPDATE users SET username = :username, email = :email, password = :password, updated_at = NOW() WHERE userID = :userID";
         $stmt = $this->db->prepare($query);
         $stmt->execute(array(':userID' => $userID, ':username' => $username, ':email' => $email, ':password' => $password));
     }
