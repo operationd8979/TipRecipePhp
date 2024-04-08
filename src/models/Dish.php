@@ -96,9 +96,16 @@ class Dish {
         return $ratings;
     }
 
+    public function getRatingUserOfDish($dishID, $userID) {
+        $query = "SELECT dishID, rating, predictedRating as preRating, predictionTime as preRatingTime FROM ratings WHERE userID = :userID AND dishID = :dishID";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute(array(':userID' => $userID, ':dishID' => $dishID));
+        $ratings = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $ratings;
+    }
+
     public function getRatingUserOfDishs($dishIDs, $userID) {
         $query = "SELECT dishID, rating, predictedRating as preRating, predictionTime as preRatingTime FROM ratings WHERE userID = :userID AND dishID IN (";
-        // $query .= implode(",", $dishIDs);
         for($i = 0; $i < count($dishIDs); $i++) {
             $query .= "\"$dishIDs[$i]\"";
             if ($i < count($dishIDs) - 1)
@@ -129,12 +136,12 @@ class Dish {
             if($result){
                 $query = "UPDATE ratings SET predictedRating = :predictedRating, predictionTime = NOW() WHERE userID = :userID AND dishID = :dishID";
                 $stmt = $this->db->prepare($query);
-                $stmt->execute(array(':userID' => $update['userID'], ':dishID' => $update['dishID'], ':predictedRating' => $update['predictedRating']*10));
+                $stmt->execute(array(':userID' => $update['userID'], ':dishID' => $update['dishID'], ':predictedRating' => $update['predictedRating']));
             }
             else{
                 $query = "INSERT INTO ratings (userID, dishID, predictedRating, predictionTime) VALUES (:userID, :dishID, :predictedRating, NOW())";
                 $stmt = $this->db->prepare($query);
-                $stmt->execute(array(':userID' => $update['userID'], ':dishID' => $update['dishID'], ':predictedRating' => $update['predictedRating']*10));
+                $stmt->execute(array(':userID' => $update['userID'], ':dishID' => $update['dishID'], ':predictedRating' => $update['predictedRating']));
             }
         }
     }
@@ -234,6 +241,65 @@ class Dish {
         SET d.avgRating = avg_ratings.avgRating, d.updatedAt = NOW()";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
+    }
+
+    public function rateDish($dishID, $rating, $userID){
+        $result = $this->checkExitsRating($userID, $dishID);
+        if($result){
+            $query = "UPDATE ratings SET rating = :rating, predictedRating = :predictedRating, predictionTime = NULL WHERE userID = :userID AND dishID = :dishID";
+            $stmt = $this->db->prepare($query);
+            $stmt->execute(array(':userID' => $userID, ':dishID' => $dishID, ':rating' => $rating/10,':predictedRating' => NULL));
+        }
+        else{
+            $query = "INSERT INTO ratings (userID, dishID, rating, predictedRating, predictionTime) VALUES (:userID, :dishID, :rating, :predictedRating, NULL)";
+            $stmt = $this->db->prepare($query);
+            $stmt->execute(array(':userID' => $userID, ':dishID' => $dishID, ':rating' => $rating/10,':predictedRating' => NULL));
+        }
+    }
+
+    public function getRecommendDishsByUser($userID){
+        $resultRating = $this->getRecommendDishsByUserRating($userID);
+        $resultPreRating = $this->getRecommendDishsByUserPreRating($userID);
+        $dishs = array_merge($resultRating, $resultPreRating);
+        usort($dishs, function($a, $b) {
+            return $b['rating'] <=> $a['rating'];
+        });
+        if(count($dishs) < 10){
+            $dishIDs = array_column($dishs, 'dishID');
+            $randomDishs = $this->getRandomDishs($dishIDs);
+            $dishs = array_merge($dishs, $randomDishs);
+        }
+        return array_slice($dishs, 0, 10);        ;
+    }
+
+    public function getRecommendDishsByUserRating($userID){
+        $query = "SELECT d.dishID, d.url, d.dishName, r.rating FROM ratings r LEFT JOIN dishs d ON r.dishID = d.dishID WHERE r.userID = :userID ORDER BY rating DESC";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute(array(':userID' => $userID));
+        $dishs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $dishs;
+    }
+
+    public function getRecommendDishsByUserPreRating($userID){
+        $query = "SELECT d.dishID, d.url, d.dishName, r.predictedRating as rating FROM ratings r LEFT JOIN dishs d ON r.dishID = d.dishID WHERE r.userID = :userID ORDER BY predictedRating DESC";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute(array(':userID' => $userID));
+        $dishs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $dishs;
+    }
+
+    public function getRandomDishs($dishIDs){
+        $query = "SELECT d.dishID, d.url, d.dishName FROM dishs d WHERE d.dishID NOT IN (";
+        for($i = 0; $i < count($dishIDs); $i++) {
+            $query .= "\"$dishIDs[$i]\"";
+            if ($i < count($dishIDs) - 1)
+                $query .= ", ";
+        }
+        $query .= ") ORDER BY RAND() LIMIT 10";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        $dishs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $dishs;
     }
 
 }

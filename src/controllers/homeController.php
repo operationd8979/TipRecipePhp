@@ -38,14 +38,15 @@ class HomeController{
                 }
             }
             $dishs = $this->dishService->getDishs($search, $filterIngredients, $filterTypes, $itemsPerPage, $offset);
-            $this->dishService->implementRating($dishs, $user['userID']);
             if(count($dishs) > 0){
+                $this->dishService->implementRating($dishs, $user['userID']);
                 $tempDish = $this->dishService->getDetailDishById($dishs[0]['dishID']);
             }
         }
     }
 
     public function invokeGetRecipe(){
+        doFilterInternal();
         if($_SERVER['REQUEST_METHOD'] === 'GET'){
             $dishId = $_GET['id'] ?? '';
             $dish = $this->dishService->getDetailDishById($dishId);
@@ -54,10 +55,27 @@ class HomeController{
     }
 
     public function invokeDetail(&$dish){
+        $user = doFilterInternal();
         if($_SERVER['REQUEST_METHOD'] === 'GET'){
             $dishId = $_GET['id'] ?? '';
             $dish = $this->dishService->getDetailDishById($dishId);
+            if(!$dish){
+                header('Location: index.php');
+                exit();
+            }
+            $rated = $this->dishService->getRatingUserOfDish($dishId,$user['userID']);
+            $dish['rating'] = $rated?$rated[0]['rating']*10:'Not yet';
+            if(isset($_GET['rating'])){
+                $newRating = $_GET['rating'];
+                $this->dishService->rateDish($dishId, $newRating, $user['userID']);
+                $dish['rating'] = $newRating;
+            }
         }
+    }
+
+    public function invokeBanner(&$dishs){
+        $user = doFilterInternal();
+        $dishs = $this->dishService->getRecommendDishsByUser($user['userID']);
     }
 
 

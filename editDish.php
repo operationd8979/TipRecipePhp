@@ -59,7 +59,7 @@ function renderValueTag($filterTypes,$filterIngredients){
 
 <body class="bg-white">
     <?php require_once('includes/header.php'); ?>
-    <div class="flex bg-gray-100 font-sans mb-8">
+    <div class="flex bg-gray-100 font-sans mb-8 mb-10">
         <!-- <aside class="bg-gray-800 text-gray-400 w-64 hidden sm:block">
             <div class="flex items-center justify-center h-16 border-b border-gray-700">
                 <span class="text-2xl font-bold uppercase">Admin</span>

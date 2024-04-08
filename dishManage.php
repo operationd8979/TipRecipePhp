@@ -46,7 +46,7 @@ function renderDishsToDom($dishs){
 
 <body>
     <?php require_once('includes/header.php'); ?>
-    <div class="flex bg-gray-100 font-sans">
+    <div class="flex bg-gray-100 font-sans mb-10">
         <?php require_once('includes/sideAdmin.php'); ?>
 
         <main class="flex-1 bg-white p-8">

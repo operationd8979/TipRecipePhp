@@ -7,12 +7,14 @@ return [
     'USER_LIST_URL' => [
         "/index",
         "/profile",
-        "/detail"
+        "/detail",
+        "/getRecipe"
     ],
     'ADMIN_LIST_URL' => [
         "/index",
         "/profile",
         "/detail",
+        "/getRecipe",
         "/admin",
         "/dashboard",
         "/userManage",

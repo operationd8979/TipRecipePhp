@@ -40,6 +40,10 @@ class DishService{
         $averageRating = [];
         $simmilarUser = [];
         foreach ($ratingUserOfDishs as $rating) {
+            if($rating['preRating'] == 0) {
+                $hasRatingOlderThan7Days = true;
+                break; 
+            }
             if($rating['preRatingTime'] == null) continue;
             $daysDifference = floor(($currentDate - strtotime($rating['preRatingTime'])) / (60 * 60 * 24));
             if ($daysDifference >= 7) {
@@ -129,6 +133,10 @@ class DishService{
         return $this->dishModel->getAverageRating();
     }
 
+    public function getRatingUserOfDish($dishID, $userId){
+        return $this->dishModel->getRatingUserOfDish($dishID, $userId);
+    }
+
     private function getRatingUserOfDishs($dishIDs, $userId){
         return $this->dishModel->getRatingUserOfDishs($dishIDs, $userId);
     }
@@ -155,6 +163,14 @@ class DishService{
 
     public function deleteDish($id){
         return $this->dishModel->deleteDish($id);
+    }
+
+    public function rateDish($dishID, $rating, $userID){
+        return $this->dishModel->rateDish($dishID, $rating, $userID);
+    }
+
+    public function getRecommendDishsByUser($userID){
+        return $this->dishModel->getRecommendDishsByUser($userID);
     }
 
 
