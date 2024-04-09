@@ -15,12 +15,20 @@ class LoginController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = htmlspecialchars(strip_tags($_POST['email']));
             $password = htmlspecialchars(strip_tags($_POST['password']));
-            $this->login($email, $password, $error);
+            $captcha = $_POST['captcha'];
+            $this->login($email, $password, $captcha, $error);
         }
     }
 
 
-    private function login($email, $password, &$error) {
+    private function login($email, $password, $captcha, &$error) {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }        
+        if ($captcha != $_SESSION['captcha']) {
+            $error = "Invalid captcha!";
+            return;
+        }
         if(validate($email, $password, $error)){
             $user = $this->userService->authenticate($email, $password);
             if ($user) {
@@ -34,7 +42,6 @@ class LoginController {
                 $error = "Invalid email or password!";
             }
         }
-    
     }
 }
 

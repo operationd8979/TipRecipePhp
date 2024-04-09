@@ -7,11 +7,10 @@ function renderBannerDishs($bannerDishs){
     foreach($bannerDishs as $dish){
         echo '<div class="slide mr-2">';
         echo '<a href="detail.php?id='.$dish['dishID'].'" class="flex-row-reverse">';
-        echo '<img src="'.$dish['url'].'" alt="Slide 1" class="rounded-xl" onload="imageLoaded()">';
+        echo '<img src="'.$dish['url'].'" alt="Slide 1" class="rounded-xl">';
         echo '</a>';
         echo '</div>';
     }
-
 }
 ?>
 <!DOCTYPE html>
@@ -23,7 +22,7 @@ function renderBannerDishs($bannerDishs){
     <title>Sliding banner</title>
     <style>
     .content {
-        opacity: 0;
+        /* opacity: 0; */
     }
 
     .slide {
@@ -55,27 +54,28 @@ function renderBannerDishs($bannerDishs){
 </head>
 
 <body>
+    <script>
+    function imageLoaded() {
+        document.querySelector('.content').style.opacity = '1';
+        // var images = document.querySelectorAll('img');
+        // var allLoaded = true;
+        // for (var i = 0; i < images.length; i++) {
+        //     if (!images[i].complete) {
+        //         allLoaded = false;
+        //         break;
+        //     }
+        // }
+        // if (allLoaded) {
+        //     document.querySelector('.content').style.opacity = '1';
+        // }
+    }
+    </script>
     <div class="relative overflow-hidden bg-white-100 p-2 content" style="content: 0">
         <div class="flex">
             <?php renderBannerDishs($bannerDishs); ?>
         </div>
     </div>
-    <script>
-    function imageLoaded() {
-        var images = document.querySelectorAll('img');
-        var allLoaded = true;
-        for (var i = 0; i < images.length; i++) {
-            if (!images[i].complete) {
-                allLoaded = false;
-                break;
-            }
-        }
-        if (allLoaded) {
-            document.querySelector('.content').style.opacity = '1';
-        }
-    }
-    imageLoaded();
-    </script>
+
 </body>
 
 </html>

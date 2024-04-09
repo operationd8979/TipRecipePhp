@@ -18,11 +18,19 @@ class RegisterController{
             $username = htmlspecialchars(strip_tags($_POST['username']));
             $password = htmlspecialchars(strip_tags($_POST['password']));
             $confirmPassword = htmlspecialchars(strip_tags($_POST['confirmPassword']));
-            $this->register($email, $username, $password, $confirmPassword, $error);
+            $captcha = $_POST['captcha'];
+            $this->register($email, $username, $password, $confirmPassword, $captcha, $error);
         }
     }
 
-    private function register($email, $username, $password, $confirmPassword, &$error) {
+    private function register($email, $username, $password, $confirmPassword, $captcha, &$error) {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }        
+        if ($captcha != $_SESSION['captcha']) {
+            $error = "Invalid captcha!";
+            return;
+        }
         if(validate($email, $username, $password, $confirmPassword, $error)){
             $email = htmlspecialchars(strip_tags($email));
             $password = htmlspecialchars(strip_tags($password));

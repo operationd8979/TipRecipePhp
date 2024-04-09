@@ -1,14 +1,17 @@
 <?php
 require_once './src/database/database.php';
+require_once './src/services/cachingService.php';
 require_once './src/models/Dish.php';
 
 class DishService{
     private $db;
     private $dishModel;
+    private $cachingService;
     public static $instance = null;
 
     private function __construct(){
         $this->db = Database::getInstance()->getConnection();
+        $this->cachingService = CachingService::getInstance();
         $this->dishModel = new Dish($this->db);
     }
 
@@ -32,55 +35,77 @@ class DishService{
     }
 
     public function implementRating(&$dishs, $userId){
+        //get dishIDs
         $dishIDs = array_column($dishs, 'dishID');
+        //get rate of user for each dish
         $ratingUserOfDishs = $this->getRatingUserOfDishs($dishIDs, $userId);
-        $hasRatingOlderThan7Days = false;
-        $currentDate = strtotime(date('Y-m-d'));
-        $totalRatings = [];
-        $averageRating = [];
-        $simmilarUser = [];
-        foreach ($ratingUserOfDishs as $rating) {
-            if($rating['preRating'] == 0) {
-                $hasRatingOlderThan7Days = true;
-                break; 
-            }
-            if($rating['preRatingTime'] == null) continue;
-            $daysDifference = floor(($currentDate - strtotime($rating['preRatingTime'])) / (60 * 60 * 24));
-            if ($daysDifference >= 7) {
-                $hasRatingOlderThan7Days = true;
-                break; 
+        //check if user has rated any dish older than 7 days or preRating = 0
+        $isNeedCollaborativeFilter = count($ratingUserOfDishs) != count($dishs);
+        if(!$isNeedCollaborativeFilter){
+            $currentDate = strtotime(date('Y-m-d'));
+            foreach ($ratingUserOfDishs as $rating) {
+                if($rating['preRating'] == 0) {
+                    $isNeedCollaborativeFilter = true;
+                    break; 
+                }
+                if($rating['preRatingTime'] == null) continue;
+                $daysDifference = floor(($currentDate - strtotime($rating['preRatingTime'])) / (60 * 60 * 24));
+                if ($daysDifference >= 7) {
+                    $isNeedCollaborativeFilter = true;
+                    break; 
+                }
             }
         }
-        if(count($ratingUserOfDishs) < count($dishs) || $hasRatingOlderThan7Days){
-            $totalRatings = $this->getRating();
+        //if need, prepare for implementing rating with collaborative filter
+        if($isNeedCollaborativeFilter){
+            $isNeedPreRating = true;
             $averageRating = $this->getAverageRating();
-            $simmilarUser = [[]];
-            $countDish = count($averageRating);
-            $countUser = count($totalRatings)/$countDish;
-            $ratingMT = [[]];
-            $indexUser = -1;
+            $ratingMT = $this->cachingService->checkExistedCache('ratingMT')??[];
             $userIDs = [];
             $dishIDs = [];
-            for($i = 0; $i < $countUser; $i++){
-                if($totalRatings[$i]['userID'] == $userId){
-                    $indexUser = $i;
-                }
-                $userIDs[$i] = $totalRatings[$i]['userID'];
-            }
-            for($i = 0; $i < $countDish; $i++){
-                $dishIDs[$i] = $averageRating[$i]['dishID'];
-            }
-            for($i = 0; $i < $countUser; $i++){
-                for($j = 0; $j < $countDish; $j++){
-                    $ratingMT[$userIDs[$i]][$dishIDs[$j]] = $totalRatings[$i+$j*$countUser]['rating']-$averageRating[$j]['avgRating'];
+            $indexUser = -1;
+            $simmilarUser = [];
+            if(count($ratingMT)!=0){
+                $isNeedPreRating = false;
+                $userIDs = array_keys($ratingMT);
+                $dishIDs = array_keys($ratingMT[$userIDs[0]]);
+                $indexUser = array_search($userId, $userIDs);
+                if($indexUser == false){
+                    $isNeedPreRating = true;
                 }
             }
-            for($i = 0; $i < $countUser; $i++){
+            if($isNeedPreRating){
+                $totalRatings = $this->getRating();
+                $countDish = count($averageRating);
+                $countUser = count($totalRatings)/$countDish;
+                for($i = 0; $i < $countUser; $i++){
+                    if($totalRatings[$i]['userID'] == $userId){
+                        $indexUser = $i;
+                    }
+                    $userIDs[$i] = $totalRatings[$i]['userID'];
+                }
+                for($i = 0; $i < $countDish; $i++){
+                    $dishIDs[$i] = $averageRating[$i]['dishID'];
+                }
+                for($i = 0; $i < $countUser; $i++){
+                    for($j = 0; $j < $countDish; $j++){
+                        $ratingMT[$userIDs[$i]][$dishIDs[$j]] = $totalRatings[$i+$j*$countUser]['rating']-$averageRating[$j]['avgRating'];
+                    }
+                }
+                $isDoneWriteCache = $this->cachingService->addCache('ratingMT', $ratingMT);
+                // if(!$isDoneWriteCache){
+                //     echo('Error when writing cache!');
+                // }
+                // else{
+                //     echo('Write cache successfully!');
+                // }
+            }
+            for($i = 0; $i < count($userIDs); $i++){
                 $simmilarUser[$i]['userID'] = $userIDs[$i];
                 $simmilarUser[$i]['value'] = $this->cosineSimilarity($ratingMT[$userIDs[$i]], $ratingMT[$userIDs[$indexUser]]);
                 $simmilarUser[$i]['different'] = 0;
                 $countDif = 0;
-                for($j = 0; $j < $countDish; $j++){
+                for($j = 0; $j < count($dishIDs); $j++){
                     if($ratingMT[$userIDs[$indexUser]][$dishIDs[$j]]!=0 && $ratingMT[$userIDs[$i]][$dishIDs[$j]]!=0){
                         $simmilarUser[$i]['different'] += $ratingMT[$userIDs[$i]][$dishIDs[$j]] / $ratingMT[$userIDs[$indexUser]][$dishIDs[$j]];
                         $countDif++;
@@ -92,6 +117,7 @@ class DishService{
             }
             array_multisort(array_column($simmilarUser, 'value'), SORT_DESC, $simmilarUser);
         }
+        //implement rating
         $countUpdateQueryy = 0;
         $updateQuery = [[]];
         for($i = 0; $i < count($dishs); $i++){
@@ -109,11 +135,11 @@ class DishService{
                     break;
                 }
             }
-            if(!$dishs[$i]['isRated']&&count($simmilarUser) > 0){
+            if(!$dishs[$i]['isRated']&&$isNeedCollaborativeFilter){
                 for($j = 0; $j < count($simmilarUser); $j++){
-                    $preRating = $ratingMT[$simmilarUser[$j]['userID']][$dishs[$i]['dishID']];
+                    $preRating = $ratingMT[$simmilarUser[$j]['userID']][$dishs[$i]['dishID']]??0;
                     if($preRating != 0 && $simmilarUser[$j]['different'] != 0){
-                        $dishs[$i]['preRating'] = ($preRating+$averageRating[array_search($dishs[$i]['dishID'], array_column($averageRating, 'dishID'))]['avgRating'])/$simmilarUser[$j]['different'];
+                        $dishs[$i]['preRating'] = ($preRating + $averageRating[array_search($dishs[$i]['dishID'], array_column($averageRating, 'dishID'))]['avgRating'])/$simmilarUser[$j]['different'];
                         $updateQuery[$countUpdateQueryy++] = ['dishID' => $dishs[$i]['dishID'], 'userID' => $userId, 'predictedRating' => $dishs[$i]['preRating']];
                         break;
                     }
@@ -121,7 +147,7 @@ class DishService{
             }
         }
         if($countUpdateQueryy > 0){
-            $this->dishModel->updatePredictedRating($updateQuery);
+            // $this->dishModel->updatePredictedRating($updateQuery);
         }
     }
 

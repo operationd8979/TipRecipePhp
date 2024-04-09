@@ -289,6 +289,13 @@ class Dish {
     }
 
     public function getRandomDishs($dishIDs){
+        if(count($dishIDs)==0){
+            $query = "SELECT d.dishID, d.url, d.dishName FROM dishs d ORDER BY RAND() LIMIT 10";
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
+            $dishs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $dishs;
+        }
         $query = "SELECT d.dishID, d.url, d.dishName FROM dishs d WHERE d.dishID NOT IN (";
         for($i = 0; $i < count($dishIDs); $i++) {
             $query .= "\"$dishIDs[$i]\"";
