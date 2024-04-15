@@ -18,6 +18,9 @@ class LoginController {
             $captcha = $_POST['captcha'];
             $this->login($email, $password, $captcha, $error);
         }
+        // else {
+        //     $error = "Invalid request!";
+        // }
     }
 
 
@@ -32,7 +35,9 @@ class LoginController {
         if(validate($email, $password, $error)){
             $user = $this->userService->authenticate($email, $password);
             if ($user) {
-                session_start();
+                if (session_status() == PHP_SESSION_NONE) {
+                    session_start();
+                } 
                 $jwt = JwtHelper::getInstance()->generate($email);
                 setcookie('jwt', $jwt, time() + 86400, '/');
                 $_SESSION['role'] = $user['role'];

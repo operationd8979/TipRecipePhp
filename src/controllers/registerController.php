@@ -21,6 +21,9 @@ class RegisterController{
             $captcha = $_POST['captcha'];
             $this->register($email, $username, $password, $confirmPassword, $captcha, $error);
         }
+        // else{
+        //     $error = "Invalid request!";
+        // }
     }
 
     private function register($email, $username, $password, $confirmPassword, $captcha, &$error) {

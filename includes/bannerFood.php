@@ -70,8 +70,8 @@ function renderBannerDishs($bannerDishs){
         // }
     }
     </script>
-    <div class="relative overflow-hidden bg-white-100 p-2 content" style="content: 0">
-        <div class="flex">
+    <div class="relative overflow-hidden bg-white-100 p-2 content">
+        <div class="flex hidden sm:flex">
             <?php renderBannerDishs($bannerDishs); ?>
         </div>
     </div>

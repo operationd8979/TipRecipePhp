@@ -165,7 +165,7 @@ function renderValueTag($filterTypes,$filterIngredients){
     const types = <?php echo json_encode($types); ?>.map(type => type.typeName);
     let filterIngredients = <?php echo json_encode($filterIngredients); ?>.map(ingredient => ingredient.name);
     const filterTypes = <?php echo json_encode($filterTypes); ?>;
-    let currentCursorPosition = 0;
+    let currentCursorPosition = document.getElementById('tagInput').value.length;
 
     const tagInput = document.getElementById('tagInput');
     tagInput.addEventListener('input', function() {
@@ -189,7 +189,7 @@ function renderValueTag($filterTypes,$filterIngredients){
     });
     tagInput.addEventListener('mousedown', function(event) {
         if (event.button === 0) {
-            currentCursorPosition = tagInput.selectionStart;
+            currentCursorPosition = document.getElementById('tagInput').value.length;
         }
     });
     tagInput.addEventListener('click', function(event) {

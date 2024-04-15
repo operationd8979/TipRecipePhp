@@ -269,11 +269,13 @@ class Dish {
             $randomDishs = $this->getRandomDishs($dishIDs);
             $dishs = array_merge($dishs, $randomDishs);
         }
-        return array_slice($dishs, 0, 10);        ;
+        return array_slice($dishs, 0, 10);
     }
 
     public function getRecommendDishsByUserRating($userID){
-        $query = "SELECT d.dishID, d.url, d.dishName, r.rating FROM ratings r LEFT JOIN dishs d ON r.dishID = d.dishID WHERE r.userID = :userID ORDER BY rating DESC";
+        $query = "SELECT d.dishID, d.url, d.dishName, r.rating 
+        FROM ratings r LEFT JOIN dishs d ON r.dishID = d.dishID 
+        WHERE r.userID = :userID ORDER BY rating DESC LIMIT 10";
         $stmt = $this->db->prepare($query);
         $stmt->execute(array(':userID' => $userID));
         $dishs = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -281,7 +283,9 @@ class Dish {
     }
 
     public function getRecommendDishsByUserPreRating($userID){
-        $query = "SELECT d.dishID, d.url, d.dishName, r.predictedRating as rating FROM ratings r LEFT JOIN dishs d ON r.dishID = d.dishID WHERE r.userID = :userID ORDER BY predictedRating DESC";
+        $query = "SELECT d.dishID, d.url, d.dishName, r.predictedRating as rating 
+        FROM ratings r LEFT JOIN dishs d ON r.dishID = d.dishID 
+        WHERE r.userID = :userID ORDER BY predictedRating DESC LIMIT 10";
         $stmt = $this->db->prepare($query);
         $stmt->execute(array(':userID' => $userID));
         $dishs = $stmt->fetchAll(PDO::FETCH_ASSOC);

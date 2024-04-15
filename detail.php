@@ -16,11 +16,11 @@
 
 <body>
     <?php include('includes/header.php'); ?>
-    <div class="lg:col-span-1 lg:bg-white lg:p-4 lg:shadow-md">
+    <div class="lg:col-span-1 lg:bg-white lg:p-4 lg:shadow-md m-10 mt-0">
         <h2 class="text-lg font-semibold mb-4">Recipe</h2>
         <hr>
-        <div class="flex justify-center">
-            <div class="mr-40">
+        <div class="lg:flex justify-center">
+            <div class="mr-4 sm:mr-6 md:mr-12 lg:mr-32">
                 <h3 id="dish-name" class="text-xl font-semibold"><?php echo($dish['dishName']) ?></h3>
                 <div class="flex">
                     <img id="dish-url" src="<?php echo($dish['url']) ?>" alt=""

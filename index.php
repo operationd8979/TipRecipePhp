@@ -9,6 +9,7 @@
     $tempDish = null;
     $homeController = new HomeController();
     $homeController->invoke($dishs, $ingredients, $types, $itemsPerPage, $offset, $tempDish);
+    // echo(password_hash('Mashiro1@', PASSWORD_DEFAULT));
 ?>
 
 <!DOCTYPE html>
