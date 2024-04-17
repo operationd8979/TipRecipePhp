@@ -36,6 +36,7 @@ if(!$role){
                     <?php if ($role == "ADMIN") : ?>
                     <li><a href="admin.php" class="text-white hover:text-gray-300">Admin</a></li>
                     <?php endif; ?>
+                    <li><a href="menu.php" class="text-white hover:text-gray-300">Menu</a></li>
                     <li><a href="profile.php" class="text-white hover:text-gray-300">Profile</a></li>
                     <li><a href="logout.php" class="text-white hover:text-gray-300">Logout</a></li>
                     <?php else : ?>
