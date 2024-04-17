@@ -14,10 +14,6 @@ function doFilterInternal(){
     if(!empty(array_filter($WHITE_LIST_URL, function($path) use ($url){
         return strpos($url, $path);
     }))){
-        if(isset($_COOKIE['jwt'])){
-            header('Location: index.php');
-            exit;
-        }
         return;
     }
     if(!isset($_COOKIE['jwt'])){

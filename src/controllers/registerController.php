@@ -44,7 +44,9 @@ class RegisterController{
                 $error = "Email already exists!";
             } else {
                 try {
-                    session_start();
+                    if (session_status() == PHP_SESSION_NONE) {
+                        session_start();
+                    }   
                     $this->userService->createUser($email, $username, $password);
                     $jwt = JwtHelper::getInstance()->generate($email);
                     setcookie('jwt', $jwt, time() + 86400, '/');

@@ -18,9 +18,6 @@ class LoginController {
             $captcha = $_POST['captcha'];
             $this->login($email, $password, $captcha, $error);
         }
-        // else {
-        //     $error = "Invalid request!";
-        // }
     }
 
 

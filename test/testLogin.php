@@ -1,20 +1,26 @@
 <?php
-require_once './src/controllers/loginController.php';
 use PHPUnit\Framework\TestCase;
 
 class testLogin extends TestCase
 {
+
+    public static function setUpBeforeClass(): void
+    {
+        require_once './src/controllers/loginController.php';
+        $_SERVER['REQUEST_URI'] = 'http://localhost/TipRecipe/login.php';
+    }
+
     public function testNoBodyRequest()
     {
         //given
-
+        
         //when
         $loginController = new LoginController();
         $error = "";
         $loginController->invoke($error);
         
         //then
-        $this->assertEquals("Invalid request!", $error);
+        $this->assertEquals("", $error);
     }
 
     public function testWrongCatcha()
@@ -92,13 +98,27 @@ class testLogin extends TestCase
         $_POST['email'] = "operationddd@gmail.com";
         $_POST['password'] = "12345678";
 
-        //when
+        // Capture the output (headers)
+        ob_start();
         $loginController = new LoginController();
         $error = "";       
         $loginController->invoke($error);
+        $output = ob_get_contents();
+        ob_end_clean();
+
+        // Check if the header location is set
+        $this->assertStringContainsString('Location: index.php', $output);
+
+        // Check if $_SESSION['role'] is set as expected
+        $this->assertEquals('ADMIN', $_SESSION['role']);
+
+        // //when
+        // $loginController = new LoginController();
+        // $error = "";       
+        // $loginController->invoke($error);
         
-        //then
-        $this->assertEquals(true, isset($_SESSION['role']));
+        // //then
+        // $this->assertEquals(true, isset($_SESSION['role']));
     }
     
 }
