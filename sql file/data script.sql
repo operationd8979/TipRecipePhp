@@ -1,9 +1,34 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th4 18, 2024 lúc 12:58 PM
+-- Phiên bản máy phục vụ: 10.4.32-MariaDB
+-- Phiên bản PHP: 8.2.12
+
+-- SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+-- START TRANSACTION;
+-- SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Cơ sở dữ liệu: `tiprecipe`
+--
+
+-- --------------------------------------------------------
+
 --
 -- Cấu trúc bảng cho bảng `dishingredients`
 --
 
 CREATE TABLE `dishingredients` (
-  `dishID` varchar(20) NOT NULL,
+  `dishID` varchar(40) NOT NULL,
   `ingredientID` int(11) NOT NULL,
   `amount` int(11) DEFAULT NULL,
   `unit` varchar(255) DEFAULT 'gram'
@@ -75,6 +100,27 @@ INSERT INTO `dishingredients` (`dishID`, `ingredientID`, `amount`, `unit`) VALUE
 ('fdf45s3fd5g4sdf546', 10, 300, 'gram'),
 ('fdf45s3fd5g4sdf546', 12, 20, 'ml'),
 ('fdf45s3fd5g4sdf546', 132, 200, 'gram'),
+('fds34f6d34sdf63df4s6', 6, 5, 'gram'),
+('fds34f6d34sdf63df4s6', 7, 5, 'gram'),
+('fds34f6d34sdf63df4s6', 12, 20, 'ml'),
+('fds34f6d34sdf63df4s6', 14, 100, 'gram'),
+('fds34f6d34sdf63df4s6', 54, 50, 'ml'),
+('fds34f6d34sdf63df4s6', 57, 200, 'gram'),
+('fds4f3d45g63dfg4s6d3', 6, 5, 'gram'),
+('fds4f3d45g63dfg4s6d3', 12, 20, 'ml'),
+('fds4f3d45g63dfg4s6d3', 53, 200, 'gram'),
+('fds4f3d45g63dfg4s6d3', 54, 30, 'ml'),
+('fds4f3df45g6df345g3d', 12, 20, 'ml'),
+('fds4f3df45g6df345g3d', 16, 100, 'gram'),
+('fds4f3df45g6df345g3d', 17, 50, 'gram'),
+('fds4f3df45g6df345g3d', 21, 200, 'gram'),
+('fds4f3df45g6df345g3d', 132, 300, 'gram'),
+('fds4f3df45g6df345g3f', 12, 20, 'ml'),
+('fds4f3df45g6df345g3f', 31, 50, 'gram'),
+('fds4f3df45g6df345g3f', 37, 100, 'gram'),
+('fds4f3df45g6df345g3f', 121, 200, 'gram'),
+('fds4f3df45g6df345g3f', 127, 1, 'quả'),
+('fds4f3df45g6df345g3f', 133, 300, 'gram'),
 ('ffd4546sdf3s4f6d34', 4, 50, 'ml'),
 ('ffd4546sdf3s4f6d34', 6, 10, 'gram'),
 ('ffd4546sdf3s4f6d34', 9, 300, 'gram'),
@@ -84,7 +130,47 @@ INSERT INTO `dishingredients` (`dishID`, `ingredientID`, `amount`, `unit`) VALUE
 ('ffd4sdf54sdf634df3', 22, 50, 'gram'),
 ('ffd4sdf54sdf634df3', 41, 100, 'gram'),
 ('ffd4sdf54sdf634df3', 56, 200, 'gram'),
-('ffd4sdf54sdf634df3', 59, 4, 'tấm');
+('ffd4sdf54sdf634df3', 59, 4, 'tấm'),
+('g4df6g3df45g34dfg63d', 2, 500, 'gram'),
+('g4df6g3df45g34dfg63d', 4, 50, 'ml'),
+('g4df6g3df45g34dfg63d', 5, 30, 'gram'),
+('g4df6g3df45g34dfg63d', 6, 5, 'gram'),
+('g4df6g3df45g34dfg63d', 14, 2, 'quả'),
+('g4df6g3df45g34dfg63d', 127, 1, 'quả'),
+('g4df6g3df45g34dfg6d', 5, 100, 'gram'),
+('g4df6g3df45g34dfg6d', 6, 5, 'gram'),
+('g4df6g3df45g34dfg6d', 12, 100, 'ml'),
+('g4df6g3df45g34dfg6d', 14, 200, 'gram'),
+('g4df6g3df45g34dfg6d', 50, 200, 'gram'),
+('g4df6g3df45g34dfg6d', 60, 300, 'gram'),
+('gdf4sdf34sdf63sd4f6s', 5, 20, 'ml'),
+('gdf4sdf34sdf63sd4f6s', 6, 5, 'gram'),
+('gdf4sdf34sdf63sd4f6s', 7, 5, 'gram'),
+('gdf4sdf34sdf63sd4f6s', 12, 20, 'ml'),
+('gdf4sdf34sdf63sd4f6s', 23, 100, 'gram'),
+('gf4d6g3df45g63df45g6', 5, 30, 'gram'),
+('gf4d6g3df45g63df45g6', 6, 5, 'gram'),
+('gf4d6g3df45g63df45g6', 12, 20, 'ml'),
+('gf4d6g3df45g63df45g6', 15, 300, 'gram'),
+('gf4d6g3df45g63df45g6', 37, 50, 'gram'),
+('gf4d6g3df45g63df45g6', 123, 200, 'gram'),
+('gf4d6g3df45g63df4g6d', 5, 30, 'gram'),
+('gf4d6g3df45g63df4g6d', 6, 5, 'gram'),
+('gf4d6g3df45g63df4g6d', 12, 20, 'ml'),
+('gf4d6g3df45g63df4g6d', 51, 200, 'gram'),
+('gf4d6g3df45g63df4g6d', 132, 300, 'gram'),
+('gf4d6g3df45g63df4g7d', 6, 5, 'gram'),
+('gf4d6g3df45g63df4g7d', 12, 20, 'ml'),
+('gf4d6g3df45g63df4g7d', 51, 200, 'gram'),
+('gf4d6g3df45g63df4g7d', 52, 100, 'gram'),
+('gf4d6g3df45g63df4g7d', 123, 100, 'gram'),
+('gf4d6g3df45g63df4g7d', 131, 200, 'gram'),
+('gfd4g3d45g63df4g6d3f', 1, 500, 'gram'),
+('gfd4g3d45g63df4g6d3f', 4, 50, 'ml'),
+('gfd4g3d45g63df4g6d3f', 5, 30, 'gram'),
+('gfd4g3d45g63df4g6d3f', 6, 5, 'gram'),
+('gfd4g3d45g63df4g6d3f', 12, 20, 'ml'),
+('gfd4g3d45g63df4g6d3f', 50, 300, 'gram');
 
 -- --------------------------------------------------------
 
@@ -93,7 +179,7 @@ INSERT INTO `dishingredients` (`dishID`, `ingredientID`, `amount`, `unit`) VALUE
 --
 
 CREATE TABLE `dishs` (
-  `dishID` varchar(20) NOT NULL,
+  `dishID` varchar(40) NOT NULL,
   `dishName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `summary` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `url` varchar(255) DEFAULT NULL,
@@ -108,19 +194,30 @@ CREATE TABLE `dishs` (
 --
 
 INSERT INTO `dishs` (`dishID`, `dishName`, `summary`, `url`, `isDelete`, `created_at`, `updated_at`, `avgRating`) VALUES
-('32df3g4df6df3gdf34', 'Bánh canh cua', 'Món ăn truyền thống với bánh canh và cua tươi.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2F32df3g4df6df3gdf34.png?alt=media&token=a6a4e1fc-3c0e-412c-bf82-55e76522865d', 0, '2024-04-06 10:32:38', '2024-04-08 02:00:57', 0.67),
-('3f45s3fd5g4sdf643df', 'Cá kho tộ', 'Món ăn truyền thống của Việt Nam, cá kho tộ thơm ngon và béo ngậy.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2F3f45s3fd5g4sdf643df.png?alt=media&token=b5fbc43f-4094-4c33-b99c-f9363eb7219e', 0, '2024-04-06 10:32:38', '2024-04-07 11:10:51', 0.73),
-('3fd5g4sdf643df54s3df', 'Bún riêu cua', 'Món ăn ngon và bổ dưỡng với bún và riêu cua thơm ngon.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Fdf546df345dfg6d5g46.png?alt=media&token=05ddbdc3-7ec6-4619-96d5-1973736141cd', 0, '2024-04-06 10:32:38', '2024-04-07 11:10:51', 0.55),
-('3fsdfdf45s3fd5g4sdf', 'Bò bít tết', 'Món ăn phổ biến với thịt bò tươi ngon và sốt bơ đặc trưng.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2F3fsdfdf45s3fd5g4sdf.png?alt=media&token=1a5069b3-8d66-497d-b071-7184c6cd13f4', 0, '2024-04-06 10:32:38', '2024-04-07 11:10:51', 0.50),
-('df3sdf4d6f3d54f6d4', 'Bánh mỳ sandwich', 'Món ăn tiện lợi và ngon miệng với bánh mỳ và nhân đa dạng.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Fdf3sdf4d6f3d54f6d4.png?alt=media&token=4dc7503d-4777-4ef6-8643-63a6c37f0f53', 0, '2024-04-06 10:32:38', '2024-04-07 11:10:51', 0.75),
-('df546df325dfg6d5g97', 'Thịt kho dưa cải', 'Cải muối chua kho với thịt siêu ngon.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Fdf546df325dfg6d5g97.png?alt=media&token=7492d1df-80ed-45af-aca7-b717e947e1d8', 0, '2024-04-06 10:36:13', '2024-04-07 11:10:51', 0.60),
-('df546df345dfg6d5g46', 'Bún ốc', 'Món ăn đặc trưng với bún và ốc tươi ngon.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2F3fd5g4sdf643df54s3df.png?alt=media&token=5f1e8f57-3b1b-4c99-930a-eff2a6757023', 0, '2024-04-06 10:32:38', '2024-04-07 11:10:51', 0.47),
-('ds4f6d3sf4d6f34d6f3', 'Gà chiên giòn', 'Món ăn ngon và bổ dưỡng với gà được chiên giòn vàng.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Fds4f6d3sf4d6f34d6f3.png?alt=media&token=b37bffb9-e84a-45c5-998d-df119130f38b', 0, '2024-04-06 10:32:38', '2024-04-07 11:10:51', 0.47),
-('fd45s3fd5g4sdf543', 'Phở gà', 'Món ăn truyền thống của Việt Nam, phở gà được làm từ nước dùng phở thơm ngon và thịt gà thái mỏng.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Ffd45s3fd5g4sdf543.png?alt=media&token=d1a1162d-3ddd-4af5-85ab-b57c4a87c9c5', 0, '2024-04-06 10:32:38', '2024-04-07 11:10:51', 0.40),
-('fd45s3fd5g4sdf544', 'Bánh mì pate', 'Món ăn phổ biến với hương vị thơm ngon của bánh mì và pate.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Ffd45s3fd5g4sdf544.png?alt=media&token=e4ecf09f-cdac-4d42-be5c-1e4c3503045e', 0, '2024-04-06 10:32:38', '2024-04-07 11:10:51', 0.73),
-('fdf45s3fd5g4sdf546', 'Cơm chiên', 'Món ăn dễ làm từ cơm và các loại gia vị.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Ffdf45s3fd5g4sdf546.png?alt=media&token=1fad61d8-15f0-4127-9ec5-1dee6f840b9d', 0, '2024-04-06 10:32:38', '2024-04-07 11:10:51', 0.67),
-('ffd4546sdf3s4f6d34', 'Bún bò Huế', 'Món ăn nổi tiếng với nước dùng thơm ngon và thịt bò thái mỏng.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Fffd4546sdf3s4f6d34.png?alt=media&token=f916ea66-60d1-4b64-acb5-c95dcc05d59c', 0, '2024-04-06 10:32:38', '2024-04-07 11:10:51', 0.55),
-('ffd4sdf54sdf634df3', 'Gỏi cuốn', 'Món ăn ngon và dễ làm từ các nguyên liệu tươi.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Fffd4sdf54sdf634df3.png?alt=media&token=cd41cfd1-21ff-4748-84d6-beb95302779b', 0, '2024-04-06 10:32:38', '2024-04-07 11:10:51', 0.83);
+('32df3g4df6df3gdf34', 'Bánh canh cua', 'Món ăn truyền thống với bánh canh và cua tươi.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2F32df3g4df6df3gdf34.png?alt=media&token=a6a4e1fc-3c0e-412c-bf82-55e76522865d', 0, '2024-04-06 03:32:38', '2024-04-18 09:59:50', 0.67),
+('3f45s3fd5g4sdf643df', 'Cá kho tộ', 'Món ăn truyền thống của Việt Nam, cá kho tộ thơm ngon và béo ngậy.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2F3f45s3fd5g4sdf643df.png?alt=media&token=b5fbc43f-4094-4c33-b99c-f9363eb7219e', 0, '2024-04-06 03:32:38', '2024-04-18 09:54:40', 0.73),
+('3fd5g4sdf643df54s3df', 'Bún riêu cua', 'Món ăn ngon và bổ dưỡng với bún và riêu cua thơm ngon.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Fdf546df345dfg6d5g46.png?alt=media&token=05ddbdc3-7ec6-4619-96d5-1973736141cd', 0, '2024-04-06 03:32:38', '2024-04-18 09:54:58', 0.55),
+('3fsdfdf45s3fd5g4sdf', 'Bò bít tết', 'Món ăn phổ biến với thịt bò tươi ngon và sốt bơ đặc trưng.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2F3fsdfdf45s3fd5g4sdf.png?alt=media&token=1a5069b3-8d66-497d-b071-7184c6cd13f4', 0, '2024-04-06 03:32:38', '2024-04-18 09:55:21', 0.50),
+('df3sdf4d6f3d54f6d4', 'Bánh mỳ sandwich', 'Món ăn tiện lợi và ngon miệng với bánh mỳ và nhân đa dạng.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Fdf3sdf4d6f3d54f6d4.png?alt=media&token=4dc7503d-4777-4ef6-8643-63a6c37f0f53', 0, '2024-04-06 03:32:38', '2024-04-18 09:55:39', 0.75),
+('df546df325dfg6d5g97', 'Thịt kho dưa cải', 'Cải muối chua kho với thịt siêu ngon.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Fdf546df325dfg6d5g97.png?alt=media&token=7492d1df-80ed-45af-aca7-b717e947e1d8', 0, '2024-04-06 03:36:13', '2024-04-18 09:55:59', 0.60),
+('df546df345dfg6d5g46', 'Bún ốc', 'Món ăn đặc trưng với bún và ốc tươi ngon.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2F3fd5g4sdf643df54s3df.png?alt=media&token=5f1e8f57-3b1b-4c99-930a-eff2a6757023', 0, '2024-04-06 03:32:38', '2024-04-18 09:56:19', 0.47),
+('ds4f6d3sf4d6f34d6f3', 'Gà chiên giòn', 'Món ăn ngon và bổ dưỡng với gà được chiên giòn vàng.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Fds4f6d3sf4d6f34d6f3.png?alt=media&token=b37bffb9-e84a-45c5-998d-df119130f38b', 0, '2024-04-06 03:32:38', '2024-04-18 09:56:33', 0.47),
+('fd45s3fd5g4sdf543', 'Phở gà', 'Món ăn truyền thống của Việt Nam, phở gà được làm từ nước dùng phở thơm ngon và thịt gà thái mỏng.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Ffd45s3fd5g4sdf543.png?alt=media&token=d1a1162d-3ddd-4af5-85ab-b57c4a87c9c5', 0, '2024-04-06 03:32:38', '2024-04-18 09:56:55', 0.40),
+('fd45s3fd5g4sdf544', 'Bánh mì pate', 'Món ăn phổ biến với hương vị thơm ngon của bánh mì và pate.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Ffd45s3fd5g4sdf544.png?alt=media&token=e4ecf09f-cdac-4d42-be5c-1e4c3503045e', 0, '2024-04-06 03:32:38', '2024-04-18 09:57:19', 0.73),
+('fdf45s3fd5g4sdf546', 'Cơm chiên', 'Món ăn dễ làm từ cơm và các loại gia vị.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Ffdf45s3fd5g4sdf546.png?alt=media&token=1fad61d8-15f0-4127-9ec5-1dee6f840b9d', 0, '2024-04-06 03:32:38', '2024-04-18 09:57:38', 0.67),
+('fds34f6d34sdf63df4s6', 'Bánh tráng trộn', 'Món ăn đường phố với sự kết hợp của bánh tráng và gia vị đặc trưng.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Ffds34f6d34sdf63df4s6.jpg?alt=media&token=8501af01-75bf-420f-a7ee-4bd5ef5f4bba', 0, '2024-04-18 10:39:52', '2024-04-18 10:46:11', 0.00),
+('fds4f3d45g63dfg4s6d3', 'Nem rán', 'Món ăn truyền thống với nhân nem thơm ngon và giòn.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Ffds4f3d45g63dfg4s6d3.jpeg?alt=media&token=8501af01-75bf-420f-a7ee-4bd5ef5f4bba', 0, '2024-04-18 10:44:21', '2024-04-18 10:48:22', 0.00),
+('fds4f3df45g6df345g3d', 'Dĩa rau trộn với gà nướng', 'Món ăn thanh mát với sự kết hợp của rau trộn và gà nướng thơm ngon.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Ffds4f3df45g6df345g3d.jpg?alt=media&token=8501af01-75bf-420f-a7ee-4bd5ef5f4bba', 0, '2024-04-18 10:08:11', '2024-04-18 10:49:31', 0.00),
+('fds4f3df45g6df345g3f', 'Cơm rang dưa cải với thịt bò', 'Món ăn giàu dinh dưỡng với cơm rang và thịt bò thơm ngon.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Ffds4f3df45g6df345g3f.jpg?alt=media&token=8501af01-75bf-420f-a7ee-4bd5ef5f4bba', 0, '2024-04-18 10:28:41', '2024-04-18 10:50:21', 0.00),
+('ffd4546sdf3s4f6d34', 'Bún bò Huế', 'Món ăn nổi tiếng với nước dùng thơm ngon và thịt bò thái mỏng.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Fffd4546sdf3s4f6d34.png?alt=media&token=f916ea66-60d1-4b64-acb5-c95dcc05d59c', 0, '2024-04-06 03:32:38', '2024-04-18 09:58:00', 0.55),
+('ffd4sdf54sdf634df3', 'Gỏi cuốn', 'Món ăn ngon và dễ làm từ các nguyên liệu tươi.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Fffd4sdf54sdf634df3.png?alt=media&token=cd41cfd1-21ff-4748-84d6-beb95302779b', 0, '2024-04-06 03:32:38', '2024-04-18 09:58:22', 0.83),
+('g4df6g3df45g34dfg63d', 'Canh chua cá lóc', 'Món canh chua truyền thống với cá lóc thơm ngon và hương vị đậm đà.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Fg4df6g3df45g34dfg63d.jpg?alt=media&token=8501af01-75bf-420f-a7ee-4bd5ef5f4bba', 0, '2024-04-18 10:38:53', '2024-04-18 10:51:01', 0.00),
+('g4df6g3df45g34dfg6d', 'Bánh trung thu nhân dừa', 'Bánh trung thu truyền thống với nhân dừa thơm ngon.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Fg4df6g3df45g34dfg6d.jpg?alt=media&token=8501af01-75bf-420f-a7ee-4bd5ef5f4bba', 0, '2024-04-18 10:39:26', '2024-04-18 10:51:53', 0.00),
+('gdf4sdf34sdf63sd4f6s', 'Gỏi ngó sen', 'Món ăn truyền thống với ngó sen và các nguyên liệu khác tạo nên hương vị đặc biệt.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Fgdf4sdf34sdf63sd4f6s.jpg?alt=media&token=8501af01-75bf-420f-a7ee-4bd5ef5f4bba', 0, '2024-04-18 10:29:56', '2024-04-18 10:52:34', 0.00),
+('gf4d6g3df45g63df45g6', 'Canh bí đỏ', 'Món canh truyền thống với bí đỏ thơm ngon và màu sắc đẹp mắt.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Fgf4d6g3df45g63df45g6.jpg?alt=media&token=8501af01-75bf-420f-a7ee-4bd5ef5f4bba', 0, '2024-04-18 10:40:15', '2024-04-18 10:53:17', 0.00),
+('gf4d6g3df45g63df4g6d', 'Cơm chiên cá mòi', 'Món cơm chiên thơm ngon với cá mòi và các nguyên liệu khác.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Fgf4d6g3df45g63df4g6d.jpg?alt=media&token=8501af01-75bf-420f-a7ee-4bd5ef5f4bba', 0, '2024-04-18 10:40:59', '2024-04-18 10:54:30', 0.00),
+('gf4d6g3df45g63df4g7d', 'Cơm tấm sườn bì', 'Món ăn phổ biến với cơm tấm, sườn và bì thơm ngon.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Fgf4d6g3df45g63df4g7d.jpg?alt=media&token=8501af01-75bf-420f-a7ee-4bd5ef5f4bba', 0, '2024-04-18 10:43:51', '2024-04-18 10:55:20', 0.00),
+('gfd4g3d45g63df4g6d3f', 'Bún ốc len', 'Món ăn đặc trưng với bún và ốc len tươi ngon.', 'https://firebasestorage.googleapis.com/v0/b/fir-a3ee6.appspot.com/o/tipRecipe%2Fdishs%2Fgfd4g3d45g63df4g6d3f.jpg?alt=media&token=8501af01-75bf-420f-a7ee-4bd5ef5f4bba', 0, '2024-04-18 10:40:36', '2024-04-18 10:57:39', 0.00);
 
 -- --------------------------------------------------------
 
@@ -129,7 +226,7 @@ INSERT INTO `dishs` (`dishID`, `dishName`, `summary`, `url`, `isDelete`, `create
 --
 
 CREATE TABLE `dishtypes` (
-  `dishID` varchar(20) NOT NULL,
+  `dishID` varchar(40) NOT NULL,
   `typeID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -179,6 +276,17 @@ INSERT INTO `dishtypes` (`dishID`, `typeID`) VALUES
 ('fdf45s3fd5g4sdf546', 15),
 ('fdf45s3fd5g4sdf546', 18),
 ('fdf45s3fd5g4sdf546', 21),
+('fds34f6d34sdf63df4s6', 19),
+('fds34f6d34sdf63df4s6', 22),
+('fds4f3d45g63dfg4s6d3', 19),
+('fds4f3d45g63dfg4s6d3', 22),
+('fds4f3df45g6df345g3d', 15),
+('fds4f3df45g6df345g3d', 19),
+('fds4f3df45g6df345g3d', 21),
+('fds4f3df45g6df345g3d', 22),
+('fds4f3df45g6df345g3f', 15),
+('fds4f3df45g6df345g3f', 21),
+('fds4f3df45g6df345g3f', 22),
 ('ffd4546sdf3s4f6d34', 2),
 ('ffd4546sdf3s4f6d34', 13),
 ('ffd4546sdf3s4f6d34', 15),
@@ -187,7 +295,36 @@ INSERT INTO `dishtypes` (`dishID`, `typeID`) VALUES
 ('ffd4sdf54sdf634df3', 2),
 ('ffd4sdf54sdf634df3', 19),
 ('ffd4sdf54sdf634df3', 20),
-('ffd4sdf54sdf634df3', 21);
+('ffd4sdf54sdf634df3', 21),
+('g4df6g3df45g34dfg63d', 13),
+('g4df6g3df45g34dfg63d', 15),
+('g4df6g3df45g34dfg63d', 17),
+('g4df6g3df45g34dfg63d', 21),
+('g4df6g3df45g34dfg63d', 22),
+('g4df6g3df45g34dfg6d', 19),
+('g4df6g3df45g34dfg6d', 20),
+('gdf4sdf34sdf63sd4f6s', 15),
+('gdf4sdf34sdf63sd4f6s', 17),
+('gdf4sdf34sdf63sd4f6s', 19),
+('gdf4sdf34sdf63sd4f6s', 21),
+('gdf4sdf34sdf63sd4f6s', 22),
+('gf4d6g3df45g63df45g6', 13),
+('gf4d6g3df45g63df45g6', 15),
+('gf4d6g3df45g63df45g6', 17),
+('gf4d6g3df45g63df45g6', 21),
+('gf4d6g3df45g63df45g6', 22),
+('gf4d6g3df45g63df4g6d', 15),
+('gf4d6g3df45g63df4g6d', 18),
+('gf4d6g3df45g63df4g6d', 21),
+('gf4d6g3df45g63df4g6d', 22),
+('gf4d6g3df45g63df4g7d', 15),
+('gf4d6g3df45g63df4g7d', 18),
+('gf4d6g3df45g63df4g7d', 21),
+('gf4d6g3df45g63df4g7d', 22),
+('gfd4g3d45g63df4g6d3f', 13),
+('gfd4g3d45g63df4g6d3f', 15),
+('gfd4g3d45g63df4g6d3f', 21),
+('gfd4g3d45g63df4g6d3f', 22);
 
 -- --------------------------------------------------------
 
@@ -223,7 +360,7 @@ INSERT INTO `ingredients` (`ingredientID`, `ingredientName`) VALUES
 (63, 'Đậu hủ'),
 (56, 'Đậu phụ'),
 (5, 'Đường'),
-(10, 'Gạo'),
+(10, 'Gạo lất'),
 (1, 'Hành lá'),
 (125, 'Kem'),
 (121, 'Mảng cầu'),
@@ -294,8 +431,8 @@ INSERT INTO `ingredients` (`ingredientID`, `ingredientName`) VALUES
 --
 
 CREATE TABLE `ratings` (
-  `userID` varchar(20) NOT NULL,
-  `dishID` varchar(20) NOT NULL,
+  `userID` varchar(40) NOT NULL,
+  `dishID` varchar(40) NOT NULL,
   `rating` float DEFAULT NULL,
   `predictedRating` float NOT NULL,
   `predictionTime` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
@@ -334,16 +471,16 @@ INSERT INTO `ratings` (`userID`, `dishID`, `rating`, `predictedRating`, `predict
 ('66115ed000ae1258259', 'ffd4sdf54sdf634df3', 0.6, 0, NULL),
 ('66115ee270603588242', '32df3g4df6df3gdf34', 0.8, 0, NULL),
 ('66115ee270603588242', '3f45s3fd5g4sdf643df', 1, 0, NULL),
-('66115ee270603588242', '3fd5g4sdf643df54s3df', NULL, 0, '2024-04-09 10:33:34'),
+('66115ee270603588242', '3fd5g4sdf643df54s3df', NULL, 0, '2024-04-09 03:33:34'),
 ('66115ee270603588242', '3fsdfdf45s3fd5g4sdf', 0.5, 0, NULL),
-('66115ee270603588242', 'df3sdf4d6f3d54f6d4', NULL, 0, '2024-04-09 10:33:31'),
+('66115ee270603588242', 'df3sdf4d6f3d54f6d4', NULL, 0, '2024-04-09 03:33:31'),
 ('66115ee270603588242', 'df546df325dfg6d5g97', 0.5, 0, NULL),
 ('66115ee270603588242', 'df546df345dfg6d5g46', 0.3, 0, NULL),
 ('66115ee270603588242', 'ds4f6d3sf4d6f34d6f3', 0.5, 0, NULL),
 ('66115ee270603588242', 'fd45s3fd5g4sdf543', 0.2, 0, NULL),
 ('66115ee270603588242', 'fd45s3fd5g4sdf544', 1, 0, NULL),
 ('66115ee270603588242', 'fdf45s3fd5g4sdf546', 0.8, 0, NULL),
-('66115ee270603588242', 'ffd4546sdf3s4f6d34', NULL, 0, '2024-04-09 10:33:27'),
+('66115ee270603588242', 'ffd4546sdf3s4f6d34', NULL, 0, '2024-04-09 03:33:27'),
 ('66115ee270603588242', 'ffd4sdf54sdf634df3', 1, 0, NULL);
 
 -- --------------------------------------------------------
@@ -353,7 +490,7 @@ INSERT INTO `ratings` (`userID`, `dishID`, `rating`, `predictedRating`, `predict
 --
 
 CREATE TABLE `recipes` (
-  `dishID` varchar(20) NOT NULL,
+  `dishID` varchar(40) NOT NULL,
   `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -362,19 +499,30 @@ CREATE TABLE `recipes` (
 --
 
 INSERT INTO `recipes` (`dishID`, `content`) VALUES
-('32df3g4df6df3gdf34', '<p><strong>*<span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_90778922431712541623155\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_90778922431712541623155\" data-mce-bogus=\"1\" data-mce-annotation=\"Sơ\" data-mce-lingo=\"en_us\">Sơ</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_89641138341712541623155\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_89641138341712541623155\" data-mce-bogus=\"1\" data-mce-annotation=\"chế\" data-mce-lingo=\"en_us\">chế</span> </strong></p><p><span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_41039042351712541623155\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_41039042351712541623155\" data-mce-bogus=\"1\" data-mce-annotation=\"Bước\" data-mce-lingo=\"en_us\">Bước</span> 1: <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_56276370461712541623155\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_56276370461712541623155\" data-mce-bogus=\"1\" data-mce-annotation=\"Nấu\" data-mce-lingo=\"en_us\">Nấu</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_53597670071712541623155\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_53597670071712541623155\" data-mce-bogus=\"1\" data-mce-annotation=\"nước\" data-mce-lingo=\"en_us\">nước</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_96566270981712541623155\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_96566270981712541623155\" data-mce-bogus=\"1\" data-mce-annotation=\"dùng\" data-mce-lingo=\"en_us\">dùng</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_46328580791712541623155\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_46328580791712541623155\" data-mce-bogus=\"1\" data-mce-annotation=\"bánh\" data-mce-lingo=\"en_us\">bánh</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_405627119101712541623155\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_405627119101712541623155\" data-mce-bogus=\"1\" data-mce-annotation=\"canh\" data-mce-lingo=\"en_us\">canh</span>. </p><p><span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_482203056111712541623155\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_482203056111712541623155\" data-mce-bogus=\"1\" data-mce-annotation=\"Bước\" data-mce-lingo=\"en_us\">Bước</span> 2: <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_156114605121712541623155\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_156114605121712541623155\" data-mce-bogus=\"1\" data-mce-annotation=\"Chuẩn\" data-mce-lingo=\"en_us\">Chuẩn</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_421821143131712541623155\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_421821143131712541623155\" data-mce-bogus=\"1\" data-mce-annotation=\"bị\" data-mce-lingo=\"en_us\">bị</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_973324144141712541623155\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_973324144141712541623155\" data-mce-bogus=\"1\" data-mce-annotation=\"cua\" data-mce-lingo=\"en_us\">cua</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_225025018151712541623155\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_225025018151712541623155\" data-mce-bogus=\"1\" data-mce-annotation=\"và\" data-mce-lingo=\"en_us\">và</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_295026247161712541623155\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_295026247161712541623155\" data-mce-bogus=\"1\" data-mce-annotation=\"các\" data-mce-lingo=\"en_us\">các</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_59186516171712541623155\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_59186516171712541623155\" data-mce-bogus=\"1\" data-mce-annotation=\"nguyên\" data-mce-lingo=\"en_us\">nguyên</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_585526506181712541623155\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_585526506181712541623155\" data-mce-bogus=\"1\" data-mce-annotation=\"liệu\" data-mce-lingo=\"en_us\">liệu</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_161743436191712541623155\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_161743436191712541623155\" data-mce-bogus=\"1\" data-mce-annotation=\"khác\" data-mce-lingo=\"en_us\">khác</span>. </p><p><strong>*<span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_741264939201712541623155\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_741264939201712541623155\" data-mce-bogus=\"1\" data-mce-annotation=\"Chế\" data-mce-lingo=\"en_us\">Chế</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_303449016211712541623155\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_303449016211712541623155\" data-mce-bogus=\"1\" data-mce-annotation=\"biến\" data-mce-lingo=\"en_us\">biến</span> </strong></p><p><span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_344467718221712541623155\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_344467718221712541623155\" data-mce-bogus=\"1\" data-mce-annotation=\"Bước\" data-mce-lingo=\"en_us\">Bước</span> 1: <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_845524168231712541623155\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_845524168231712541623155\" data-mce-bogus=\"1\" data-mce-annotation=\"Làm\" data-mce-lingo=\"en_us\">Làm</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_102185082241712541623155\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_102185082241712541623155\" data-mce-bogus=\"1\" data-mce-annotation=\"sạch\" data-mce-lingo=\"en_us\">sạch</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_36773895251712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_36773895251712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"cua\" data-mce-lingo=\"en_us\">cua</span>. </p><p><span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_399679953261712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_399679953261712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"Bước\" data-mce-lingo=\"en_us\">Bước</span> 2: <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_183365494271712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_183365494271712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"Làm\" data-mce-lingo=\"en_us\">Làm</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_454625515281712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_454625515281712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"sạch\" data-mce-lingo=\"en_us\">sạch</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_142285763291712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_142285763291712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"các\" data-mce-lingo=\"en_us\">các</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_688402399301712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_688402399301712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"loại\" data-mce-lingo=\"en_us\">loại</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_442786800311712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_442786800311712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"rau\" data-mce-lingo=\"en_us\">rau</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_19394966321712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_19394966321712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"cải\" data-mce-lingo=\"en_us\">cải</span>. </p><p><span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_112311889331712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_112311889331712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"Bước\" data-mce-lingo=\"en_us\">Bước</span> 3: <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_178718234341712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_178718234341712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"Nấu\" data-mce-lingo=\"en_us\">Nấu</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_448336394351712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_448336394351712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"bánh\" data-mce-lingo=\"en_us\">bánh</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_620281786361712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_620281786361712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"canh\" data-mce-lingo=\"en_us\">canh</span>. </p><p><span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_476044009371712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_476044009371712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"Bước\" data-mce-lingo=\"en_us\">Bước</span> 4: <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_836671256381712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_836671256381712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"Thêm\" data-mce-lingo=\"en_us\">Thêm</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_297471748391712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_297471748391712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"cua\" data-mce-lingo=\"en_us\">cua</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_874499949401712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_874499949401712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"vào\" data-mce-lingo=\"en_us\">vào</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_240238866411712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_240238866411712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"nồi\" data-mce-lingo=\"en_us\">nồi</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_166544769421712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_166544769421712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"nước\" data-mce-lingo=\"en_us\">nước</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_880148167431712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_880148167431712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"dùng\" data-mce-lingo=\"en_us\">dùng</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_339596463441712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_339596463441712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"và\" data-mce-lingo=\"en_us\">và</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_93446925451712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_93446925451712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"nấu\" data-mce-lingo=\"en_us\">nấu</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_714916463461712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_714916463461712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"chín\" data-mce-lingo=\"en_us\">chín</span>. </p><p><span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_898262890471712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_898262890471712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"Bước\" data-mce-lingo=\"en_us\">Bước</span> 5: <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_937611178481712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_937611178481712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"Dọn\" data-mce-lingo=\"en_us\">Dọn</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_798179012491712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_798179012491712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"ra\" data-mce-lingo=\"en_us\">ra</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_406751791501712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_406751791501712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"bát\" data-mce-lingo=\"en_us\">bát</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_21719888511712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_21719888511712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"và\" data-mce-lingo=\"en_us\">và</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_675528735521712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_675528735521712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"thêm\" data-mce-lingo=\"en_us\">thêm</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_573598055531712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_573598055531712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"rau\" data-mce-lingo=\"en_us\">rau</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_618586853541712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_618586853541712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"sống\" data-mce-lingo=\"en_us\">sống</span>. </p><p><span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_914185750551712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_914185750551712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"Bước\" data-mce-lingo=\"en_us\">Bước</span> 6: <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_363143939561712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_363143939561712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"Thưởng\" data-mce-lingo=\"en_us\">Thưởng</span> <span class=\"mce-spellchecker-annotation mce-spellchecker-word mce-cram_472369886571712541623156\" aria-invalid=\"spelling\" data-mce-highlight-id=\"mce-cram_472369886571712541623156\" data-mce-bogus=\"1\" data-mce-annotation=\"thức\" data-mce-lingo=\"en_us\">thức</span>.</p>'),
-('3f45s3fd5g4sdf643df', '*Sơ chế\r\nBước 1: Làm sạch cá.\r\nBước 2: Chuẩn bị các gia vị.\r\n*Chế biến\r\nBước 1: Xào tỏi và ớt.\r\nBước 2: Cho cá vào xào chín.\r\nBước 3: Thêm nước mắm, đường và nước.\r\nBước 4: Nấu cho cá mềm và nước thấm đều vào thịt cá.\r\nBước 5: Dọn ra đĩa và thưởng thức.'),
-('3fd5g4sdf643df54s3df', '*Sơ chế\r\nBước 1: Làm nước dùng riêu cua.\r\nBước 2: Làm sạch cua và các nguyên liệu khác.\r\n*Chế biến\r\nBước 1: Nấu nước dùng.\r\nBước 2: Nấu bún.\r\nBước 3: Cho cua vào nồi nước dùng và nấu chín.\r\nBước 4: Dọn ra bát và thêm rau sống.\r\nBước 5: Thưởng thức.'),
-('3fsdfdf45s3fd5g4sdf', '*Sơ chế\r\nBước 1: Chuẩn bị thịt bò và các nguyên liệu khác.\r\n*Chế biến\r\nBước 1: Chiên thịt bò và trứng.\r\nBước 2: Làm sốt bơ.\r\nBước 3: Dọn thịt bò và trứng lên đĩa.\r\nBước 4: Đổ sốt bơ lên mặt.\r\nBước 5: Thêm rau sống và khoai tây chiên.\r\nBước 6: Thưởng thức.'),
-('df3sdf4d6f3d54f6d4', '*Sơ chế\r\nBước 1: Chuẩn bị bánh mỳ và các nguyên liệu nhân.\r\n*Chế biến\r\nBước 1: Chuẩn bị nhân sandwich.\r\nBước 2: Làm bánh mỳ sandwich.\r\nBước 3: Thoa nhân lên bánh mỳ.\r\nBước 4: Thêm rau sống và các loại sốt.\r\nBước 5: Thưởng thức.'),
-('df546df325dfg6d5g97', '*Sơ chế\r\nBước 1: Làm sạch rau.\r\nBước 2: Cắt thịt và luộc sơ.\r\n*Chế biến\r\nBước 1: Xào rau trong 15 phút.\r\nBước 2: Xào thịt trong 20 phút.\r\nBước 3: Thêm gia vị và xào đến khi hết nước.\r\nBước 4: Dọn ra bát và thêm rau sống.\r\nBước 5: Thưởng thức.'),
-('df546df345dfg6d5g46', '*Sơ chế\r\nBước 1: Làm nước dùng ốc.\r\nBước 2: Làm sạch ốc và các nguyên liệu khác.\r\n*Chế biến\r\nBước 1: Nấu nước dùng.\r\nBước 2: Nấu bún.\r\nBước 3: Cho ốc vào nồi nước dùng và nấu chín.\r\nBước 4: Dọn ra bát và thêm rau sống.\r\nBước 5: Thưởng thức.'),
-('ds4f6d3sf4d6f34d6f3', '*Sơ chế\r\nBước 1: Làm sạch gà.\r\nBước 2: Ướp gia vị cho gà.\r\n*Chế biến\r\nBước 1: Chiên gà.\r\nBước 2: Thêm gia vị và chiên thêm.\r\nBước 3: Dọn ra đĩa và thưởng thức.'),
-('fd45s3fd5g4sdf543', '*Sơ chế\r\nBước 1: Nấu nước dùng phở.\r\nBước 2: Chuẩn bị thịt gà và các nguyên liệu khác.\r\n*Chế biến\r\nBước 1: Luộc phở.\r\nBước 2: Mắc phở.\r\nBước 3: Thêm thịt gà.\r\nBước 4: Cho các gia vị vào tô phở.\r\nBước 5: Thêm rau sống và ớt cắt nhỏ.\r\nBước 6: Thưởng thức.'),
-('fd45s3fd5g4sdf544', '*Sơ chế\r\nBước 1: Chuẩn bị bánh mì và các nguyên liệu khác.\r\n*Chế biến\r\nBước 1: Pha chế pate.\r\nBước 2: Làm mỡ hành.\r\nBước 3: Ướp gia vị cho thịt pate.\r\nBước 4: Làm bánh mì.\r\nBước 5: Thoa pate lên bánh mì và thêm rau sống.\r\nBước 6: Thưởng thức.'),
-('fdf45s3fd5g4sdf546', '*Sơ chế\r\nBước 1: Chuẩn bị cơm đã nấu.\r\nBước 2: Cắt thịt và các nguyên liệu khác.\r\n*Chế biến\r\nBước 1: Chiên thịt và tỏi.\r\nBước 2: Thêm cơm vào chảo và xào đều với các gia vị.\r\nBước 3: Thêm ớt và nấm vào và xào thêm một lát.\r\nBước 4: Cho trứng vào và xào đều.\r\nBước 5: Dọn ra đĩa và thưởng thức.'),
-('ffd4546sdf3s4f6d34', '*Sơ chế\r\nBước 1: Nấu nước dùng bún bò Huế.\r\nBước 2: Chuẩn bị thịt bò và các nguyên liệu khác.\r\n*Chế biến\r\nBước 1: Luộc bún.\r\nBước 2: Mắc bún.\r\nBước 3: Thêm thịt bò.\r\nBước 4: Cho các gia vị vào tô bún.\r\nBước 5: Thêm rau sống và ớt cắt nhỏ.\r\nBước 6: Thưởng thức.'),
-('ffd4sdf54sdf634df3', '*Sơ chế\r\nBước 1: Chuẩn bị các nguyên liệu.\r\n*Chế biến\r\nBước 1: Ướp gia vị cho thịt.\r\nBước 2: Chế biến các nguyên liệu khác.\r\nBước 3: Làm ướt bánh tráng và xếp thịt và các nguyên liệu lên.\r\nBước 4: Gói chặt và thưởng thức.');
+('32df3g4df6df3gdf34', '<p><strong>*Sơ chế </strong></p><p>Bước 1: Nấu nước dùng bánh canh.</p><p>Bước 2: Chuẩn bị cua và các nguyên liệu khác.</p><p><strong>*Chế biến </strong></p><p>Bước 1: Làm sạch cua.</p><p>Bước 2: Làm sạch các loại rau cải.</p><p>Bước 3: Nấu bánh canh.</p><p>Bước 4: Thêm cua vào nồi nước dùng và nấu chín.</p><p>Bước 5: Dọn ra bát và thêm rau sống.</p><p>Bước 6: Thưởng thức.</p>'),
+('3f45s3fd5g4sdf643df', '<p><strong>*Sơ chế </strong></p><p>Bước 1: Làm sạch cá. </p><p>Bước 2: Chuẩn bị các gia vị. </p><p><strong>*Chế biến </strong></p><p>Bước 1: Xào tỏi và ớt.&nbsp;</p><p>Bước 2: Cho cá vào xào chín. </p><p>Bước 3: Thêm nước mắm, đường và nước. </p><p>Bước 4: Nấu cho cá mềm và nước<span style=\"text-decoration: underline;\" data-mce-style=\"text-decoration: underline;\"> thấm đều vào thịt cá. </span></p><p>Bước 5: Dọn ra đĩa và thưởng thức.</p>'),
+('3fd5g4sdf643df54s3df', '<p><strong>*Sơ chế </strong></p><p>Bước 1: Làm nước dùng riêu cua. </p><p>Bước 2: Làm sạch cua và các nguyên liệu khác. </p><p><strong>*Chế biến </strong></p><p>Bước 1: Nấu nước dùng.&nbsp;</p><p>Bước 2: Nấu bún. </p><p>Bước 3: Cho cua vào nồi nước dùng và nấu chín. </p><p>Bước 4: Dọn ra bát và thêm rau sống. </p><p>Bước 5: Thưởng thức.</p>'),
+('3fsdfdf45s3fd5g4sdf', '<p><strong>*Sơ chế </strong></p><p>Bước 1: Chuẩn bị thịt bò và các nguyên liệu khác. </p><p><strong>*Chế biến</strong></p><p>Bước 1: Chiên thịt bò và trứng. </p><p>Bước 2: Làm sốt bơ. </p><p>Bước 3: Dọn thịt bò và trứng lên đĩa. </p><p>Bước 4: Đổ sốt bơ lên mặt. </p><p>Bước 5: Thêm rau sống và khoai tây chiên. </p><p>Bước 6: Thưởng thức.</p>'),
+('df3sdf4d6f3d54f6d4', '<p><strong>*Sơ chế </strong></p><p>Bước 1: Chuẩn bị bánh mỳ và các nguyên liệu nhân. </p><p><strong>*Chế biến </strong></p><p>Bước 1: Chuẩn bị nhân sandwich. </p><p>Bước 2: Làm bánh mỳ sandwich. </p><p>Bước 3: Thoa nhân lên bánh mỳ. </p><p>Bước 4: Thêm rau sống và các loại sốt. </p><p>Bước 5: Thưởng thức.</p>'),
+('df546df325dfg6d5g97', '<p><strong>*Sơ chế </strong></p><p>Bước 1: Làm sạch rau. </p><p>Bước 2: Cắt thịt và luộc sơ. </p><p><strong>*Chế biến </strong></p><p>Bước 1: Xào rau trong 15 phút. </p><p>Bước 2: Xào thịt trong 20 phút. </p><p>Bước 3: Thêm gia vị và xào đến khi hết nước. </p><p>Bước 4: Dọn ra bát và thêm rau sống. </p><p>Bước 5: Thưởng thức.</p>'),
+('df546df345dfg6d5g46', '<p><strong>*Sơ chế </strong></p><p>Bước 1: Làm nước dùng ốc. </p><p>Bước 2: Làm sạch ốc và các nguyên liệu khác. </p><p><strong>*Chế biến </strong></p><p>Bước 1: Nấu nước dùng. </p><p>Bước 2: Nấu bún. </p><p>Bước 3: Cho ốc vào nồi nước dùng và nấu chín. </p><p>Bước 4: Dọn ra bát và thêm rau sống. </p><p>Bước 5: Thưởng thức.</p>'),
+('ds4f6d3sf4d6f34d6f3', '<p><strong>*Sơ chế </strong></p><p>Bước 1: Làm sạch gà. </p><p>Bước 2: Ướp gia vị cho gà. </p><p><strong>*Chế biến </strong></p><p>Bước 1: Chiên gà. </p><p>Bước 2: Thêm gia vị và chiên thêm. </p><p>Bước 3: Dọn ra đĩa và thưởng thức.</p>'),
+('fd45s3fd5g4sdf543', '<p><strong>*Sơ chế </strong></p><p>Bước 1: Nấu nước dùng phở. </p><p>Bước 2: Chuẩn bị thịt gà và các nguyên liệu khác.</p><p><strong>*Chế biến </strong></p><p>Bước 1: Luộc phở. </p><p>Bước 2: Mắc phở. </p><p>Bước 3: Thêm thịt gà. </p><p>Bước 4: Cho các gia vị vào tô phở. </p><p>Bước 5: Thêm rau sống và ớt cắt nhỏ. </p><p>Bước 6: Thưởng thức.</p>'),
+('fd45s3fd5g4sdf544', '<p><strong>*Sơ chế </strong></p><p>Bước 1: Chuẩn bị bánh mì và các nguyên liệu khác. </p><p><strong>*Chế biến </strong></p><p>Bước 1: Pha chế pate.&nbsp;</p><p>Bước 2: Làm mỡ hành. </p><p>Bước 3: Ướp gia vị cho thịt pate. </p><p>Bước 4: Làm bánh mì. </p><p>Bước 5: Thoa pate lên bánh mì và thêm rau sống. </p><p>Bước 6: Thưởng thức.</p>'),
+('fdf45s3fd5g4sdf546', '<p><strong>*Sơ chế </strong></p><p>Bước 1: Chuẩn bị cơm đã nấu. </p><p>Bước 2: Cắt thịt và các nguyên liệu khác. </p><p><strong>*Chế biến </strong></p><p>Bước 1: Chiên thịt và tỏi. </p><p>Bước 2: Thêm cơm vào chảo và xào đều với các gia vị. </p><p>Bước 3: Thêm ớt và nấm vào và xào thêm một lát. </p><p>Bước 4: Cho trứng vào và xào đều. </p><p>Bước 5: Dọn ra đĩa và thưởng thức.</p>'),
+('fds34f6d34sdf63df4s6', '<p><strong>*Sơ chế </strong></p><p>Bước 1: Làm sạch bánh tráng và các nguyên liệu khác. </p><p><strong>*Chế biến </strong></p><p>Bước 1: Cắt bánh tráng thành những miếng nhỏ. </p><p>Bước 2: Trộn bánh tráng với gia vị và nước mắm. </p><p>Bước 3: Dọn ra đĩa và thưởng thức.</p>'),
+('fds4f3d45g63dfg4s6d3', '<p><strong>*Sơ chế </strong></p><p>Bước 1: Làm sạch thịt và các nguyên liệu khác. </p><p><strong>*Chế biến </strong></p><p>Bước 1: Làm nhân nem. </p><p>Bước 2: Cuốn nem và chiên giòn. </p><p>Bước 3: Dọn ra đĩa và thưởng thức.</p>'),
+('fds4f3df45g6df345g3d', '<p><strong>*Sơ chế </strong></p><p>Bước 1: Chuẩn bị rau và gà. </p><p><strong>*Chế biến </strong></p><p>Bước 1: Nướng gà. </p><p>Bước 2: Trộn rau với gia vị. </p><p>Bước 3: Dọn gà nướng lên đĩa và thêm rau trộn. </p><p>Bước 4: Thưởng thức.</p>'),
+('fds4f3df45g6df345g3f', '<p><strong>*Sơ chế </strong></p><p>Bước 1: Chuẩn bị cơm và nguyên liệu. </p><p><strong>*Chế biến </strong></p><p>Bước 1: Xào thịt bò với dưa cải. </p><p>Bước 2: Rang cơm và thêm gia vị. </p><p>Bước 3: Trộn thịt bò và dưa cải với cơm rang. </p><p>Bước 4: Dọn ra đĩa và thưởng thức.</p>'),
+('ffd4546sdf3s4f6d34', '<p><strong>*Sơ chế </strong></p><p>Bước 1: Nấu nước dùng bún bò Huế. </p><p>Bước 2: Chuẩn bị thịt bò và các nguyên liệu khác. </p><p><strong>*Chế biến</strong></p><p>Bước 1: Luộc bún.&nbsp;</p><p>Bước 2: Mắc bún. </p><p>Bước 3: Thêm thịt bò. </p><p>Bước 4: Cho các gia vị vào tô bún. </p><p>Bước 5: Thêm rau sống và ớt cắt nhỏ. </p><p>Bước 6: Thưởng thức.</p>'),
+('ffd4sdf54sdf634df3', '<p><strong>*Sơ chế </strong></p><p>Bước 1: Chuẩn bị các nguyên liệu. </p><p><strong>*Chế biến </strong></p><p>Bước 1: Ướp gia vị cho thịt. </p><p>Bước 2: Chế biến các nguyên liệu khác. </p><p>Bước 3: Làm ướt bánh tráng và xếp thịt và các nguyên liệu lên. </p><p>Bước 4: Gói chặt và thưởng thức.</p>'),
+('g4df6g3df45g34dfg63d', '<p><strong>*Sơ chế </strong></p><p>Bước 1: Làm sạch cá lóc và các nguyên liệu khác. </p><p><strong>*Chế biến </strong></p><p>Bước 1: Nấu nước dùng canh chua. </p><p>Bước 2: Cho cá lóc vào nồi nước dùng và nấu chín. </p><p>Bước 3: Thêm cà chua và gia vị vào nồi. </p><p>Bước 4: Dọn ra đĩa và thưởng thức.</p>'),
+('g4df6g3df45g34dfg6d', '<p><strong>*Sơ chế </strong></p><p>Bước 1: Chuẩn bị nguyên liệu làm bánh và nhân dừa. </p><p><strong>*Chế biến </strong></p><p>Bước 1: Trộn bột và nước vào nhân dừa. </p><p>Bước 2: Làm nhân bánh và làm bánh. </p><p>Bước 3: Nướng bánh đến khi chín. </p><p>Bước 4: Dọn ra đĩa và thưởng thức.</p>'),
+('gdf4sdf34sdf63sd4f6s', '<p><strong>*Sơ chế </strong></p><p>Bước 1: Làm sạch ngó sen và các nguyên liệu khác. </p><p><strong>*Chế biến </strong></p><p>Bước 1: Nấu nước mắm chấm.&nbsp;</p><p>Bước 2: Trộn ngó sen với gia vị và nước mắm chấm. </p><p>Bước 3: Dọn ra đĩa và thưởng thức.</p>'),
+('gf4d6g3df45g63df45g6', '<p><strong>*Sơ chế </strong></p><p>Bước 1: Làm sạch bí đỏ và các nguyên liệu khác. </p><p><strong>*Chế biến </strong></p><p>Bước 1: Nấu nước dùng canh.&nbsp;</p><p>Bước 2: Cho bí đỏ vào nồi nước dùng và nấu chín. </p><p>Bước 3: Thêm gia vị và nấu thêm chút nữa. </p><p>Bước 4: Dọn ra đĩa và thưởng thức.</p>'),
+('gf4d6g3df45g63df4g6d', '<p><strong>*Sơ chế </strong></p><p>Bước 1: Làm sạch cá mòi và các nguyên liệu khác. </p><p><strong>*Chế biến </strong></p><p>Bước 1: Xào cá mòi với cơm. </p><p>Bước 2: Thêm gia vị và chiên cho đến khi vàng đều. </p><p>Bước 3: Dọn ra đĩa và thưởng thức.</p>'),
+('gf4d6g3df45g63df4g7d', '<p><strong>*Sơ chế </strong></p><p>Bước 1: Làm sạch sườn, bì và các nguyên liệu khác. </p><p><strong>*Chế biến </strong></p><p>Bước 1: Nướng sườn và thái thành lát. </p><p>Bước 2: Xào bì với gia vị. </p><p>Bước 3: Làm cơm và dọn ra đĩa cùng với sườn và bì. </p><p>Bước 4: Thêm nước mắm và thưởng thức.</p>'),
+('gfd4g3d45g63df4g6d3f', '<p><strong>*Sơ chế </strong></p><p>Bước 1: Làm sạch ốc len và các nguyên liệu khác. </p><p><strong>*Chế biến </strong></p><p>Bước 1: Nấu nước dùng ốc.&nbsp;</p><p>Bước 2: Nấu bún. </p><p>Bước 3: Cho ốc len vào nồi nước dùng và nấu chín. </p><p>Bước 4: Dọn ra đĩa và thưởng thức.</p>');
 
 -- --------------------------------------------------------
 
@@ -422,7 +570,7 @@ INSERT INTO `typedishs` (`typeID`, `typeName`) VALUES
 --
 
 CREATE TABLE `users` (
-  `userID` varchar(20) NOT NULL,
+  `userID` varchar(40) NOT NULL,
   `username` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
@@ -436,10 +584,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`userID`, `username`, `password`, `email`, `created_at`, `updated_at`, `role`) VALUES
-('6610e716d9cfd144092', 'operationddd', '$2y$10$wQ/5ry8jD5YQeOazC3lakewmQNOS6JJFfY0PuAtMk3XickkF4UdRS', 'operationddd@gmail.com', '2024-04-06 06:09:26', '2024-04-06 06:09:26', 'USER'),
-('6610e8741fcb2844367', 'operationddd', '$2y$10$kh9v1ORsRKbWRTk0kyUxVO9D4M7cE3TmibrkfmPzI53UbfB.b04SS', 'admin@gmail.com', '2024-04-06 06:15:16', '2024-04-06 06:15:16', 'ADMIN'),
-('66115ed000ae1258259', 'operationddd', '$2y$10$cLxZPVimCEtb5m3w/vm3HumFU3EdwRaAKj9SU3siVjmcJrzeMGHRK', 'hoangdung@gmail.com', '2024-04-06 14:40:16', '2024-04-06 14:40:16', 'USER'),
-('66115ee270603588242', 'operationddd', '$2y$10$bpoamdM.iWfs771JAShFvOeen5sfCSE4Hhs378iAFzx1OMAXR1S66', 'hangnguyen@gmail.com', '2024-04-06 14:40:34', '2024-04-07 15:43:28', 'USER');
+('6610e716d9cfd144092', 'operationddd', '$2y$10$wQ/5ry8jD5YQeOazC3lakewmQNOS6JJFfY0PuAtMk3XickkF4UdRS', 'operationddd@gmail.com', '2024-04-05 23:09:26', '2024-04-05 23:09:26', 'USER'),
+('6610e8741fcb2844367', 'operationddd', '$2y$10$kh9v1ORsRKbWRTk0kyUxVO9D4M7cE3TmibrkfmPzI53UbfB.b04SS', 'admin@gmail.com', '2024-04-05 23:15:16', '2024-04-05 23:15:16', 'ADMIN'),
+('66115ed000ae1258259', 'operationddd', '$2y$10$cLxZPVimCEtb5m3w/vm3HumFU3EdwRaAKj9SU3siVjmcJrzeMGHRK', 'hoangdung@gmail.com', '2024-04-06 07:40:16', '2024-04-06 07:40:16', 'USER'),
+('66115ee270603588242', 'operationddd', '$2y$10$bpoamdM.iWfs771JAShFvOeen5sfCSE4Hhs378iAFzx1OMAXR1S66', 'hangnguyen@gmail.com', '2024-04-06 07:40:34', '2024-04-07 08:43:28', 'USER');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -545,3 +693,8 @@ ALTER TABLE `ratings`
 --
 ALTER TABLE `recipes`
   ADD CONSTRAINT `recipes_ibfk_1` FOREIGN KEY (`dishID`) REFERENCES `dishs` (`dishID`);
+-- COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
