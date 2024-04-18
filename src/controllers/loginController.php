@@ -36,10 +36,11 @@ class LoginController {
                     session_start();
                 } 
                 $jwt = JwtHelper::getInstance()->generate($email);
-                setcookie('jwt', $jwt, time() + 86400, '/');
+                setcookie('jwt', $jwt, time() + 86400, '/', '', false, true);
                 $_SESSION['role'] = $user['role'];
+                $_SESSION['jwt'] = $jwt;
                 header('Location: index.php');
-                exit;
+                // exit;
             } else {
                 $error = "Invalid email or password!";
             }

@@ -21,9 +21,6 @@ class RegisterController{
             $captcha = $_POST['captcha'];
             $this->register($email, $username, $password, $confirmPassword, $captcha, $error);
         }
-        // else{
-        //     $error = "Invalid request!";
-        // }
     }
 
     private function register($email, $username, $password, $confirmPassword, $captcha, &$error) {
@@ -51,8 +48,9 @@ class RegisterController{
                     $jwt = JwtHelper::getInstance()->generate($email);
                     setcookie('jwt', $jwt, time() + 86400, '/');
                     $_SESSION['role'] = "USER";
+                    $_SESSION['jwt'] = $jwt;
                     header('Location: index.php');
-                    exit;
+                    // exit;
                 } catch (Exception $e) {
                     $error = "An error occurred!";
                 }

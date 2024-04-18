@@ -32,29 +32,17 @@ function renderValueTag($filterTypes,$filterIngredients){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Disk</title>
-    <script src="https://cdn.tiny.cloud/1/1u5byklg9tall9ayqltrxvbcyie41qqc4ft9dknoji08i743/tinymce/7/tinymce.min.js"
-        referrerpolicy="origin"></script>
-    <!-- <script src="./assets/css/tinymce.min.js" referrerpolicy="origin"></script> -->
-    <script>
-    tinymce.init({
-        selector: 'textarea',
-        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
-        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-        tinycomments_mode: 'embedded',
-        tinycomments_author: 'Author name',
-        mergetags_list: [{
-                value: 'First.Name',
-                title: 'First Name'
-            },
-            {
-                value: 'Email',
-                title: 'Email'
-            },
-        ],
-        ai_request: (request, respondWith) => respondWith.string(() => Promise.reject(
-            "See docs to implement AI Assistant")),
-    });
-    </script>
+    <!-- Place the first <script> tag in your HTML's <head> -->
+<script src="https://cdn.tiny.cloud/1/1u5byklg9tall9ayqltrxvbcyie41qqc4ft9dknoji08i743/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
+<!-- Place the following <script> and <textarea> tags your HTML's <body> -->
+<script>
+  tinymce.init({
+    selector: 'textarea',
+    plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
+    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+  });
+</script>
 </head>
 
 <body class="bg-white">
@@ -73,11 +61,11 @@ function renderValueTag($filterTypes,$filterIngredients){
             </nav>
         </aside> -->
         <?php require_once('includes/sideAdmin.php'); ?>
-        <main class="flex-1 bg-white p-8">
+        <main class="flex-1 bg-white p-8 h-screen">
             <h1 class="text-3xl font-bold mb-8">
                 <?php echo !($dish)?"Add Disk":"Edit Disk"; ?>
             </h1>
-            <div class="lg:grid lg:grid-cols-2">
+            <div class="lg:grid lg:grid-cols-3">
                 <div class="max-w-xl lg:col-span-1 mr-8">
                     <div class="mb-4 flex justify-center">
                         <img id="dishPhoto" name="dishPhoto"
@@ -128,7 +116,7 @@ function renderValueTag($filterTypes,$filterIngredients){
                         </aside>
                     </div>
                 </div>
-                <div class="max-w-xl lg:col-span-1">
+                <div class="max-w-xxl lg:col-span-2">
 
                     <div class="mb-4">
                         <label for="dishUrl" class="block text-gray-700 font-semibold mb-2">Photo</label>

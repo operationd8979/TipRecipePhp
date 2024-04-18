@@ -1,9 +1,15 @@
 <?php
-require_once './src/controllers/registerController.php';
 use PHPUnit\Framework\TestCase;
 
 class testRegister extends TestCase
 {
+
+    public static function setUpBeforeClass(): void
+    {
+        require_once './src/controllers/registerController.php';
+        $_SERVER['REQUEST_URI'] = 'http://localhost/TipRecipe/register.php';
+    }
+
     public function testNoBodyRequest()
     {
         //given
@@ -14,7 +20,7 @@ class testRegister extends TestCase
         $registerController->invoke($error);
         
         //then
-        $this->assertEquals("Invalid request!", $error);
+        $this->assertEquals("", $error);
     }
 
     public function testWrongCatcha()
@@ -225,6 +231,37 @@ class testRegister extends TestCase
         //then
         $this->assertEquals("Email already exists!", $error);
     }
+
+    public function testSuccess()
+    {
+        //given
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }  
+        $email ="operationddd123@gmail.com";
+        $_SERVER['REQUEST_METHOD'] = 'POST';   
+        $_SESSION['captcha'] = "123456";
+        $_POST['captcha'] = "123456";
+        $_POST['email'] = $email;
+        $_POST['username'] = "operationddd";
+        $_POST['password'] = "12345678";
+        $_POST['confirmPassword'] = "12345678";
+
+        //when
+        $registerController = new RegisterController();
+        $error = "";
+        $registerController->invoke($error);
+
+        //then
+        require_once './src/services/userService.php';
+        // $token = $_COOKIE['jwt'];
+        $token = $_SESSION['jwt'];
+        $user = UserService::getInstance()->getUserByToken($token);
+
+        $this->assertEquals($email, $user['email']??"");
+
+    }
+
 }
 
 ?>

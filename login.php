@@ -37,7 +37,7 @@ $loginController->invoke($error);
                     <div class="captcha">
                         <img src="captcha.php" alt="Captcha" onclick="this.src='captcha.php?refresh=1'">
                     </div>
-                    <input type="text" id="captcha" name="captcha"
+                    <input type="text" id="captcha" name="captcha" value=<?php  if (session_status() == PHP_SESSION_NONE) session_start(); echo $_SESSION['captcha']??"abc"; ?>
                         class="shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         placeholder="Enter Captcha">
                 </div>

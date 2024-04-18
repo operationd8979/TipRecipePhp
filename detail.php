@@ -17,15 +17,13 @@
 <body>
     <?php include('includes/header.php'); ?>
     <div class="lg:col-span-1 lg:bg-white lg:p-4 lg:shadow-md m-10 mt-0">
-        <h2 class="text-lg font-semibold mb-4">Recipe</h2>
+        <h2 class="text-lg font-semibold mb-4"><?php echo($dish['dishName']) ?> Recipe</h2>
         <hr>
-        <div class="lg:flex justify-center">
-            <div class="mr-4 sm:mr-6 md:mr-12 lg:mr-32">
-                <h3 id="dish-name" class="text-xl font-semibold"><?php echo($dish['dishName']) ?></h3>
-                <div class="flex">
-                    <img id="dish-url" src="<?php echo($dish['url']) ?>" alt=""
+        <div class="lg:grid lg:grid-cols-3">
+            <div class="max-w-xl lg:col-span-1 mr-4 sm:mr-6 md:mr-12 md:p-5 lg:mr-32 lg:pd-10">
+                <img id="dish-url" src="<?php echo($dish['url']) ?>" alt=""
                         class="w-64 h-64 object-cover rounded-lg">
-                </div>
+                <h3 id="dish-name" class="text-xl font-semibold"><?php echo($dish['dishName']) ?></h3>
                 <p id="dish-description" class="text-gray-600 font-semibold"><?php echo($dish['summary']) ?></p>
                 <p id="dish-types" class="text-gray-600">
                     <?php
@@ -46,7 +44,7 @@
                         ?>
                 </ul>
             </div>
-            <div>
+            <div class="max-w-xxl lg:col-span-2 pr-10">
                 <div id="dish-content" class="mt-4">
                     <h1 class="text-2xl font-bold mb-4">Step by step</h1>
                     <?php echo($dish['content']) ?>

@@ -2,7 +2,7 @@
 require_once('./src/helpers/jwtFilter.php');
 require_once('./src/controllers/adminController.php');
 
-$itemsPerPage = 4;
+$itemsPerPage = 8;
 $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($currentPage - 1) * $itemsPerPage;
 $totalDishs = 0;
@@ -49,7 +49,7 @@ function renderDishsToDom($dishs){
     <div class="flex bg-gray-100 font-sans mb-10">
         <?php require_once('includes/sideAdmin.php'); ?>
 
-        <main class="flex-1 bg-white p-8">
+        <main class="flex-1 bg-white p-8 h-screen">
             <h1 class="text-3xl font-bold mb-8">Dish Management</h1>
             <div class="mb-4">
                 <a href="editDish.php"

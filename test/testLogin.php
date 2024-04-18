@@ -86,39 +86,32 @@ class testLogin extends TestCase
         $this->assertEquals("Email and password are required!", $error);
     }
 
+    
     public function testSuccess()
     {
         //given
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }  
+        $email ="operationddd@gmail.com";
         $_SERVER['REQUEST_METHOD'] = 'POST';   
         $_SESSION['captcha'] = "123456";
         $_POST['captcha'] = "123456";
-        $_POST['email'] = "operationddd@gmail.com";
+        $_POST['email'] = $email;
         $_POST['password'] = "12345678";
 
-        // Capture the output (headers)
-        ob_start();
+        //when
         $loginController = new LoginController();
-        $error = "";       
+        $error = "";
         $loginController->invoke($error);
-        $output = ob_get_contents();
-        ob_end_clean();
 
-        // Check if the header location is set
-        $this->assertStringContainsString('Location: index.php', $output);
+        //then
+        require_once './src/services/userService.php';
+        // $token = $_COOKIE['jwt'];
+        $token = $_SESSION['jwt'];
+        $user = UserService::getInstance()->getUserByToken($token);
 
-        // Check if $_SESSION['role'] is set as expected
-        $this->assertEquals('ADMIN', $_SESSION['role']);
-
-        // //when
-        // $loginController = new LoginController();
-        // $error = "";       
-        // $loginController->invoke($error);
-        
-        // //then
-        // $this->assertEquals(true, isset($_SESSION['role']));
+        $this->assertEquals($email, $user['email']??"");
     }
     
 }

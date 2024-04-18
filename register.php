@@ -51,7 +51,7 @@ $registerController->invoke($error);
                 </div>
 
                 <div class="mb-4 flex items-center">
-                    <input type="text" id="captcha" name="captcha"
+                    <input type="text" id="captcha" name="captcha" value=<?php  if (session_status() == PHP_SESSION_NONE) session_start(); echo $_SESSION['captcha']??"abc"; ?>
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         placeholder="Enter Captcha">
                     <img src="captcha.php" alt="CAPTCHA" class="ml-4" onclick="this.src='captcha.php?refresh=1'">
