@@ -19,8 +19,8 @@ class CachingService{
     public function checkExistedCache($hotKey){
         $path = $this->commonPath.$hotKey;
         if (file_exists($path) && (time() - filemtime($path)) < $this->cacheLifetime) {
-            $ratingMT = include $path;
-            return $ratingMT;
+            $data = include $path;
+            return $data;
         } else {
             return null;
         }

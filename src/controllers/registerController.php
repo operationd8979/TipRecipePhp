@@ -48,7 +48,7 @@ class RegisterController{
                     $jwt = JwtHelper::getInstance()->generate($email);
                     setcookie('jwt', $jwt, time() + 86400, '/');
                     $_SESSION['role'] = "USER";
-                    $_SESSION['jwt'] = $jwt;
+                    // $_SESSION['jwt'] = $jwt;
                     header('Location: index.php');
                     // exit;
                 } catch (Exception $e) {

@@ -238,7 +238,7 @@ class testRegister extends TestCase
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }  
-        $email ="operationddd123@gmail.com";
+        $email ="operationddd1234@gmail.com";
         $_SERVER['REQUEST_METHOD'] = 'POST';   
         $_SESSION['captcha'] = "123456";
         $_POST['captcha'] = "123456";

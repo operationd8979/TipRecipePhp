@@ -2,7 +2,7 @@
 require_once('./src/helpers/jwtFilter.php');
 require_once('./src/controllers/adminController.php');
 
-$itemsPerPage = 8;
+$itemsPerPage = 6;
 $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($currentPage - 1) * $itemsPerPage;
 $totalDishs = 0;

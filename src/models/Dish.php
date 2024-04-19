@@ -248,12 +248,12 @@ class Dish {
         if($result){
             $query = "UPDATE ratings SET rating = :rating, predictedRating = :predictedRating, predictionTime = NULL WHERE userID = :userID AND dishID = :dishID";
             $stmt = $this->db->prepare($query);
-            $stmt->execute(array(':userID' => $userID, ':dishID' => $dishID, ':rating' => $rating/10,':predictedRating' => NULL));
+            $stmt->execute(array(':userID' => $userID, ':dishID' => $dishID, ':rating' => $rating/10,':predictedRating' => 0));
         }
         else{
             $query = "INSERT INTO ratings (userID, dishID, rating, predictedRating, predictionTime) VALUES (:userID, :dishID, :rating, :predictedRating, NULL)";
             $stmt = $this->db->prepare($query);
-            $stmt->execute(array(':userID' => $userID, ':dishID' => $dishID, ':rating' => $rating/10,':predictedRating' => NULL));
+            $stmt->execute(array(':userID' => $userID, ':dishID' => $dishID, ':rating' => $rating/10,':predictedRating' => 0));
         }
     }
 
@@ -285,7 +285,7 @@ class Dish {
     public function getRecommendDishsByUserPreRating($userID){
         $query = "SELECT d.dishID, d.url, d.dishName, r.predictedRating as rating 
         FROM ratings r LEFT JOIN dishs d ON r.dishID = d.dishID 
-        WHERE r.userID = :userID ORDER BY predictedRating DESC LIMIT 10";
+        WHERE r.userID = :userID AND r.predictedRating != 0 ORDER BY predictedRating DESC LIMIT 10";
         $stmt = $this->db->prepare($query);
         $stmt->execute(array(':userID' => $userID));
         $dishs = $stmt->fetchAll(PDO::FETCH_ASSOC);
